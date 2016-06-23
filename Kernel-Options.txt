@@ -1,0 +1,113 @@
+General setup --->
+    Stack Protector buffer overflow detection (Strong)
+Processor type and features --->
+    [*] EFI Runtime service support --->
+    [*]   EFI stub support
+    [ ]     EFI mixed-mode support
+Power management and ACPI options --->
+    [*] Suspend to RAM and standby
+    [*] Opportunistic sleep
+    [*] SMT (Hyperthreading) scheduler support
+    [*] Multi-core scheduler support
+Networking support --->
+    -*- Wireless --->
+        <*> cfg80211 - wireless configuration API
+        [*]   enable powersave by default
+        [*]	  cfg80211 wireless extensions compatibility
+        < > Generic IEEE 802.11 Networking Stack (mac80211) # Must be disabled for broadcom-sta to work
+Device Drivers --->
+    <*> Sound card support --->
+        <*> Advanced Linux Sound Architecture --->
+            HD-Audio --->
+                [*] Support digital beep via input layer
+                (1)    Digital beep registration mode (0=off, 1=on)
+                <*> Build Realtek HD-audio coced support
+                <*> Build HDMI/DisplayPort HD-audio codec support
+            # To prevent the error:
+            #   Too many HDMI devices
+            #   Consider building the kernel with CONFIG_SND_DYNAMIC_MINORS=y
+            [*] Dynamic device file minor numbers
+            (32)	Max number of sound cards
+    HID support --->
+        Special HID drivers --->
+            <*> Corsair devices
+    [*] Real Time Clock --->
+        [*] Set system time from RTC on startup and resume
+    [*] USB support --->
+        <*> Support for Host-side USB
+        [*]   xHCI HCD (USB 3.0) support
+        < >     Generic xHCI driver for a platform device
+        <*>   EHCI HCD (USB 2.0) support
+        [ ]     Root Hub Transaction Translators
+        [*]	    Improved Transaction Translator scheduling
+    [*] Multiple devices drive support (RAID and LVM) --->
+        <*> Device mapper support
+        <*>   Crypt target support # Needed for encrypted disk
+    [*] Network device support --->
+        [*] Wireless LAN --->
+            < > Broadcom 43xx wireless support (mac80211 stack)
+            <*> Intel PRO/Wireless 2100 Network Connection # Needed for broadcom-sta
+                [ ] Enable promiscuous mode
+                [ ] Enable full debugging output in IPW2100 module
+        [*] Ethernet driver support --->
+            [*] Intel devices
+            <*>   Intel (R) PRO/1000 PCI-Express Gigabit Ethernet support
+    # These 2 must be disabled for broadcom-sta
+    Broadcom specific AMBA --->
+        < > BCMA support
+    Sonics Silicon Backplane --->
+        < > Sonics Silicon Backplane support
+    # For sensors
+    I2C support --->
+        -*- I2C support
+        <*>	  I2C device interface
+    -*- Hardware Monitoring support --->
+        <*> Intel Core/Core2/Atom temperature sensor
+        <*> Nuvoton NCT6775F and compatibles
+File systems --->
+    <*> Second extended fs support --->
+    -*-   Ext2 extended attributes --->
+    [*]     Ext2 POSIX Axxess Control Lists
+    [*]     Ext2 Security Labels
+    <*> The Extended 3 (ext3) filesystem --->
+    [*]   Ext3 POSIX Access Control Lists
+    [*]   Ext3 Security Labels
+    -*- The Extended 4 (ext4) filesystem
+    -*-   Ext4 POSIX Access Control Lists
+    -*-   Ext4 Security Labels
+    < >   Ext4 Encryption
+    [ ]   EXT4 debugging support
+    [*] Miscellaneous filesystems --->
+        <*> Apple Macintosh file system support
+        <*> Apple Extended HFS file system support --->
+        [*]   HFS+ POSIX Access Control Lists
+Security options --->
+    Grsecurity --->
+        [*] Grsecurity
+            Configuration Method (Automatic)
+            Usage Type (Desktop)
+            Virtualization Type (Host)
+            Virtualization Hardware (EPT/RVI Processor Support)
+            Virtualization Software (VirtualBox)
+            Required Priorities (Performance)
+            Customize Configuration --->
+                PaX --->
+                    [*] Enable various PaX features
+                        PaX Control --->
+                            [ ] Support soft mode
+                            [ ] Use ELF program header marking
+                            [*] Use filesystem extended attributesmarking
+Cryptographic API --->
+    -*- CBC support
+    -*- ECB support
+    -*- XTS support
+    -*- CRC32c CRC algorithm
+    <*> CRC32c INTEL hardware acceleration
+    -*- Michael MIC keyed digest algorithm
+    -*- SH1 digest algorithm
+    <*> SHA1 digest algorithm (SSSE3/AVX/AVX2/SHA-NI)
+    <*> SHA256 digest algorithm (SSSE3/AVX/AVX2/SHA-NI)
+    <*> SHA512 digest algorithm (SSSE3/AVX/AVX2)
+    -*- AES cipher algorithms
+    -*- AES cipher algorithms (x86_64)
+    <*> AES cipher algorithms (AES-NI)
