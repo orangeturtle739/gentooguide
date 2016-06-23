@@ -262,7 +262,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'GentooSetupGuide.tex', u'Gentoo Setup Guide Documentation',
+    (master_doc, 'GentooSetupGuide.tex', u'Gentoo Setup Guide',
      u'Jacob Glueck', 'manual'),
 ]
 
@@ -278,7 +278,7 @@ latex_documents = [
 
 # If true, show page references after internal links.
 #
-# latex_show_pagerefs = False
+latex_show_pagerefs = True
 
 # If true, show URL addresses after external links.
 #

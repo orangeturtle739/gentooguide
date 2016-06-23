@@ -7,7 +7,7 @@ Gentoo Setup Guide
 ==============================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Contents
 
    Introduction 

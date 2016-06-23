@@ -6,8 +6,6 @@ Installation
 
 This section covers installing hardened Gentoo with an encrypted root partition on a machine which boots using UEFI. This section follows the Gentoo Handbook (https://wiki.gentoo.org/wiki/Handbook:AMD64), but explains specifically how I configured my system, and thus does not explain all the different choices discussed in the handbook.
 
-In this book, a ``$`` indicates a user prompt and ``#`` indicates a root prompt.
-
 .. _setup_verify:
 
 ******
@@ -75,7 +73,7 @@ The encrypted disk will have three partitions on it: one for GRUB (the GRand Uni
             |-- dev/vg1/root (ext4, root)
             `-- /dev/vg1/swap (swap)
 
-As the computer will use the Unified Extensible Firmware Interface (UEFI)[#uefibios]_ to book, the disk must use a GUID Partition Table (GPT). To make a GPT partition table, first install ``gdisk``: ``emerge gptfdisk``. Then, run it::
+As the computer will use the Unified Extensible Firmware Interface (UEFI) [#uefibios]_ to book, the disk must use a GUID Partition Table (GPT). To make a GPT partition table, first install ``gdisk``: ``emerge gptfdisk``. Then, run it::
 
     # gdisk
     GPT fdisk (gdisk) version 1.0.1
@@ -199,7 +197,7 @@ This command takes the first 512 bytes from the random number stream ``/dev/uran
 
 The GNU Privacy Guard (``gpg``) is a general purpose encryption program. The ``--symmetric`` flag makes it use a symmetric cipher (which uses the same key for encryption and decrypting) as opposed to the default public key cipher. The ``-o`` file specifies the output file, and the final argument is the input file. ``gpg`` will prompt you for a password.
 
-One optional step is first writing random data to the drive::
+One optional step is writing random data to the drive::
 
     # pv /dev/urandom -s 1000G | dd of=/dev/sda3 bs=1M
 
@@ -482,7 +480,7 @@ Uncomment or add the proper locales to ``/etc/locale.gen``. I used::
 
 Run ``locale-gen`` to generate the locales. Then, select the right local::
 
-    eselect locale list
+    # eselect locale list
     Available targets for the LANG variable:
       [1]   C
       [2]   en_US
@@ -490,7 +488,7 @@ Run ``locale-gen`` to generate the locales. Then, select the right local::
       [4]   en_US.utf8 *
       [5]   POSIX
       [ ]   (free form)
-    eselect locale set 4
+    # eselect locale set 4
 
 I chose the ``en_US.utf8`` [#locales]_. Reload the environment::
 
@@ -759,7 +757,7 @@ To boot with a passphrase, omit the key file parameters::
 
 .. highlight:: console
 
-There is one other GRUB option that appears relevant: ``GRUB_ENABLE_CRYPTODISK=y``. However, that is only when the boot partition is also encrypted. Without an encrypted boot partition, that option causes the error ``error: device name required`` on boot. Leave it commented out.
+There is one other GRUB option that appears relevant: ``GRUB_ENABLE_CRYPTODISK=y``. However, that is only needed when the boot partition is also encrypted. Without an encrypted boot partition, that option causes the error ``error: device name required`` on boot. Leave it commented out.
 
 Now, generate the GRUB2 configuration file::
 
@@ -769,7 +767,7 @@ Now, generate the GRUB2 configuration file::
 Rebooting
 ================
 
-The final test is rebooting the system. If everything is right, it will boot from the new gentoo installation, prompt for a passphrase if needed, decrypt the drive, and boot completely. To reboot, exit the ``chroot``, unmount the partitions, and reboot::
+The final test is rebooting the system. If everything is right, it will boot from the new Gentoo installation, prompt for a passphrase if needed, decrypt the drive, and boot completely. To reboot, exit the ``chroot``, unmount the partitions, and reboot::
 
     # exit
     # umount -l /mnt/gentoo/dev{/shm,/pts,}
