@@ -712,6 +712,13 @@ To enable remote access, have the SSH daemon start on boot::
 
     # rc-update add sshd default
 
+LVM
+============================
+
+Because the system uses LVM, it must start at boot::
+
+    # rc-update add lvm boot
+
 ******************
 Bootloader
 ******************

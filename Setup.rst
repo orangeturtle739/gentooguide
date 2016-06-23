@@ -75,22 +75,215 @@ While it verified the signature, it prints warnings because the key is not signe
 ********************************
 Setting up ccache
 ********************************
+The compiler cache (ccache) speeds up compilation by saving output from previous compilations and reusing it if the source files have not changed. This is useful when updating software because not all the files will change. To use it, first install it::
+
+    # emerge dev-util/ccache
+
+.. highlight:: shell
+
+The, add ``ccache`` to the ``FEATURES`` variable in ``/etc/portage/make.conf``, and also configure the ``CCACHE_SIZE``::
+
+    FEATURES="webrsync-gpg ccache"
+    CCACHE_SIZE="10G"
+
+.. highlight:: console
+
+To check the status of the cache, use::
+
+    # CCACHE_DIR="/var/tmp/ccache" ccache -s
+    cache directory                     /var/tmp/ccache
+    primary config                      /var/tmp/ccache/ccache.conf
+    secondary config      (readonly)    /etc/ccache.conf
+    cache hit (direct)                  1096
+    cache hit (preprocessed)            1729
+    cache miss                         32775
+    called for link                     3346
+    called for preprocessing            3973
+    multiple source files                  6
+    compiler produced stdout               1
+    compile failed                      1450
+    preprocessor error                   513
+    can't use precompiled header           6
+    bad compiler arguments               380
+    unsupported source language         1328
+    autoconf compile/link               9530
+    unsupported compiler option           85
+    no input file                       3983
+    files in cache                     74286
+    cache size                         694.7 MB
+    max cache size                      10.0 GB
 
 ********************************
 Configuring WiFi using ``wicd``
 ********************************
 
+The Wireless Interface Connection Daemon (``wicd``) is a lightweight daemon for managing wired and wireless connections. It can automatically switch to a wired connection if one becomes available, and also switch to a wireless connection if there is no wired connection. It also has a ncurses user interface. To emerge it, first set the ``ncurses`` use flag::
+
+    # echo "net-misc/wicd ncurses" > /etc/portage/package.use/wicd
+
+Then emerge it::
+
+    # emerge net-misc/wicd
+
+Make it start on boot:
+
+    # rc-update add wicd default
+
+Also, make sure no other network scripts run at boot. For example, to remove the standard netifrc ethernet script, run::
+
+    rc-update del net.enp0s31f6
+
+Then, run the `wicd` configuration program::
+
+    # wicd-curses
+
+My computer had a `BCM4352` chip, so I had to emerge the ``net-wireless/broadcom-sta`` package. The package requires the following settings::
+
+    B43: If you insist on building this, you must blacklist it!
+    BCMA: If you insist on building this, you must blacklist it!
+    SSB: If you insist on building this, you must blacklist it!
+    LIB80211: Please enable it. If you can't find it: enabling the driver for "Intel PRO/Wireless 2100" or "Intel PRO/Wireless 2200BG" (IPW2100 or IPW2200) should suffice.
+    MAC80211: If you insist on building this, you must blacklist it!
+    LIB80211_CRYPT_TKIP: You will need this for WPA.
+
 ********************************
 Sound
 ********************************
+
+ALSA Setup
+==============
+
+The sound might just work. But, if it does not or you want to change the sound output, first list the sound devices::
+
+    # aplay -L
+    null
+        Discard all samples (playback) or generate zero samples (capture)
+    default:CARD=PCH
+        HDA Intel PCH, ALC1150 Analog
+        Default Audio Device
+    sysdefault:CARD=PCH
+        HDA Intel PCH, ALC1150 Analog
+        Default Audio Device
+    front:CARD=PCH,DEV=0
+        HDA Intel PCH, ALC1150 Analog
+        Front speakers
+    surround21:CARD=PCH,DEV=0
+        HDA Intel PCH, ALC1150 Analog
+        2.1 Surround output to Front and Subwoofer speakers
+    surround40:CARD=PCH,DEV=0
+        HDA Intel PCH, ALC1150 Analog
+        4.0 Surround output to Front and Rear speakers
+    surround41:CARD=PCH,DEV=0
+        HDA Intel PCH, ALC1150 Analog
+        4.1 Surround output to Front, Rear and Subwoofer speakers
+    surround50:CARD=PCH,DEV=0
+        HDA Intel PCH, ALC1150 Analog
+        5.0 Surround output to Front, Center and Rear speakers
+    surround51:CARD=PCH,DEV=0
+        HDA Intel PCH, ALC1150 Analog
+        5.1 Surround output to Front, Center, Rear and Subwoofer speakers
+    surround71:CARD=PCH,DEV=0
+        HDA Intel PCH, ALC1150 Analog
+        7.1 Surround output to Front, Center, Side, Rear and Woofer speakers
+    iec958:CARD=PCH,DEV=0
+        HDA Intel PCH, ALC1150 Digital
+        IEC958 (S/PDIF) Digital Audio Output
+    hdmi:CARD=PCH,DEV=0
+        HDA Intel PCH, HDMI 0
+        HDMI Audio Output
+    hdmi:CARD=PCH,DEV=1
+        HDA Intel PCH, HDMI 1
+        HDMI Audio Output
+    hdmi:CARD=PCH,DEV=2
+        HDA Intel PCH, HDMI 2
+        HDMI Audio Output
+
+Then, test them with ``speaker-test``::
+
+    # speaker-test -Dfront:PCH -c2 -twav
+    
+    speaker-test 1.0.29
+
+    Playback device is front:PCH
+    Stream parameters are 48000Hz, S16_LE, 2 channels
+    WAV file(s)
+    Rate set to 48000Hz (requested 48000Hz)
+    Buffer size range from 64 to 16384
+    Period size range from 32 to 8192
+    Using max buffer size 16384
+    Periods = 4
+    was set period_size = 4096
+    was set buffer_size = 16384
+     0 - Front Left
+     1 - Front Right
+
+Change the device until it works. For example, to use HDMI, try ``-Dhdmi:PCH``. To make the device which works the default, use a ``.asoundrc`` file in your home directory. When I use a ``genkernel`` kernel, I need the following ``.asoundrc`` to make sound work::
+
+    pcm.!default{
+        type hw
+        card 0
+        device 0
+    }
+
+However, with my manually-configured kernel, sound works find without the `.asoundrc`. For more information about the `.asoundrc` file, see: http://www.alsa-project.org/main/index.php/Asoundrc.
+
+Playing Music
+==============
+
+The simplest way to play music from the command line is with `media-sound/sox`: https://packages.gentoo.org/packages/media-sound/sox. Install it with the following ``USE`` flags:
+
+* ``amr``: adds support for Adaptive Multi-Rate Audio support
+* ``flac``: adds support for the Free Lossless Audio Codec
+* ``mad``: adds support for MP3
+* ``ogg``: adds support for for ogg files
+* ``wavpack``: adds support for wav files
+* ``encode``: adds support for encoding
+
+Then, play music with ``play``::
+
+    # play Koji\ Kondo/The\ Legend\ Of\ Zelda\ 25th\ Anniversary\ Soundtrack/01\ -\ The\ Legend\ Of\ Zelda\ 25th\ Anniversary\ Medley.mp3
+    play WARN alsa: can't encode 0-bit Unknown or not applicable
+
+    Koji Kondo/The Legend Of Zelda 25th Anniversary Soundtrack/01 - The Legend Of Zelda 25th Anniversary Medley.mp3:
+
+     File Size: 16.0M     Bit Rate: 263k
+      Encoding: MPEG audio    
+      Channels: 2 @ 16-bit   
+    Samplerate: 44100Hz      
+    Replaygain: off         
+      Duration: 00:08:08.41  
+    
+        In:0.00% 00:00:00.00 [00:08:08.41] Out:0     [      |      ]        Clip:0   
+
+For some reason, adding the flag `-t alsa` prevents the `can't encode 0-bit` warning.
+
+************************************
+GRUB Default Boot Choice
+************************************
+
+.. highlight:: shell
+
+In order to set the default boot choice in GRUB, edit the ``GRUB_DEFAULT`` variable in ``/etc/default/grub``. It identifies the kernel to start counting from 0. For example, to boot the 5\ :sup:`th` kernel on the menu, use::
+
+    GRUB_DEFAULT=4
+
+In order for this to work, I had to disable the GRUB submenus::
+
+    GRUB_DISABLE_SUBMENU=y
+
+.. highlight:: console
 
 ************************************
 Common Unix Printing System (CUPS)
 ************************************
 
+Coming soon!
+
 ************************************
 Desktop environment
 ************************************
+
+Coming soon!
 
 .. rubric:: Footnotes
 

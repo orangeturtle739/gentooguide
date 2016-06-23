@@ -25,38 +25,13 @@ The Gentoo installation is hardened and set up with an encrypted root partition.
 Setup
 *************
 
-This guide also documents the setup of the computer, including:
-
-* Setting up portage to use only GPG signed snapshots
-* Configuring WiFi using ``wicd``
-* Setting up sound
-* Setting up the Common Unix Printing System (CUPS)
-* Setting up a desktop environment
+This guide also documents the setup of the computer, including WiFi, sound, and printing.
 
 *************
 Cool stuff
 *************
 
-All the cool packages and neat tricks, including:
-
-* Cool packages
-
-  * ``cowsay``
-  * ``fortune``
-  * ``linux-logo``
-  * ``libcaca``
-  * ``toilet``
-  * ``figlet``
-* Cool tricks
-
-  * Setting up ``/etc/motd`` and ``/etc/issue`` for cool login prompts
-  * Making the console font readable with ``consolefont`` and ``setfont``
-  * Printing an ASCII art linux penguin on boot with ``linux-logo``
-  * Setting a cool grub theme
-* Useful commands
-
-  * Image a failing drive with ``dd``
-  * Mount images made with ``dd`` using ``losetup``
+Finally, I list all the cool packages and neat tricks to make the computer as cool as possible.
 
 *************
 Conventions
