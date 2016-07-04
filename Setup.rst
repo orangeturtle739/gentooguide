@@ -255,7 +255,7 @@ Then, play music with ``play``::
     
         In:0.00% 00:00:00.00 [00:08:08.41] Out:0     [      |      ]        Clip:0   
 
-For some reason, adding the flag `-t alsa` prevents the `can't encode 0-bit` warning.
+For some reason, adding the flag ``-t alsa`` prevents the ``can't encode 0-bit`` warning.
 
 ************************************
 GRUB Default Boot Choice
@@ -277,7 +277,105 @@ In order for this to work, I had to disable the GRUB submenus::
 Common Unix Printing System (CUPS)
 ************************************
 
-Coming soon!
+First, emerge ``net-print/cups``. For a USB printer, set the ``usb`` ``USE`` flag. However, if USB printer support is enabled in the kernel, do not set the USB use flag.
+
+Add users who will need to print to the ``lp`` group::
+
+    # gpasswd -a username lp
+
+Add users who will need to add printers to the ``lpadmin`` group::
+
+    # gpasswd -a username lpadmin
+
+Make the CUPS daemon start at boot::
+
+    # rc-update add cupsd default
+
+Scan for printers with ``lpinfo``::
+
+    # lpinfo -l -v
+    Device: uri = https
+            class = network
+            info = Internet Printing Protocol (https)
+            make-and-model = Unknown
+            device-id = 
+            location = 
+    Device: uri = ipps
+            class = network
+            info = Internet Printing Protocol (ipps)
+            make-and-model = Unknown
+            device-id = 
+            location = 
+    Device: uri = socket
+            class = network
+            info = AppSocket/HP JetDirect
+            make-and-model = Unknown
+            device-id = 
+            location = 
+    Device: uri = http
+            class = network
+            info = Internet Printing Protocol (http)
+            make-and-model = Unknown
+            device-id = 
+            location = 
+    Device: uri = lpd
+            class = network
+            info = LPD/LPR Host or Printer
+            make-and-model = Unknown
+            device-id = 
+            location = 
+    Device: uri = ipp
+            class = network
+            info = Internet Printing Protocol (ipp)
+            make-and-model = Unknown
+            device-id = 
+            location = 
+    Device: uri = lpd://BRW008092859C92/BINARY_P1
+            class = network
+            info = Brother MFC-8950DW
+            make-and-model = Brother MFC-8950DW
+            device-id = MFG:Brother;CMD:PJL,PCL,PCLXL,URF;MDL:MFC-8950DW;CLS:PRINTER;CID:Brother Laser Type2;URF:W8,CP1,IS11-19-4,MT1-3-4-5-8-11,OB10,PQ4,RS300-600-1200,DM1;
+            location = spaceport
+    Device: uri = lpd://BRN30055C50102E/BINARY_P1
+            class = network
+            info = Brother MFC-L8850CDW
+            make-and-model = Brother MFC-L8850CDW
+            device-id = MFG:Brother;CMD:PJL,PCL,PCLXL,URF;MDL:MFC-L8850CDW;CLS:PRINTER;CID:Brother Generic Jpeg Type2;URF:SRGB24,W8,CP1,IS19-1,MT1-3-4-5-8-11,OB10,PQ4-5,RS200-600,V1.3,DM1;
+            location = sub
+
+Look at the available drivers using ``lpinfo``::
+
+    # lpinfo -m
+    lsb/usr/cupsfilters/Fuji_Xerox-DocuPrint_CM305_df-PDF.ppd Fuji Xerox
+    drv:///sample.drv/dymo.ppd Dymo Label Printer
+    drv:///sample.drv/epson9.ppd Epson 9-Pin Series
+    drv:///sample.drv/epson24.ppd Epson 24-Pin Series
+    drv:///cupsfilters.drv/pwgrast.ppd Generic IPP Everywhere Printer
+    drv:///sample.drv/generpcl.ppd Generic PCL Laser Printer
+    lsb/usr/cupsfilters/Generic-PDF_Printer-PDF.ppd Generic PDF Printer
+    drv:///sample.drv/generic.ppd Generic PostScript Printer
+    lsb/usr/cupsfilters/textonly.ppd Generic text-only printer
+    lsb/usr/cupsfilters/HP-Color_LaserJet_CM3530_MFP-PDF.ppd HP Color LaserJet CM3530 MFP PDF
+    lsb/usr/cupsfilters/pxlcolor.ppd HP Color LaserJet Series PCL 6 CUPS
+    drv:///cupsfilters.drv/dsgnjt600pcl.ppd HP DesignJet 600 pcl, 1.0
+    drv:///cupsfilters.drv/dsgnjt750cpcl.ppd HP DesignJet 750c pcl, 1.0
+    drv:///cupsfilters.drv/dsgnjt1050cpcl.ppd HP DesignJet 1050c pcl, 1.0
+    drv:///cupsfilters.drv/dsgnjt4000pcl.ppd HP DesignJet 4000 pcl, 1.0
+    drv:///cupsfilters.drv/dsgnjtt790pcl.ppd HP DesignJet T790 pcl, 1.0
+    drv:///cupsfilters.drv/dsgnjtt1100pcl.ppd HP DesignJet T1100 pcl, 1.0
+    drv:///sample.drv/deskjet.ppd HP DeskJet Series
+    drv:///sample.drv/laserjet.ppd HP LaserJet Series PCL 4/5
+    lsb/usr/cupsfilters/pxlmono.ppd HP LaserJet Series PCL 6 CUPS
+    lsb/usr/cupsfilters/HP-PhotoSmart_Pro_B8300-hpijs-pdftoijs.ppd HP PhotoSmart Pro B8300 CUPS/pdftoijs/hpijs
+    drv:///sample.drv/intelbar.ppd Intellitech IntelliBar Label Printer, 2.1
+    drv:///sample.drv/okidata9.ppd Oki 9-Pin Series
+    drv:///sample.drv/okidat24.ppd Oki 24-Pin Series
+    raw Raw Queue
+    lsb/usr/cupsfilters/Ricoh-PDF_Printer-PDF.ppd Ricoh PDF Printer
+    drv:///sample.drv/zebracpl.ppd Zebra CPCL Label Printer
+    drv:///sample.drv/zebraep1.ppd Zebra EPL1 Label Printer
+    drv:///sample.drv/zebraep2.ppd Zebra EPL2 Label Printer
+    drv:///sample.drv/zebra.ppd Zebra ZPL Label Printer
 
 ************************************
 Desktop environment
