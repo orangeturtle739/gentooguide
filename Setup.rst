@@ -21,7 +21,7 @@ Then, add ``webrsync-gpg`` to the ``FEATURES`` variable in ``/etc/portage/make.c
     FEATURES="webrsync-gpg"
     PORTAGE_GPG_DIR="/var/lib/gentoo/gkeys/keyrings/gentoo/release"
 
-Edit the gentoo section of `/etc/portage/repos.conf/gentoo.conf`::
+Edit the gentoo section of ``/etc/portage/repos.conf/gentoo.conf`` [#portagegpgconf]_::
 
     [gentoo]
     location = /usr/portage
@@ -42,17 +42,17 @@ In order to the signatures to be valid, the keys must also be valid. To verify t
           Key fingerprint = D2DE 1DBB A0F4 3EBA 341B  97D8 8255 33CB F6CD 6C97
     uid       [ unknown] Gentoo-keys Team <gkeys@gentoo.org>
     sub   4096R/151C3FC7 2014-10-03 [expires: 2017-09-17]
-    
+
     pub   1024D/17072058 2004-07-20 [expires: 2016-08-13]
           Key fingerprint = D99E AC73 79A8 50BC E47D  A5F2 9E64 38C8 1707 2058
     uid       [ unknown] Gentoo Linux Release Engineering (Gentoo Linux Release Signing Key) <releng@gentoo.org>
     sub   2048g/1415B4ED 2004-07-20 [expires: 2016-08-13]
-    
+
     pub   4096R/96D8BF6D 2011-11-25 [expires: 2016-07-01]
-          Key fingerprint = DCD0 5B71 EAB9 4199 527F  44AC DB6B 8C1F 96D8 BF6D    
+          Key fingerprint = DCD0 5B71 EAB9 4199 527F  44AC DB6B 8C1F 96D8 BF6D
     uid       [ unknown] Gentoo Portage Snapshot Signing Key (Automated Signing Key)
     sub   4096R/C9189250 2011-11-25 [expires: 2016-07-01]
-    
+
     pub   4096R/2D182910 2009-08-25 [expires: 2017-08-25]
           Key fingerprint = 13EB BDBE DE7A 1277 5DFD  B1BA BB57 2E0E 2D18 2910
     uid       [ unknown] Gentoo Linux Release Engineering (Automated Weekly Release Key) <releng@gentoo.org>
@@ -117,7 +117,7 @@ To check the status of the cache, use::
 Configuring WiFi using ``wicd``
 ********************************
 
-The Wireless Interface Connection Daemon (``wicd``) is a lightweight daemon for managing wired and wireless connections. It can automatically switch to a wired connection if one becomes available, and also switch to a wireless connection if there is no wired connection. It also has a ncurses user interface. To emerge it, first set the ``ncurses`` use flag::
+The Wireless Interface Connection Daemon (``wicd``) is a lightweight daemon for managing wired and wireless connections [#wicd_]. It can automatically switch to a wired connection if one becomes available, and also switch to a wireless connection if there is no wired connection. It also has a ncurses user interface. To emerge it, first set the ``ncurses`` use flag::
 
     # echo "net-misc/wicd ncurses" > /etc/portage/package.use/wicd
 
@@ -146,6 +146,8 @@ My computer had a `BCM4352` chip, so I had to emerge the ``net-wireless/broadcom
     MAC80211: If you insist on building this, you must blacklist it!
     LIB80211_CRYPT_TKIP: You will need this for WPA.
 
+For information about other Broadcom chips, see: https://wireless.wiki.kernel.org/en/users/Drivers/b43#Supported_devices.
+
 ********************************
 Sound
 ********************************
@@ -153,7 +155,7 @@ Sound
 ALSA Setup
 ==============
 
-The sound might just work. But, if it does not or you want to change the sound output, first list the sound devices::
+ALSA is the Advanced Linux Sound Architecture [#alsawiki]_. The sound might just work. But, if it does not or you want to change the sound output, first list the sound devices::
 
     # aplay -L
     null
@@ -198,10 +200,16 @@ The sound might just work. But, if it does not or you want to change the sound o
         HDA Intel PCH, HDMI 2
         HDMI Audio Output
 
+You can also look at ``/proc/asound/cards``::
+
+    # cat /proc/asound/cards
+     0 [PCH            ]: HDA-Intel - HDA Intel PCH
+                          HDA Intel PCH at 0xdf440000 irq 136
+
 Then, test them with ``speaker-test``::
 
     # speaker-test -Dfront:PCH -c2 -twav
-    
+
     speaker-test 1.0.29
 
     Playback device is front:PCH
@@ -225,7 +233,7 @@ Change the device until it works. For example, to use HDMI, try ``-Dhdmi:PCH``. 
         device 0
     }
 
-However, with my manually-configured kernel, sound works find without the `.asoundrc`. For more information about the `.asoundrc` file, see: http://www.alsa-project.org/main/index.php/Asoundrc.
+However, with my manually-configured kernel, sound works find without the ``.asoundrc``. For more information about the ``.asoundrc`` file, see: http://www.alsa-project.org/main/index.php/Asoundrc.
 
 Playing Music
 ==============
@@ -247,15 +255,15 @@ Then, play music with ``play``::
     Koji Kondo/The Legend Of Zelda 25th Anniversary Soundtrack/01 - The Legend Of Zelda 25th Anniversary Medley.mp3:
 
      File Size: 16.0M     Bit Rate: 263k
-      Encoding: MPEG audio    
-      Channels: 2 @ 16-bit   
-    Samplerate: 44100Hz      
-    Replaygain: off         
-      Duration: 00:08:08.41  
-    
-        In:0.00% 00:00:00.00 [00:08:08.41] Out:0     [      |      ]        Clip:0   
+      Encoding: MPEG audio
+      Channels: 2 @ 16-bit
+    Samplerate: 44100Hz
+    Replaygain: off
+      Duration: 00:08:08.41
 
-For some reason, adding the flag ``-t alsa`` prevents the ``can't encode 0-bit`` warning.
+    In:0.00% 00:00:00.00 [00:08:08.41] Out:0     [      |      ]        Clip:0
+
+For some reason, adding the flag ``-t alsa`` prevents the ``can't encode 0-bit`` warning [#bitwarning]_.
 
 ************************************
 GRUB Default Boot Choice
@@ -274,10 +282,70 @@ In order for this to work, I had to disable the GRUB submenus::
 .. highlight:: console
 
 ************************************
+Layman
+************************************
+
+.. highlight:: shell
+
+Layman (`app-portage/layman`) is a program which makes it easy to manage overlays. When I installed the most recent unmaksed version (2.0.0-r3), I got the following warning::
+
+    !!! Repository 'x-portage' is missing masters attribute in '/usr/local/portage/metadata/layout.conf'
+    !!! Set 'masters = gentoo' in this file for future compatibility
+
+.. highlight:: console
+
+While I could fix the warning by creating that file and putting the line ``masters = gentoo`` in it, I decided to try the new version of layman (2.4.1-r1), even though it was masked. To install it, first set the ``git`` (for supporting overlays from git), ``gpg`` (for verifying overlays, but I am not sure if it is used), and  ``sync-plugin-portage`` (for using portage's plugin system, which is what makes the new version different from the old one). In order to determine the keyword changes necessary, try to emerge it::
+
+    emerge -pv =layman-2.4.1-r1
+
+.. highlight:: shell
+
+I had to make the following keyword changes in ``/etc/portage/package.accept_keywords/layman``::
+
+    # required by app-portage/layman-2.4.1-r1::gentoo
+    # required by =layman-2.4.1-r1 (argument)
+    =dev-python/ssl-fetch-0.4 ~amd64
+    # required by =layman-2.4.1-r1 (argument)
+    =app-portage/layman-2.4.1-r1 ~amd64
+    # required by app-portage/layman-2.4.1-r1::gentoo[gpg]
+    # required by =layman-2.4.1-r1 (argument)
+    =dev-python/pyGPG-0.2 ~amd64
+
+.. highlight:: console
+
+Run ``layman-updater`` to set it up::
+
+    # layman-updater -R
+     *   Creating layman's repos.conf file
+     *   You are now ready to add overlays into your system.
+     *
+     *     layman -L
+     *
+     *   will display a list of available overlays.
+     *
+     *   Select an overlay and add it using
+     *
+     *     layman -a overlay-name
+     *
+
+************************************
+Avahi Daemon
+************************************
+
+The Avahi mDNS/DNS-SD daemon allows you to find computers and other things by name on the local network. It has two components: the deamon, ``net-dns/avahi``, and the client, ``sys-auth/nss-mdns``. In order to get the ```avahi-browse`` command and lots of other useful commands, ```avahi`` needs the ``dbus`` ``USE`` flag. After installing, start the daemon::
+
+    # rc-update add avahi-daemon default
+    # rc-service avahi-daemon start
+
+To configure the client, edit the ``/etc/nsswitch.conf`` file. Change the line ``hosts:       files dns`` to ``hosts:       files mdns_minimal [NOTFOUND=return] dns mdns``. While this option enables IPv6 support, to use only IPv4, use the line ``hosts:       files mdns4_minimal [NOTFOUND=return] dns mdns4`` instead. If this line is wrong, the DNS system will not work properly (you will be able to ping 8.8.8.8, but not google.com). You should now be able to ping your computer::
+
+    # ping hostname.local
+
+************************************
 Common Unix Printing System (CUPS)
 ************************************
 
-First, emerge ``net-print/cups``. For a USB printer, set the ``usb`` ``USE`` flag. However, if USB printer support is enabled in the kernel, do not set the USB use flag.
+First, emerge ``net-print/cups``. For a USB printer, set the ``usb`` ``USE`` flag. However, if USB printer support is enabled in the kernel, do not set the USB use flag. In order for CUPS to work properly, it needs to interface with Avahi, and so must have the `zeroconf` and `dbus` flags.
 
 Add users who will need to print to the ``lp`` group::
 
@@ -298,55 +366,78 @@ Scan for printers with ``lpinfo``::
             class = network
             info = Internet Printing Protocol (https)
             make-and-model = Unknown
-            device-id = 
-            location = 
+            device-id =
+            location =
     Device: uri = ipps
             class = network
             info = Internet Printing Protocol (ipps)
             make-and-model = Unknown
-            device-id = 
-            location = 
-    Device: uri = socket
-            class = network
-            info = AppSocket/HP JetDirect
-            make-and-model = Unknown
-            device-id = 
-            location = 
+            device-id =
+            location =
     Device: uri = http
             class = network
             info = Internet Printing Protocol (http)
             make-and-model = Unknown
-            device-id = 
-            location = 
+            device-id =
+            location =
     Device: uri = lpd
             class = network
             info = LPD/LPR Host or Printer
             make-and-model = Unknown
-            device-id = 
-            location = 
+            device-id =
+            location =
     Device: uri = ipp
             class = network
             info = Internet Printing Protocol (ipp)
             make-and-model = Unknown
-            device-id = 
-            location = 
+            device-id =
+            location =
+    Device: uri = socket
+            class = network
+            info = AppSocket/HP JetDirect
+            make-and-model = Unknown
+            device-id =
+            location =
     Device: uri = lpd://BRW008092859C92/BINARY_P1
             class = network
             info = Brother MFC-8950DW
             make-and-model = Brother MFC-8950DW
             device-id = MFG:Brother;CMD:PJL,PCL,PCLXL,URF;MDL:MFC-8950DW;CLS:PRINTER;CID:Brother Laser Type2;URF:W8,CP1,IS11-19-4,MT1-3-4-5-8-11,OB10,PQ4,RS300-600-1200,DM1;
             location = spaceport
-    Device: uri = lpd://BRN30055C50102E/BINARY_P1
+    Device: uri = dnssd://AirPrint%20brother-mfc-4650%20%40%208fhq801._ipp._tcp.local/cups
             class = network
-            info = Brother MFC-L8850CDW
-            make-and-model = Brother MFC-L8850CDW
-            device-id = MFG:Brother;CMD:PJL,PCL,PCLXL,URF;MDL:MFC-L8850CDW;CLS:PRINTER;CID:Brother Generic Jpeg Type2;URF:SRGB24,W8,CP1,IS19-1,MT1-3-4-5-8-11,OB10,PQ4-5,RS200-600,V1.3,DM1;
-            location = sub
+            info = AirPrint brother-mfc-4650 @ 8fhq801
+            make-and-model = Unknown
+            device-id =
+            location =
+    Device: uri = dnssd://Brother%20MFC-8950DW._ipp._tcp.local/?uuid=e3248000-80ce-11db-8000-001ba9c62678
+            class = network
+            info = Brother MFC-8950DW
+            make-and-model = Brother MFC-8950DW
+            device-id = MFG:Brother;MDL:MFC-8950DW;CMD:PJL,PCL,PCLXL,URF;
+            location =
+
+To get a shorter output, just use the ``-v`` flag::
+
+    # lpinfo -v
+    network https
+    network ipps
+    network http
+    network lpd
+    network ipp
+    network socket
+    network dnssd://Brother%20MFC-8950DW._ipps._tcp.local/?uuid=e3248000-80ce-11db-8000-001ba9c62678
+    network dnssd://Brother%20MFC-L8850CDW._ipp._tcp.local/?uuid=e3248000-80ce-11db-8000-30055c50102e
+    network lpd://BRW008092859C92/BINARY_P1
+    network lpd://BRN30055C50102E/BINARY_P1
+
+Above, the ``dnssd`` addresses use the Internet Printing Protocol (IPP), which is newer the LPD protocol the other addresses use [#cupsprotocol]_. IPP also provides bidirectional communication, while LPD does not. Thus, choose IPP when possible.
 
 Look at the available drivers using ``lpinfo``::
 
     # lpinfo -m
     lsb/usr/cupsfilters/Fuji_Xerox-DocuPrint_CM305_df-PDF.ppd Fuji Xerox
+    brother-BrGenML1-cups-en.ppd Brother BrGenML1 for CUPS
     drv:///sample.drv/dymo.ppd Dymo Label Printer
     drv:///sample.drv/epson9.ppd Epson 9-Pin Series
     drv:///sample.drv/epson24.ppd Epson 24-Pin Series
@@ -377,6 +468,199 @@ Look at the available drivers using ``lpinfo``::
     drv:///sample.drv/zebraep2.ppd Zebra EPL2 Label Printer
     drv:///sample.drv/zebra.ppd Zebra ZPL Label Printer
 
+Then, install the printer::
+
+    # lpadmin -p Brother_MFC-8950DW -E -v dnssd://Brother%20MFC-8950DW._ipps._tcp.local/?uuid=e3248000-80ce-11db-8000-001ba9c62678 -m brother-BrGenML1-cups-en.ppd
+
+Verify the setup with ``lpstat``::
+
+    # lpstat -d -l -t
+    system default destination: Brother_MFC-8950DW
+    scheduler is running
+    system default destination: Brother_MFC-8950DW
+    device for Brother_MFC-8950DW: dnssd://Brother%20MFC-8950DW._ipps._tcp.local/?uuid=e3248000-80ce-11db-8000-001ba9c62678
+    Brother_MFC-8950DW accepting requests since Tue 19 Jul 2016 06:42:55 AM EDT
+    printer Brother_MFC-8950DW is idle.  enabled since Tue 19 Jul 2016 06:42:55 AM EDT
+    	Form mounted:
+    	Content types: any
+    	Printer types: unknown
+    	Description: Brother_MFC-8950DW
+    	Alerts: none
+    	Location:
+    	Connection: direct
+    	Interface: /etc/cups/ppd/Brother_MFC-8950DW.ppd
+    	On fault: no alert
+    	After fault: continue
+    	Users allowed:
+    		(all)
+    	Forms allowed:
+    		(none)
+    	Banner required
+    	Charset sets:
+    		(none)
+    	Default pitch:
+    	Default page size:
+    	Default port settings:
+
+To set the default printer for a user, use ``lpoptions``::
+
+    $ lpoptions -d Brother_MFC-8950DW
+    copies=1 device-uri=dnssd://Brother%20MFC-8950DW._ipps._tcp.local/?uuid=e3248000-80ce-11db-8000-001ba9c62678 finishings=3 job-cancel-after=10800 job-hold-until=no-hold job-priority=50 job-sheets=none,none marker-change-time=0 number-up=1 printer-commands=AutoConfigure,Clean,PrintSelfTestPage printer-info=Brother_MFC-8950DW printer-is-accepting-jobs=true printer-is-shared=true printer-location printer-make-and-model='Brother BrGenML1 for CUPS ' printer-state=3 printer-state-change-time=1468924975 printer-state-reasons=none printer-type=8425492 printer-uri-supported=ipp://localhost/printers/Brother_MFC-8950DW
+
+To view all the options for the printer, use ``-l``::
+
+    $ lpoptions -p Brother_MFC-8950DW -l
+    OptionTrays/Number of Input Trays: *1Trays 2Trays 3Trays
+    PageSize/Media Size: Custom.WIDTHxHEIGHT Letter Legal Executive FanFoldGermanLegal *A4 A5 A6 Env10 EnvMonarch EnvDL EnvC5 ISOB5 B5 ISOB6 B6 4x6 Postcard DoublePostcardRotated EnvYou4 195x270mm 184x260mm 197x273mm CUSTOM1 CUSTOM2 CUSTOM3
+    BrMediaType/MediaType: *PLAIN THIN THICK THICKERPAPER2 BOND ENV ENVTHICK ENVTHIN
+    InputSlot/InputSlot: MPTRAY TRAY1 TRAY2 TRAY3 MANUAL *AUTO
+    Duplex/Duplex: DuplexTumble DuplexNoTumble *None
+    Resolution/Resolution: 300dpi *600dpi 600x300dpi 2400x600dpi 1200dpi
+    TonerSaveMode/Toner Save: *OFF ON
+    Sleep/Sleep Time [Min.]: *PrinterDefault 2minutes 10minutes 30minutes
+
+Set the options for the printer using the ``-o`` flag for each option::
+
+    $ lpoptions -p Brother_MFC-8950DW -o PageSize=Letter -o Duplex=DuplexNoTumble -o TonerSaveMode=ON
+
+    $ lpoptions -p Brother_MFC-8950DW -l
+    OptionTrays/Number of Input Trays: *1Trays 2Trays 3Trays
+    PageSize/Media Size: Custom.WIDTHxHEIGHT *Letter Legal Executive FanFoldGermanLegal A4 A5 A6 Env10 EnvMonarch EnvDL EnvC5 ISOB5 B5 ISOB6 B6 4x6 Postcard DoublePostcardRotated EnvYou4 195x270mm 184x260mm 197x273mm CUSTOM1 CUSTOM2 CUSTOM3
+    BrMediaType/MediaType: *PLAIN THIN THICK THICKERPAPER2 BOND ENV ENVTHICK ENVTHIN
+    InputSlot/InputSlot: MPTRAY TRAY1 TRAY2 TRAY3 MANUAL *AUTO
+    Duplex/Duplex: DuplexTumble *DuplexNoTumble None
+    Resolution/Resolution: 300dpi *600dpi 600x300dpi 2400x600dpi 1200dpi
+    TonerSaveMode/Toner Save: OFF *ON
+    Sleep/Sleep Time [Min.]: *PrinterDefault 2minutes 10minutes 30minutes
+
+For duplex, ``DuplexTumble`` means short-side stapling and ``DuplexNoTumble`` means long-side stapling.
+
+To print a test page from the command line, use::
+
+    $ locate testprint
+    /usr/share/cups/data/testprint
+    $ lp /usr/share/cups/data/testprint
+    request id is Brother_MFC-8950DW-9 (1 file(s))
+
+Brother Printers
+===================================
+
+This section explains how I installed the driver for my Brother printer. For more information about Brother printers, see: https://wiki.gentoo.org/wiki/Brother_networked_printer.
+
+To get the Brother printer drivers, the easiest way is to use the Brother overlay: https://github.com/stefan-langenmaier/brother-overlay/tree/master/. Install the overlay with Layman::
+
+    # layman -o https://raw.github.com/stefan-langenmaier/brother-overlay/master/repositories.xml -f -a brother-overlay
+
+     * Fetching remote list...
+     * Fetch Ok
+
+     * Adding overlay...
+     * Overlay "brother-overlay" is not official. Continue installing? [y/n]: y
+     * Running Git... # ( cd /var/lib/layman  && /usr/bin/git clone git://github.com/stefan-langenmaier/brother-overlay.git /var/lib/layman/brother-overlay )
+    Cloning into '/var/lib/layman/brother-overlay'...
+    remote: Counting objects: 2077, done.
+    remote: Total 2077 (delta 0), reused 0 (delta 0), pack-reused 2077
+    Receiving objects: 100% (2077/2077), 386.25 KiB | 166.00 KiB/s, done.
+    Resolving deltas: 100% (1018/1018), done.
+    Checking connectivity... done.
+     * Running Git... # ( cd /var/lib/layman/brother-overlay  && /usr/bin/git config user.name "layman" )
+     * Running Git... # ( cd /var/lib/layman/brother-overlay  && /usr/bin/git config user.email "layman@localhost" )
+     * Successfully added overlay(s) brother-overlay.
+
+Search for the printer driver::
+
+    # eix *8950*
+    * media-gfx/brother-mfc8950dw-bin [1]
+         Available versions:  1.0
+         Homepage:            http://support.brother.com
+         Description:         Scanner driver for Brother MFC-8950DW (brscan4)
+
+    * net-print/brother-mfc8950dw-bin [1]
+         Available versions:  1.0
+         Installed versions:  1.0(06:37:35 AM 07/19/2016)
+         Homepage:            http://support.brother.com
+         Description:         Printer driver for Brother MFC-8950DW (brgenml1)
+
+    * net-print/brother-mfc8950dwt-bin [1]
+         Available versions:  1.0
+         Homepage:            http://support.brother.com
+         Description:         Printer driver for Brother MFC-8950DWT (brgenml1)
+
+    [1] "brother-overlay" /usr/local/portage/brother-overlay
+
+    Found 3 matches
+
+The ``net-print`` prefix contains the printer drivers, and the ``media-gfx`` contains the scanner drivers. Then, install the driver.
+
+************************************
+Sensors
+************************************
+
+The ``sys-apps/lm_sensors`` allows the computer to detect the processor temperature, fan speed, and other things. I used the ``sensord`` use flag to get a daemon which can log the sensor data, but I never used the deamon. Install it, and then run ``sensors-detect`` to determine which kernel modules are needed for the sensors. I think this only works properly if all the possible sensor drivers are built as modules already, and then the program determines which ones need to be used. I had to use the following kernel modules::
+
+    # For sensors
+    I2C support --->
+        -*- I2C support
+        <*>	  I2C device interface
+    -*- Hardware Monitoring support --->
+        <*> Intel Core/Core2/Atom temperature sensor
+        <*> Nuvoton NCT6775F and compatibles
+
+I figured them out using a test Ubuntu installation, which had all the modules built. I am not sure if there is an easier way to do it. Once that is done, run ``sensors`` to get the readings::
+
+    $ sensors
+    coretemp-isa-0000
+    Adapter: ISA adapter
+    Physical id 0:  +19.0°C  (high = +80.0°C, crit = +100.0°C)
+    Core 0:         +16.0°C  (high = +80.0°C, crit = +100.0°C)
+    Core 1:         +17.0°C  (high = +80.0°C, crit = +100.0°C)
+    Core 2:         +16.0°C  (high = +80.0°C, crit = +100.0°C)
+    Core 3:         +18.0°C  (high = +80.0°C, crit = +100.0°C)
+
+    nct6791-isa-0290
+    Adapter: ISA adapter
+    in0:                    +0.38 V  (min =  +0.00 V, max =  +1.74 V)
+    in1:                    +1.70 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+    in2:                    +3.41 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+    in3:                    +3.41 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+    in4:                    +1.02 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+    in5:                    +1.02 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+    in6:                    +1.02 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+    in7:                    +3.50 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+    in8:                    +3.22 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+    in9:                    +1.02 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+    in10:                   +0.00 V  (min =  +0.00 V, max =  +0.00 V)
+    in11:                   +0.97 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+    in12:                   +1.38 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+    in13:                   +1.28 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+    in14:                   +1.07 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+    fan1:                   903 RPM  (min =    0 RPM)
+    fan2:                   738 RPM  (min =    0 RPM)
+    fan3:                   549 RPM  (min =    0 RPM)
+    fan4:                     0 RPM  (min =    0 RPM)
+    fan5:                     0 RPM  (min =    0 RPM)
+    fan6:                     0 RPM
+    SYSTIN:                 +29.0°C  (high =  +0.0°C, hyst =  +0.0°C)  ALARM  sensor = thermistor
+    CPUTIN:                 +24.0°C  (high = +80.0°C, hyst = +75.0°C)  sensor = thermistor
+    AUXTIN0:                +25.0°C    sensor = thermistor
+    AUXTIN1:               -128.0°C    sensor = thermistor
+    AUXTIN2:                +28.0°C    sensor = thermistor
+    AUXTIN3:                +22.0°C    sensor = thermistor
+    PECI Agent 0:           +18.5°C  (high = +80.0°C, hyst = +75.0°C)
+                                     (crit = +100.0°C)
+    PCH_CHIP_CPU_MAX_TEMP:   +0.0°C
+    PCH_CHIP_TEMP:           +0.0°C
+    PCH_CPU_TEMP:            +0.0°C
+    intrusion0:            ALARM
+    intrusion1:            ALARM
+    beep_enable:           disabled
+
+************************************
+Locate
+************************************
+
+The ``sys-apps/mlocate`` makes it easy to locate files. See more information here: https://wiki.gentoo.org/wiki/Mlocate.
+
 ************************************
 Desktop environment
 ************************************
@@ -386,3 +670,9 @@ Coming soon!
 .. rubric:: Footnotes
 
 .. [#portagehashes] See https://forums-web2.gentoo.org/viewtopic-t-831293-start-0.html.
+.. [#portagegpgconf] This is simliar to the Gentoo website (https://wiki.gentoo.org/wiki/Handbook:AMD64/Working/Features#Validated_Portage_tree_snapshots), but I had to modify it to make it work.
+.. [#wicd] See https://wiki.gentoo.org/wiki/Wicd.
+.. [#alsawiki] See https://wiki.gentoo.org/wiki/ALSA.
+.. [#bitwarning] See https://github.com/floere/playa/issues/6.
+.. [#layman] See https://wiki.gentoo.org/wiki/Layman.
+.. [#cupsprotocol] See http://askubuntu.com/questions/401119/should-i-set-up-my-cups-printing-to-use-ipp-lpd-or-url.

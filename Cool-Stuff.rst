@@ -15,9 +15,9 @@ Cool packages
 
 The ``games-misc/cowsay`` package is a very important package::
 
-     _____________________ 
+     _____________________
     < Need I say anymore? >
-     --------------------- 
+     ---------------------
             \   ^__^
              \  (oo)\_______
                 (__)\       )\/\
@@ -41,7 +41,7 @@ Be sure to check out all the cowfiles::
 Just for fun: ``games-misc/fortune-mod``. Can be combined with cowsay::
 
     # fortune | cowsay -f tux
-     ________________________________________ 
+     ________________________________________
     / On two occasions I have been asked [by \
     | members of Parliament!], "Pray, Mr.    |
     | Babbage, if you put into the machine   |
@@ -52,7 +52,7 @@ Just for fun: ``games-misc/fortune-mod``. Can be combined with cowsay::
     | question.                              |
     |                                        |
     \ -- Charles Babbage                     /
-     ---------------------------------------- 
+     ----------------------------------------
        \
         \
             .--.
@@ -72,8 +72,8 @@ Just for fun: ``games-misc/fortune-mod``. Can be combined with cowsay::
 Pretty self-explanatory (``app-misc/linux-logo``)::
 
     $ linux_logo -a -L gentoo-alt
-    
-    
+
+
                                                 .
           .vir.                                d$b
        .d$$$$$$b.    .cd$$b.     .d$$b.   d$$$$$$$$$$$b  .d$$b.      .d$$b.
@@ -83,8 +83,8 @@ Pretty self-explanatory (``app-misc/linux-logo``)::
         d$$$$$$P"   "$$$$$$$$ Q$$$     Q$$$$  $$$$$   `Q$$$$$$$P  `Q$$$$$$$P
     |  $$$$$$$P       `"""""   ""        ""   Q$$$P     "Q$$$P"     "Q$$$P"
     |  `Q$$P"                                  """
-    +--------------------------------------------------------- l  i  n  u  x  
-    
+    +--------------------------------------------------------- l  i  n  u  x
+
      Linux Version 4.4.8-hardened-r1, Compiled #14 SMP Mon Jun 20 14:01:32 EDT 2016
             Eight 4GHz Intel i7 Processors, 31.7GB RAM, 64127 Bogomips Total
                                     greenhippogriff
@@ -94,7 +94,7 @@ Pretty self-explanatory (``app-misc/linux-logo``)::
 Be sure to try all the logos::
 
     $ linux_logo -L list
-    
+
     Available Built-in Logos:
             Num    Type    Ascii  Name            Description
             1      Banner  Yes    gentoo          Gentoo Logo
@@ -104,7 +104,7 @@ Be sure to try all the logos::
             5      Classic Yes    classic-nodots  The Classic Logo, No Periods
             6      Classic Yes    classic-simp    Classic No Dots Or Letters
             7      Classic Yes    classic         The Default Classic Logo
-    
+
     Do "linux_logo -L num" where num is from above to get the appropriate logo.
     Remember to also use -a to get ascii version.
 
@@ -156,7 +156,7 @@ The program ``agetty`` parses ``/etc/issue``, supports the following escape sequ
 An easy way to generate a nice ``/etc/issue`` file is with a script. I put mine in ``/root/scripts`` and called it ``issue.sh``. It looks like this::
 
     #! /bin/bash
-    
+
     clear > /etc/issue
     linux_logo -L 2 >> /etc/issue
     echo -e "\n" >> /etc/issue
@@ -167,7 +167,7 @@ The script first deletes the file and replaces it with a new file which has the 
 The ``/etc/motd`` file is displayed whenever a user logs in. I wrote a script to generate that too::
 
     #! /bin/bash
-    
+
     echo -e "\033[1;32m" > /etc/motd
     toilet -f slant "GreenHippogriff" -w 100 >> /etc/motd
 
@@ -177,10 +177,10 @@ This script first writes the color code for green to the file, and then appends 
 
        ______                     __  ___                              _ ________
       / ____/_______  ___  ____  / / / (_)___  ____  ____  ____ ______(_) __/ __/
-     / / __/ ___/ _ \/ _ \/ __ \/ /_/ / / __ \/ __ \/ __ \/ __ `/ ___/ / /_/ /_  
-    / /_/ / /  /  __/  __/ / / / __  / / /_/ / /_/ / /_/ / /_/ / /  / / __/ __/  
-    \____/_/   \___/\___/_/ /_/_/ /_/_/ .___/ .___/\____/\__, /_/  /_/_/ /_/     
-                                     /_/   /_/          /____/                   
+     / / __/ ___/ _ \/ _ \/ __ \/ /_/ / / __ \/ __ \/ __ \/ __ `/ ___/ / /_/ /_
+    / /_/ / /  /  __/  __/ / / / __  / / /_/ / /_/ / /_/ / /_/ / /  / / __/ __/
+    \____/_/   \___/\___/_/ /_/_/ /_/_/ .___/ .___/\____/\__, /_/  /_/_/ /_/
+                                     /_/   /_/          /____/
 
 Some common ANSI color escape codes are:
 
@@ -209,9 +209,11 @@ No Color       ``0``
 Nice console font with ``consolefont``
 ===================================================================
 
-This makes the console font more readable. Install ``media-fonts/terminus-font``. The available console fonts are in ``/usr/share/consolefonts/``. Test the fonts with ``setfont fontname``, leaving off the extension in the name. To reset the font to the default, use ``setfont``. Set the font in ``/etc/conf.d/consolefont`` with ``consolefont="ter-v18b"`` (I chose ``ter-v18b``). Finally, add ``consolefont`` to the boot runlevel::
+This makes the console font more readable. Install ``media-fonts/terminus-font`` [#terminus]_. The available console fonts are in ``/usr/share/consolefonts/``. Test the fonts with ``setfont fontname``, leaving off the extension in the name. To reset the font to the default, use ``setfont``. Set the font in ``/etc/conf.d/consolefont`` with ``consolefont="ter-v18b"`` (I chose ``ter-v18b``). Finally, add ``consolefont`` to the boot runlevel::
 
-    # rc-update add consolefont boot 
+    # rc-update add consolefont boot
+
+Before changing the console font, I sometimes had squares for quotes and other strange things, but changing the font fixed that [#squares]_.
 
 ASCII art Linux penguin at boot with ``linux-logo``
 ===================================================================
@@ -239,7 +241,7 @@ Edit the ``/etc/conf.d/linux-logo``::
     # #V    Version of OS           2.2.0-pre5
     # #X    CPU Vendor              AMD
     # \\n   carriage return
-    
+
     # Changed from gentoo to 3 ------------------------------------------------
     LOGO="-L 3"
     FORMAT="Gentoo #O `cat /etc/gentoo-release | awk '{ print $5,$6 }'`\n#O #V, Compiled #C\n#N #X #T #M CPU#S, #R RAM, #B Bogomips\n#U\n#H / \l  \n"
@@ -270,9 +272,13 @@ Useful commands
 Image a failing drive with ``dd``
 ===================================================================
 
-Just make `dd` ignore the errors::
+.. highlight:: none
+
+Just make ``dd`` ignore the errors::
 
     # dd if=/dev/sdd of=/path/to/output/file.bin conv=noerror,sync
+
+.. highlight:: console
 
 Mount images made with ``dd`` using ``losetup``
 ===================================================================
@@ -297,8 +303,13 @@ Perfect for an image made using ``dd``::
     I/O size (minimum/optimal): 512 bytes / 512 bytes
     Disklabel type: dos
     Disk identifier: 0xe9b7948b
-    
+
     Device           Start       End   Sectors   Size Id Type
     imagefile.img1    2048    999423    997376   487M 83 Linux
     imagefile.img2 1001470 490233855 489232386 233.3G  5 Extended
     imagefile.img5 1001472 490233855 489232384 233.3G 83 Linux
+
+.. rubric:: Footnotes
+
+.. [#terminus] See https://www.artembutusov.com/modify-linux-kernel-font/.
+.. [#squares] See https://forums.gentoo.org/viewtopic-t-980980-start-0.html.

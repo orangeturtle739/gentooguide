@@ -34,9 +34,13 @@ Finally, get the expected hash, which will be::
 
 The ``-m 1`` makes ``grep`` only print the first match, and the ``-i`` makes it case insensitive. If the expected hash matches the actual hash, continue. Otherwise, try downloading the file again, perhaps from a different mirror.
 
+.. highlight:: none
+
 Next, burn the ISO file to a CD, or copy it to a flash drive. The standard way to copy the image to a flash drive is with ``dd``::
 
     $ dd if=install-amd64-minimal-20141204.iso of=/dev/sda bs=1M
+
+.. highlight:: console
 
 The input file (``if``) is the downloaded ISO, and the output file (``of``) is the flash drive. To determine the name of the flash drive, use ``fdisk -l`` on linux or, on OS X, use ``diskutil list``. Finally, ``bs`` is the block size. 1 mebibyte generally works well. On OS X, use ``bs=1m``. While this works, ``dd`` does not have a progress indicator, which can be annoying. To solve this, use a combination of ``pv`` and ``dd``::
 
@@ -77,14 +81,14 @@ As the computer will use the Unified Extensible Firmware Interface (UEFI) [#uefi
 
     # gdisk
     GPT fdisk (gdisk) version 1.0.1
-    
+
     Type device filename, or press <Enter> to exit: /dev/sda
     Partition table scan:
       MBR: not present
       BSD: not present
       APM: not present
       GPT: not present
-    
+
     Creating new GPT entries.
 
     Command (? for help):
@@ -154,7 +158,7 @@ Type ``p`` to see the result::
     First usable sector is 34, last usable sector is 16383966
     Partitions will be aligned on 2048-sector boundaries
     Total free space is 2014 sectors (1007.0 KiB)
-    
+
     Number  Start (sector)    End (sector)  Size       Code  Name
        1            2048            6143   2.0 MiB     EF02  grub
        2            6144          268287   128.0 MiB   8300  boot
@@ -163,7 +167,7 @@ Type ``p`` to see the result::
 Use the ``w`` command to write the new partition to the disk::
 
     Command (? for help): w
-    
+
     Final checks complete. About to write GPT data. THIS WILL OVERWRITE EXISTING
     PARTITIONS!!
 
@@ -201,7 +205,7 @@ One optional step is writing random data to the drive::
 
     # pv /dev/urandom -s 1000G | dd of=/dev/sda3 bs=1M
 
-After this, the whole drive will look random so it will be impossible to figure out how much stuff is on it. However, this took me about 24 hours for the 1 TB drive that I used. Also, the ``-s`` argument to ``pv`` does not have to be exactly right; anything pretty close will produce a good progress bar.
+After this, the whole drive will look random so it will be impossible to figure out how much stuff is on it. However, this took me about 24 hours for the 1 TB drive that I used. For a 3 TB WD Red drive, it took 78 hours. Also, the ``-s`` argument to ``pv`` does not have to be exactly right; anything pretty close will produce a good progress bar.
 
 Next, encrypt the drive. If using a key file, type::
 
@@ -211,7 +215,7 @@ The cipher ``aes-xts-plain`` with the ``sha-512`` hash is a pretty standard comb
 
     # cryptsetup luksDump /dev/sda3
     LUKS header information for /dev/sda3
-    
+
     Version:        1
     Cipher name:    aes
     Cipher mode:    xts-plain
@@ -223,7 +227,7 @@ The cipher ``aes-xts-plain`` with the ``sha-512`` hash is a pretty standard comb
                     17 e5 65 99 7c 63 88 bb 65 11 b7 90 8d 11 c1 c6
     MK iterations:  192750
     UUID:           74117333-2efa-462b-9dde-22ca6deace42
-    
+
     Key Slot 0: ENABLED
             Iterations:             773413
             Salt:                   ed 1b 8f 47 90 84 23 3d 5c de 7d 7d 51 55 6e 99
@@ -271,7 +275,7 @@ Create the filesystems
 =======================
 
 The newly created partitions need to be formatted in order to hold data. First, the ``grub`` partition must be ``FAT`` according to the UEFI standard::
- 
+
     # mkdosfs /dev/sda1
 
 Remember that the ``grub`` partition is as ``/dev/sda1``.
@@ -697,6 +701,20 @@ There are many loggers (https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation
     # emerge app-admin/sysklogd
     rc-update add sysklogd default
 
+With ``sysklogd``, I got an error like ``sysklogd: /dev/xconsole: No such file or directory`` printed out about once a day. To fix it, I commented out the following section in ``/etc/syslog.conf`` [#xconsole_]::
+
+    daemon.*;mail.*;\
+           news.err;\
+           *.=debug;*.=info;\
+           *.=notice;*.=warn       |/dev/xconsole
+
+Also about once a day, I got errors like::
+
+    syslogd: /var/log/news/news.crit: No such file or directory
+    syslogd: /var/log/news/news.err: No such file or directory
+    syslogd: /var/log/news/news.notice: No such file or directory
+
+I fixed those by creating the three directories [#newsdir_].
 Set up a cron daemon
 ============================
 
@@ -718,6 +736,10 @@ LVM
 Because the system uses LVM, it must start at boot::
 
     # rc-update add lvm boot
+
+When I did not have LVM running, I got the following error message every time I did something involving disks::
+
+    WARNING: failed to connect lvmetad. Falling back to internal scanning
 
 ******************
 Bootloader
@@ -853,3 +875,5 @@ Then, try to find and fix any problems.
 .. [#naming] See the GRUB page for more information on naming: https://wiki.gentoo.org/wiki/GRUB2_Quick_Start#Kernel_naming_scheme.
 .. [#fstab] For more information, see: https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System#Filesystem_information.
 .. [#complexnet] For more complex network configurations, see: https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System#Configuring_the_network.
+.. [#xconsole] See https://forums.gentoo.org/viewtopic-t-1042218-start-0.html.
+.. [#newsdir] See https://forums.gentoo.org/viewtopic-t-881147-start-0.html.

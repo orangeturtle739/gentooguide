@@ -77,6 +77,8 @@ File systems --->
     -*-   Ext4 Security Labels
     < >   Ext4 Encryption
     [ ]   EXT4 debugging support
+    <*> FUSE (Filesystem in Userspace) support
+    <*>   Character device in Userspace support
     [*] Miscellaneous filesystems --->
         <*> Apple Macintosh file system support
         <*> Apple Extended HFS file system support --->
