@@ -1,4 +1,4 @@
-# Gentoo Setup Guide
+# Gentoo Guide
 
 This guide explains how I set up Gentoo Linux on my system.
 

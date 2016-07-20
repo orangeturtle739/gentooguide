@@ -1,16 +1,16 @@
-.. Gentoo Setup Guide documentation master file, created by
+.. Gentoo Guide documentation master file, created by
    sphinx-quickstart on Wed Jun 22 12:01:59 2016.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Gentoo Setup Guide
+Gentoo Guide
 ==============================================
 
 .. toctree::
    :maxdepth: 3
    :caption: Contents
 
-   Introduction 
+   Introduction
    Installation
    Setup
    Cool-Stuff
@@ -21,4 +21,3 @@ Gentoo Setup Guide
    * :ref:`genindex`
    * :ref:`modindex`
    * :ref:`search`
-

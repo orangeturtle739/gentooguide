@@ -63,12 +63,12 @@ all: html singlehtml epub3 latexpdf rst2pdf text
 .PHONY: package
 package: all
 	mkdir -p $(PACKAGEDIR)
-	tar -zcvf $(PACKAGEDIR)/GentooSetupGuide-html.tar.gz $(BUILDDIR)/html
-	tar -zcvf $(PACKAGEDIR)/GentooSetupGuide-singlehtml.tar.gz $(BUILDDIR)/singlehtml
-	cp $(BUILDDIR)/pdf/GentooSetupGuide.pdf $(PACKAGEDIR)/GentooSetupGuide-rst.pdf
-	cp $(BUILDDIR)/epub3/GentooSetupGuide.epub $(PACKAGEDIR)/GentooSetupGuide-epub.epub
-	cp $(BUILDDIR)/latex/GentooSetupGuide.pdf $(PACKAGEDIR)/GentooSetupGuide-latex.pdf
-	tar -zcvf $(PACKAGEDIR)/GentooSetupGuide-text.tar.gz $(BUILDDIR)/text
+	tar -zcvf $(PACKAGEDIR)/GentooGuide-html.tar.gz $(BUILDDIR)/html
+	tar -zcvf $(PACKAGEDIR)/GentooGuide-singlehtml.tar.gz $(BUILDDIR)/singlehtml
+	cp $(BUILDDIR)/pdf/GentooGuide.pdf $(PACKAGEDIR)/GentooGuide-rst.pdf
+	cp $(BUILDDIR)/epub3/GentooGuide.epub $(PACKAGEDIR)/GentooGuide-epub.epub
+	cp $(BUILDDIR)/latex/GentooGuide.pdf $(PACKAGEDIR)/GentooGuide-latex.pdf
+	tar -zcvf $(PACKAGEDIR)/GentooGuide-text.tar.gz $(BUILDDIR)/text
 
 .PHONY: html
 html:

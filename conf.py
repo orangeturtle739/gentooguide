@@ -2,7 +2,7 @@ import sphinx_bootstrap_theme
 
 # -*- coding: utf-8 -*-
 #
-# Gentoo Setup Guide documentation build configuration file, created by
+# Gentoo Guide documentation build configuration file, created by
 # sphinx-quickstart on Wed Jun 22 12:01:59 2016.
 #
 # This file is execfile()d with the current directory set to its
@@ -54,7 +54,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Gentoo Setup Guide'
+project = u'Gentoo Guide'
 copyright = u'2016, Jacob Glueck'
 author = u'Jacob Glueck'
 
@@ -152,7 +152,7 @@ html_theme_options = {
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-# html_title = u'Gentoo Setup Guide v1.0.0'
+# html_title = u'Gentoo Guide v1.0.0'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
@@ -252,7 +252,7 @@ html_static_path = ['_static']
 # html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'GentooSetupGuidedoc'
+htmlhelp_basename = 'GentooGuidedoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -278,7 +278,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'GentooSetupGuide.tex', u'Gentoo Setup Guide',
+    (master_doc, 'GentooGuide.tex', u'Gentoo Guide',
      u'Jacob Glueck', 'manual'),
 ]
 
@@ -324,7 +324,7 @@ latex_show_pagerefs = True
 # regardless of the global pdf_compressed setting.
 
 
-pdf_documents = [('index', u'GentooSetupGuide', u'Gentoo Setup Guide', u'Jacob Glueck'),]
+pdf_documents = [('index', u'GentooGuide', u'Gentoo Guide', u'Jacob Glueck'),]
 
 # A comma-separated list of custom stylesheets. Example:
 pdf_stylesheets = ['letter','freetype-serif']
@@ -431,7 +431,7 @@ pdf_fit_background_mode = 'scale'
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'gentoosetupguide', u'Gentoo Setup Guide Documentation',
+    (master_doc, 'gentooguide', u'Gentoo Guide Documentation',
      [author], 1)
 ]
 
@@ -446,8 +446,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'GentooSetupGuide', u'Gentoo Setup Guide Documentation',
-     author, 'GentooSetupGuide', 'One line description of project.',
+    (master_doc, 'GentooGuide', u'Gentoo Guide Documentation',
+     author, 'GentooGuide', 'One line description of project.',
      'Miscellaneous'),
 ]
 
