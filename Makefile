@@ -54,7 +54,7 @@ clean:
 clean-package:
 	rm -rf $(PACKAGEDIR)
 
-.PHONY: clean-all
+.PHONY: clean
 clean-all: clean-build clean-package
 
 .PHONY: all
@@ -63,12 +63,15 @@ all: html singlehtml epub3 latexpdf rst2pdf text
 .PHONY: package
 package: all
 	mkdir -p $(PACKAGEDIR)
-	tar -zcvf $(PACKAGEDIR)/GentooGuide-html.tar.gz $(BUILDDIR)/html
-	tar -zcvf $(PACKAGEDIR)/GentooGuide-singlehtml.tar.gz $(BUILDDIR)/singlehtml
+	tar -zcvf $(PACKAGEDIR)/GentooGuide-html.tar.gz -C $(BUILDDIR) html
+	tar -zcvf $(PACKAGEDIR)/GentooGuide-singlehtml.tar.gz -C $(BUILDDIR) singlehtml
 	cp $(BUILDDIR)/pdf/GentooGuide.pdf $(PACKAGEDIR)/GentooGuide-rst.pdf
 	cp $(BUILDDIR)/epub3/GentooGuide.epub $(PACKAGEDIR)/GentooGuide-epub.epub
 	cp $(BUILDDIR)/latex/GentooGuide.pdf $(PACKAGEDIR)/GentooGuide-latex.pdf
-	tar -zcvf $(PACKAGEDIR)/GentooGuide-text.tar.gz $(BUILDDIR)/text
+	tar -zcvf $(PACKAGEDIR)/GentooGuide-text.tar.gz -C $(BUILDDIR) text
+
+.PHONE: release
+release: clean package
 
 .PHONY: html
 html:
