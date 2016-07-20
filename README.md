@@ -4,13 +4,15 @@ This guide explains how I set up Gentoo Linux on my system.
 
 # Building
 
-Install the dependencies with pip:
+Install the sphinx and related dependencies with pip:
 ```
 pip install sphinx
 pip install sphinx_bootstrap_theme
 pip install rst2pdf
 ```
 The rst2pdf plugin did not work properly with Python 3, so use Python 2.
+
+For latex building, make sure latex is installed, including `pdflatex`.
 
 Then, run:
 ```
