@@ -6,6 +6,7 @@ SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 PAPER         =
 BUILDDIR      = _build
+PACKAGEDIR    = _package
 
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4
@@ -31,6 +32,7 @@ help:
 	@echo "  latex      to make LaTeX files, you can set PAPER=a4 or PAPER=letter"
 	@echo "  latexpdf   to make LaTeX files and run them through pdflatex"
 	@echo "  latexpdfja to make LaTeX files and run them through platex/dvipdfmx"
+	@echo "  rst2pdf    to make a pdf using rst2pdf"
 	@echo "  text       to make text files"
 	@echo "  man        to make manual pages"
 	@echo "  texinfo    to make Texinfo files"
@@ -44,9 +46,29 @@ help:
 	@echo "  coverage   to run coverage check of the documentation (if enabled)"
 	@echo "  dummy      to check syntax errors of document sources"
 
-.PHONY: clean
+.PHONY: clean-build
 clean:
 	rm -rf $(BUILDDIR)/*
+
+.PHONY: clean-package
+clean-package:
+	rm -rf $(PACKAGEDIR)
+
+.PHONY: clean-all
+clean-all: clean-build clean-package
+
+.PHONY: all
+all: html singlehtml epub3 latexpdf rst2pdf text
+
+.PHONY: package
+package: all
+	mkdir -p $(PACKAGEDIR)
+	tar -zcvf $(PACKAGEDIR)/GentooSetupGuide-html.tar.gz $(BUILDDIR)/html
+	tar -zcvf $(PACKAGEDIR)/GentooSetupGuide-singlehtml.tar.gz $(BUILDDIR)/singlehtml
+	cp $(BUILDDIR)/pdf/GentooSetupGuide.pdf $(PACKAGEDIR)/GentooSetupGuide-rst.pdf
+	cp $(BUILDDIR)/epub3/GentooSetupGuide.epub $(PACKAGEDIR)/GentooSetupGuide-epub.epub
+	cp $(BUILDDIR)/latex/GentooSetupGuide.pdf $(PACKAGEDIR)/GentooSetupGuide-latex.pdf
+	tar -zcvf $(PACKAGEDIR)/GentooSetupGuide-text.tar.gz $(BUILDDIR)/text
 
 .PHONY: html
 html:
@@ -147,6 +169,11 @@ latexpdfja:
 	@echo "Running LaTeX files through platex and dvipdfmx..."
 	$(MAKE) -C $(BUILDDIR)/latex all-pdf-ja
 	@echo "pdflatex finished; the PDF files are in $(BUILDDIR)/latex."
+
+.PHONY: rst2pdf
+rst2pdf:
+		$(SPHINXBUILD) -b pdf $(ALLSPHINXOPTS) $(BUILDDIR)/pdf
+		@echo "Build finished. The pdf file is in $(BUILDDIR)/pdf."
 
 .PHONY: text
 text:
