@@ -28,3 +28,9 @@ The built files will be:
 * Plain text: `_build/text`
 
 The HTML version looks the best.
+
+## Releasing
+To build the `_package` folder with all the file formats ready to be distributed, run:
+```
+make release
+```
