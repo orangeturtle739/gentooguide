@@ -250,7 +250,7 @@ Edit the ``/etc/conf.d/linux-logo``::
 
 Add ``linux-logo`` to the default runlevel::
 
-    rc-update add linux-logo default
+    # rc-update add linux-logo default
 
 Note that the ``linux-logo`` init script overwrites ``/etc/issue``.
 
