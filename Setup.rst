@@ -73,6 +73,69 @@ Verify the fingerprints printed with those on Gentoo's website: https://wiki.gen
 While it verified the signature, it prints warnings because the key is not signed by a trusted key. Since there is no easy way to verify the fingerprints without relaying on HTTPS, you should not sign the key, but can now be pretty confident that the portage tree is valid.
 
 ********************************
+PaXtest
+********************************
+
+.. highlight:: shell
+
+In order to verify that the PaX security extensions are working, use the ``PaXtest`` program. It is masked, so unmask it by editing ``/etc/portage/package.accept_keywords/paxtest``::
+
+    # required by paxtest (argument)
+    =app-admin/paxtest-0.9.14 ~amd64
+
+.. highlight:: console
+
+Install it, and then run it::
+
+    $ paxtest blackhat
+    PaXtest - Copyright(c) 2003-2014 by Peter Busser <peter@adamantix.org> and Brad Spengler <spender@grsecurity.net>
+    Released under the GNU Public Licence version 2 or later
+
+    Writing output to paxtest.log
+    It may take a while for the tests to complete
+    Test results:
+    PaXtest - Copyright(c) 2003-2014 by Peter Busser <peter@adamantix.org> and Brad Spengler <spender@grsecurity.net>
+    Released under the GNU Public Licence version 2 or later
+
+    Mode: blackhat
+    Linux greenhippogriff 4.4.8-hardened-r1 #15 SMP Thu Jul 7 21:37:20 EDT 2016 x86_64 Intel(R) Core(TM) i7-6700K CPU @ 4.00GHz GenuineIntel GNU/Linux
+
+    Executable anonymous mapping             : Killed
+    Executable bss                           : Killed
+    Executable data                          : Killed
+    Executable heap                          : Killed
+    Executable stack                         : Killed
+    Executable shared library bss            : Killed
+    Executable shared library data           : Killed
+    Executable anonymous mapping (mprotect)  : Killed
+    Executable bss (mprotect)                : Killed
+    Executable data (mprotect)               : Killed
+    Executable heap (mprotect)               : Killed
+    Executable stack (mprotect)              : Killed
+    Executable shared library bss (mprotect) : Killed
+    Executable shared library data (mprotect): Killed
+    Writable text segments                   : Killed
+    Anonymous mapping randomization test     : 33 quality bits (guessed)
+    Heap randomization test (ET_EXEC)        : 22 quality bits (guessed)
+    Heap randomization test (PIE)            : 40 quality bits (guessed)
+    Main executable randomization (ET_EXEC)  : 33 quality bits (guessed)
+    Main executable randomization (PIE)      : 33 quality bits (guessed)
+    Shared library randomization test        : 33 quality bits (guessed)
+    VDSO randomization test                  : 33 quality bits (guessed)
+    Stack randomization test (SEGMEXEC)      : 40 quality bits (guessed)
+    Stack randomization test (PAGEEXEC)      : 40 quality bits (guessed)
+    Arg/env randomization test (SEGMEXEC)    : 44 quality bits (guessed)
+    Arg/env randomization test (PAGEEXEC)    : 44 quality bits (guessed)
+    Randomization under memory exhaustion @~0: 33 bits (guessed)
+    Randomization under memory exhaustion @0 : 33 bits (guessed)
+    Return to function (strcpy)              : paxtest: return address contains a NULL byte.
+    Return to function (memcpy)              : Vulnerable
+    Return to function (strcpy, PIE)         : paxtest: return address contains a NULL byte.
+    Return to function (memcpy, PIE)         : Vulnerable
+
+Note that the vulnerable functions are normal. See: https://wiki.gentoo.org/wiki/Hardened/Grsecurity2_Quickstart#Verifying_the_PaX_settings.
+
+********************************
 Setting up ccache
 ********************************
 The compiler cache (ccache) speeds up compilation by saving output from previous compilations and reusing it if the source files have not changed. This is useful when updating software because not all the files will change. To use it, first install it::
@@ -125,13 +188,13 @@ Then emerge it::
 
     # emerge net-misc/wicd
 
-Make it start on boot:
+Make it start on boot::
 
     # rc-update add wicd default
 
 Also, make sure no other network scripts run at boot. For example, to remove the standard netifrc ethernet script, run::
 
-    rc-update del net.enp0s31f6
+    # rc-update del net.enp0s31f6
 
 Then, run the `wicd` configuration program::
 
@@ -238,7 +301,7 @@ However, with my manually-configured kernel, sound works find without the ``.aso
 Playing Music
 ==============
 
-The simplest way to play music from the command line is with `media-sound/sox`: https://packages.gentoo.org/packages/media-sound/sox. Install it with the following ``USE`` flags:
+The simplest way to play music from the command line is with ``media-sound/sox``. Install it with the following ``USE`` flags:
 
 * ``amr``: adds support for Adaptive Multi-Rate Audio support
 * ``flac``: adds support for the Free Lossless Audio Codec
@@ -285,9 +348,9 @@ In order for this to work, I had to disable the GRUB submenus::
 Layman
 ************************************
 
-.. highlight:: shell
+.. highlight:: console
 
-Layman (`app-portage/layman`) is a program which makes it easy to manage overlays. When I installed the most recent unmaksed version (2.0.0-r3), I got the following warning::
+Layman (``app-portage/layman``) is a program which makes it easy to manage overlays. When I installed the most recent unmaksed version (2.0.0-r3), I got the following warning::
 
     !!! Repository 'x-portage' is missing masters attribute in '/usr/local/portage/metadata/layout.conf'
     !!! Set 'masters = gentoo' in this file for future compatibility
@@ -332,12 +395,24 @@ Run ``layman-updater`` to set it up::
 Avahi Daemon
 ************************************
 
-The Avahi mDNS/DNS-SD daemon allows you to find computers and other things by name on the local network. It has two components: the deamon, ``net-dns/avahi``, and the client, ``sys-auth/nss-mdns``. In order to get the ```avahi-browse`` command and lots of other useful commands, ```avahi`` needs the ``dbus`` ``USE`` flag. After installing, start the daemon::
+The Avahi mDNS/DNS-SD daemon allows you to find computers and other things by name on the local network. It has two components: the deamon, ``net-dns/avahi``, and the client, ``sys-auth/nss-mdns``. In order to get the ``avahi-browse`` command and lots of other useful commands, ``avahi`` needs the ``dbus`` ``USE`` flag. After installing, start the daemon::
 
     # rc-update add avahi-daemon default
     # rc-service avahi-daemon start
 
-To configure the client, edit the ``/etc/nsswitch.conf`` file. Change the line ``hosts:       files dns`` to ``hosts:       files mdns_minimal [NOTFOUND=return] dns mdns``. While this option enables IPv6 support, to use only IPv4, use the line ``hosts:       files mdns4_minimal [NOTFOUND=return] dns mdns4`` instead. If this line is wrong, the DNS system will not work properly (you will be able to ping 8.8.8.8, but not google.com). You should now be able to ping your computer::
+To configure the client, edit the ``/etc/nsswitch.conf`` file. Find the line::
+
+    hosts:       files dns
+
+Change it to::
+
+    hosts:       files mdns_minimal [NOTFOUND=return] dns mdns
+
+While this option enables IPv6 support, to use only IPv4, use the line::
+
+    hosts:       files mdns4_minimal [NOTFOUND=return] dns mdns4
+
+If this line is wrong, the DNS system will not work properly (you will be able to ping 8.8.8.8, but not google.com). You should now be able to ping your computer::
 
     # ping hostname.local
 
@@ -345,7 +420,7 @@ To configure the client, edit the ``/etc/nsswitch.conf`` file. Change the line `
 Common Unix Printing System (CUPS)
 ************************************
 
-First, emerge ``net-print/cups``. For a USB printer, set the ``usb`` ``USE`` flag. However, if USB printer support is enabled in the kernel, do not set the USB use flag. In order for CUPS to work properly, it needs to interface with Avahi, and so must have the `zeroconf` and `dbus` flags.
+First, emerge ``net-print/cups``. For a USB printer, set the ``usb`` ``USE`` flag. However, if USB printer support is enabled in the kernel, do not set the USB use flag. In order for CUPS to work properly, it needs to interface with Avahi, and so must have the ``zeroconf`` and ``dbus`` flags.
 
 Add users who will need to print to the ``lp`` group::
 
@@ -404,12 +479,6 @@ Scan for printers with ``lpinfo``::
             make-and-model = Brother MFC-8950DW
             device-id = MFG:Brother;CMD:PJL,PCL,PCLXL,URF;MDL:MFC-8950DW;CLS:PRINTER;CID:Brother Laser Type2;URF:W8,CP1,IS11-19-4,MT1-3-4-5-8-11,OB10,PQ4,RS300-600-1200,DM1;
             location = spaceport
-    Device: uri = dnssd://AirPrint%20brother-mfc-4650%20%40%208fhq801._ipp._tcp.local/cups
-            class = network
-            info = AirPrint brother-mfc-4650 @ 8fhq801
-            make-and-model = Unknown
-            device-id =
-            location =
     Device: uri = dnssd://Brother%20MFC-8950DW._ipp._tcp.local/?uuid=e3248000-80ce-11db-8000-001ba9c62678
             class = network
             info = Brother MFC-8950DW
@@ -427,9 +496,7 @@ To get a shorter output, just use the ``-v`` flag::
     network ipp
     network socket
     network dnssd://Brother%20MFC-8950DW._ipps._tcp.local/?uuid=e3248000-80ce-11db-8000-001ba9c62678
-    network dnssd://Brother%20MFC-L8850CDW._ipp._tcp.local/?uuid=e3248000-80ce-11db-8000-30055c50102e
     network lpd://BRW008092859C92/BINARY_P1
-    network lpd://BRN30055C50102E/BINARY_P1
 
 Above, the ``dnssd`` addresses use the Internet Printing Protocol (IPP), which is newer the LPD protocol the other addresses use [#cupsprotocol]_. IPP also provides bidirectional communication, while LPD does not. Thus, choose IPP when possible.
 
@@ -545,7 +612,7 @@ To print a test page from the command line, use::
 Brother Printers
 ===================================
 
-This section explains how I installed the driver for my Brother printer. For more information about Brother printers, see: https://wiki.gentoo.org/wiki/Brother_networked_printer.
+This section explains how I installed the driver for my Brother printer [#brotherprinters]_.
 
 To get the Brother printer drivers, the easiest way is to use the Brother overlay: https://github.com/stefan-langenmaier/brother-overlay/tree/master/. Install the overlay with Layman::
 
@@ -590,7 +657,7 @@ Search for the printer driver::
 
     Found 3 matches
 
-The ``net-print`` prefix contains the printer drivers, and the ``media-gfx`` contains the scanner drivers. Then, install the driver.
+The ``net-print`` prefix contains the printer drivers, and the ``media-gfx`` contains the scanner drivers.
 
 ************************************
 Sensors
@@ -655,6 +722,8 @@ I figured them out using a test Ubuntu installation, which had all the modules b
     intrusion1:            ALARM
     beep_enable:           disabled
 
+The core temperatures are way to low to be right; 17-19 °C is far below room temperature. I beleive they are off by about 20 °C because the UEFI setup tool shows that the processor idles at around 38 °C.
+
 ************************************
 Locate
 ************************************
@@ -676,3 +745,4 @@ Coming soon!
 .. [#bitwarning] See https://github.com/floere/playa/issues/6.
 .. [#layman] See https://wiki.gentoo.org/wiki/Layman.
 .. [#cupsprotocol] See http://askubuntu.com/questions/401119/should-i-set-up-my-cups-printing-to-use-ipp-lpd-or-url.
+.. [#brotherprinters] For more information about Brother printers, see: https://wiki.gentoo.org/wiki/Brother_networked_printer.

@@ -42,11 +42,28 @@ Next, burn the ISO file to a CD, or copy it to a flash drive. The standard way t
 
 .. highlight:: console
 
-The input file (``if``) is the downloaded ISO, and the output file (``of``) is the flash drive. To determine the name of the flash drive, use ``fdisk -l`` on linux or, on OS X, use ``diskutil list``. Finally, ``bs`` is the block size. 1 mebibyte generally works well. On OS X, use ``bs=1m``. While this works, ``dd`` does not have a progress indicator, which can be annoying. To solve this, use a combination of ``pv`` and ``dd``::
+The input file (``if``) is the downloaded ISO, and the output file (``of``) is the flash drive. To determine the name of the flash drive, use ``fdisk -l`` on Linux or, on OS X, use ``diskutil list``. Finally, ``bs`` is the block size. 1 mebibyte generally works well. On OS X, use ``bs=1m``. While this works, ``dd`` does not have a progress indicator, which can be annoying. To solve this, use a combination of ``pv`` and ``dd``::
 
     $ pv install-amd64-minimal-20141204.iso | dd of=/dev/sdb bs=1M
 
-``pv`` copies its input file to standard output, and displays a progress bar with the status of the copy.
+``pv`` copies its input file to standard output, and displays a progress bar with the status of the copy. It is also possible to use ``pv`` by itself::
+
+    $ pv install-amd64-minimal-20141204.iso > /dev/sdb
+
+However, then you cannot control the block size. According to a benchmark online [#catdd]_, ``cat`` (which is about the same as ``pv``) performs about the same as ``dd``:
+
+================ ========= ==========
+Command          Same (s)   Diff (s)
+================ ========= ==========
+``dd bs=64M``    71.1      51.3
+``dd bs=1M``     73.9      41.8
+``dd bs=4k``     79.6      48.5
+``dd bs=512``    85.3      48.9
+``cat``          76.2      41.7
+``cp``           77.8      45.3
+================ ========= ==========
+
+The same column is the copying time of a 2 GB file from the original filesystem to a different file on the same filesystem. The diff column is the copying of a 2 GB file to a different drive. For the same column, ``cat`` is about 7.2% slower than ``dd``. For the diff column, ``cat`` is about equal to the fastest ``dd`` run. Thus, just using ``pv`` by itself is probably fine.
 
 *********
 Booting
@@ -59,7 +76,7 @@ Configuring the Network
 
 If the computer is plugged in with an Ethernet cable and is assigned an IP address using DHCP, then the network probably just works. Test it by pinging Google::
 
-    ping google.com
+    # ping google.com
 
 If the network does not work, follow the Gentoo handbook: https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Networking.
 
@@ -205,7 +222,7 @@ One optional step is writing random data to the drive::
 
     # pv /dev/urandom -s 1000G | dd of=/dev/sda3 bs=1M
 
-After this, the whole drive will look random so it will be impossible to figure out how much stuff is on it. However, this took me about 24 hours for the 1 TB drive that I used. For a 3 TB WD Red drive, it took 78 hours. Also, the ``-s`` argument to ``pv`` does not have to be exactly right; anything pretty close will produce a good progress bar.
+After this, the whole drive will look random so it will be impossible to figure out how much stuff is on it. This improves the security of the drive [#driverandom]_.However, this took me about 24 hours for the 1 TB drive that I used. For a 3 TB WD Red drive, it took 78 hours. Also, the ``-s`` argument to ``pv`` does not have to be exactly right; anything pretty close will produce a good progress bar.
 
 Next, encrypt the drive. If using a key file, type::
 
@@ -701,7 +718,7 @@ There are many loggers (https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation
     # emerge app-admin/sysklogd
     rc-update add sysklogd default
 
-With ``sysklogd``, I got an error like ``sysklogd: /dev/xconsole: No such file or directory`` printed out about once a day. To fix it, I commented out the following section in ``/etc/syslog.conf`` [#xconsole_]::
+With ``sysklogd``, I got an error like ``sysklogd: /dev/xconsole: No such file or directory`` printed out about once a day. To fix it, I commented out the following section in ``/etc/syslog.conf`` [#xconsole]_::
 
     daemon.*;mail.*;\
            news.err;\
@@ -714,7 +731,8 @@ Also about once a day, I got errors like::
     syslogd: /var/log/news/news.err: No such file or directory
     syslogd: /var/log/news/news.notice: No such file or directory
 
-I fixed those by creating the three directories [#newsdir_].
+I fixed those by creating the three directories [#newsdir]_.
+
 Set up a cron daemon
 ============================
 
@@ -851,11 +869,13 @@ Then, try to find and fix any problems.
 .. rubric:: Footnotes
 
 .. [#uefi] For alternatives, see: https://forums.gentoo.org/viewtopic-p-7444862.html?sid=30a9928dedbe572722345bcf720d8879#7444862.
+.. [#catdd] Data from: http://unix.stackexchange.com/questions/9432/is-there-a-way-to-determine-the-optimal-value-for-the-bs-parameter-to-dd/9492#9492.
 .. [#boot] For more information about booting, see: https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Media.
 .. [#uefibios] UEFI is a replacement for the Basic Input/Output System (BIOS).
 .. [#typecodes] See http://www.ibm.com/developerworks/library/l-lpic1-104-1/ for more information about partitioning and type codes.
 .. [#offset] See https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Disks#Creating_the_BIOS_boot_partition.
 .. [#random] Some people suggest using ``/dev/random`` for cryptographic purposes, claiming that it is more random than ``/dev/urandom``. For a detailed discussion, see: http://www.2uo.de/myths-about-urandom/.
+.. [#driverandom] See http://security.stackexchange.com/questions/26594/filling-the-disk-with-random-data-prior-to-encryption.
 .. [#cipher] For a detailed discussion of the cipher and hash combination, see https://wiki.gentoo.org/wiki/DM-Crypt_LUKS#Which_cipher:hash_combination.3F. Also, for information about key lengths, see: https://www.keylength.com/en/4/.
 .. [#swap] For a discussion about how big to make it, see: https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Disks#Designing_a_partition_scheme. Also, some people suggest making it continuous (https://www.preney.ca/paul/archives/389), but that does not seem to be necessary: http://unix.stackexchange.com/questions/58265/does-swap-need-to-be-on-a-contiguous-lvm-logical-volume.
 .. [#filesystems] For information about choosing a filesystem, see: https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Disks#Creating_file_systems.
