@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Cool Stuff &mdash; Gentoo Guide 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.3.6/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="Gentoo Guide 1.0.0 documentation" href="index.html" />
+    <link rel="prev" title="Setup" href="Setup.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          Gentoo Guide</a>
+        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Introduction.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Introduction.html#setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Introduction.html#cool-stuff">Cool stuff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Introduction.html#conventions">Conventions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#booting">Booting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#configuring-the-network">Configuring the Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#partitioning">Partitioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#encrypting">Encrypting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configure-encryption">Configure encryption</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configure-lvm">Configure LVM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#create-the-filesystems">Create the filesystems</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#mount-the-filesystems">Mount the filesystems</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#installing-stage-3">Installing stage 3</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#set-the-date">Set the date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#downloading-the-stage-3-tarball">Downloading the stage 3 tarball</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#picking-an-editor">Picking an editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configuring-compile-options">Configuring compile options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configuring-the-main-gentoo-repository">Configuring the main Gentoo repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#copy-dns-configuration">Copy DNS configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#id19">Mount the filesystems</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#enter-the-new-environment">Enter the new environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configuring-portage">Configuring portage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configure-the-timezone">Configure the timezone</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configure-the-locale">Configure the locale</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#kernel">Kernel</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#install-the-sources">Install the sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configure-the-kernel">Configure the kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#make-the-initramfs">Make the initramfs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#naming-the-files">Naming the files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#system-configuration">System Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#filesystem-mounting">Filesystem Mounting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#name-the-computer">Name the computer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configuring-ethernet">Configuring ethernet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#set-a-root-password">Set a root password</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#set-up-a-system-logger">Set up a system logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#set-up-a-cron-daemon">Set up a cron daemon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#ssh">SSH</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#lvm">LVM</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#bootloader">Bootloader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#installing-the-bootloader">Installing the bootloader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#rebooting">Rebooting</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Installation.html#rescue">Rescue</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Setup.html">Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#gpg-signed-portage-snapshots">GPG signed portage snapshots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#paxtest">PaXtest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#setting-up-ccache">Setting up ccache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#configuring-wifi-using-wicd">Configuring WiFi using <code class="docutils literal"><span class="pre">wicd</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#sound">Sound</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Setup.html#alsa-setup">ALSA Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Setup.html#playing-music">Playing Music</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#grub-default-boot-choice">GRUB Default Boot Choice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#layman">Layman</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#avahi-daemon">Avahi Daemon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#common-unix-printing-system-cups">Common Unix Printing System (CUPS)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Setup.html#brother-printers">Brother Printers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#sensors">Sensors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#locate">Locate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#desktop-environment">Desktop environment</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Cool Stuff</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#cool-packages">Cool packages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cowsay"><code class="docutils literal"><span class="pre">cowsay</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fortune"><code class="docutils literal"><span class="pre">fortune</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#linux-logo"><code class="docutils literal"><span class="pre">linux-logo</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#libcaca"><code class="docutils literal"><span class="pre">libcaca</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#toilet"><code class="docutils literal"><span class="pre">toilet</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#figlet"><code class="docutils literal"><span class="pre">figlet</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#cool-tricks">Cool tricks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cool-login-prompts-with-etc-motd-and-etc-issue">Cool login prompts with <code class="docutils literal"><span class="pre">/etc/motd</span></code> and <code class="docutils literal"><span class="pre">/etc/issue</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nice-console-font-with-consolefont">Nice console font with <code class="docutils literal"><span class="pre">consolefont</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ascii-art-linux-penguin-at-boot-with-linux-logo">ASCII art Linux penguin at boot with <code class="docutils literal"><span class="pre">linux-logo</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cool-grub-theme">Cool grub theme</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#useful-commands">Useful commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#image-a-failing-drive-with-dd">Image a failing drive with <code class="docutils literal"><span class="pre">dd</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mount-images-made-with-dd-using-losetup">Mount images made with <code class="docutils literal"><span class="pre">dd</span></code> using <code class="docutils literal"><span class="pre">losetup</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#use-fdisk-l-on-a-file">Use <code class="docutils literal"><span class="pre">fdisk</span> <span class="pre">-l</span></code> on a file</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Cool Stuff</a><ul>
+<li><a class="reference internal" href="#cool-packages">Cool packages</a><ul>
+<li><a class="reference internal" href="#cowsay"><code class="docutils literal"><span class="pre">cowsay</span></code></a></li>
+<li><a class="reference internal" href="#fortune"><code class="docutils literal"><span class="pre">fortune</span></code></a></li>
+<li><a class="reference internal" href="#linux-logo"><code class="docutils literal"><span class="pre">linux-logo</span></code></a></li>
+<li><a class="reference internal" href="#libcaca"><code class="docutils literal"><span class="pre">libcaca</span></code></a></li>
+<li><a class="reference internal" href="#toilet"><code class="docutils literal"><span class="pre">toilet</span></code></a></li>
+<li><a class="reference internal" href="#figlet"><code class="docutils literal"><span class="pre">figlet</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cool-tricks">Cool tricks</a><ul>
+<li><a class="reference internal" href="#cool-login-prompts-with-etc-motd-and-etc-issue">Cool login prompts with <code class="docutils literal"><span class="pre">/etc/motd</span></code> and <code class="docutils literal"><span class="pre">/etc/issue</span></code></a></li>
+<li><a class="reference internal" href="#nice-console-font-with-consolefont">Nice console font with <code class="docutils literal"><span class="pre">consolefont</span></code></a></li>
+<li><a class="reference internal" href="#ascii-art-linux-penguin-at-boot-with-linux-logo">ASCII art Linux penguin at boot with <code class="docutils literal"><span class="pre">linux-logo</span></code></a></li>
+<li><a class="reference internal" href="#cool-grub-theme">Cool grub theme</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#useful-commands">Useful commands</a><ul>
+<li><a class="reference internal" href="#image-a-failing-drive-with-dd">Image a failing drive with <code class="docutils literal"><span class="pre">dd</span></code></a></li>
+<li><a class="reference internal" href="#mount-images-made-with-dd-using-losetup">Mount images made with <code class="docutils literal"><span class="pre">dd</span></code> using <code class="docutils literal"><span class="pre">losetup</span></code></a></li>
+<li><a class="reference internal" href="#use-fdisk-l-on-a-file">Use <code class="docutils literal"><span class="pre">fdisk</span> <span class="pre">-l</span></code> on a file</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="Setup.html" title="Previous Chapter: Setup"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Setup</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/Cool-Stuff.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="cool-stuff">
+<h1>Cool Stuff<a class="headerlink" href="#cool-stuff" title="Permalink to this headline">¶</a></h1>
+<p>This section covers all the cool packages and neat tricks.</p>
+<div class="section" id="cool-packages">
+<h2>Cool packages<a class="headerlink" href="#cool-packages" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cowsay">
+<h3><code class="docutils literal"><span class="pre">cowsay</span></code><a class="headerlink" href="#cowsay" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal"><span class="pre">games-misc/cowsay</span></code> package is a very important package:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go"> _____________________</span>
+<span class="go">&lt; Need I say anymore? &gt;</span>
+<span class="go"> ---------------------</span>
+<span class="go">        \   ^__^</span>
+<span class="go">         \  (oo)\_______</span>
+<span class="go">            (__)\       )\/\</span>
+<span class="go">                ||----w |</span>
+<span class="go">                ||     ||</span>
+</pre></div>
+</div>
+<p>Be sure to check out all the cowfiles:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> cowsay -l
+<span class="go">Cow files in /usr/share/cowsay-3.03/cows:</span>
+<span class="go">beavis.zen bong bud-frogs bunny cheese cower daemon default dragon</span>
+<span class="go">dragon-and-cow elephant elephant-in-snake eyes flaming-sheep ghostbusters</span>
+<span class="go">head-in hellokitty kiss kitty koala kosh luke-koala meow milk moofasa moose</span>
+<span class="go">mutilated ren satanic sheep skeleton small sodomized stegosaurus stimpy</span>
+<span class="go">supermilker surgery telebears three-eyes turkey turtle tux udder vader</span>
+<span class="go">vader-koala www</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="fortune">
+<h3><code class="docutils literal"><span class="pre">fortune</span></code><a class="headerlink" href="#fortune" title="Permalink to this headline">¶</a></h3>
+<p>Just for fun: <code class="docutils literal"><span class="pre">games-misc/fortune-mod</span></code>. Can be combined with cowsay:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> fortune <span class="p">|</span> cowsay -f tux
+<span class="go"> ________________________________________</span>
+<span class="go">/ On two occasions I have been asked [by \</span>
+<span class="go">| members of Parliament!], &quot;Pray, Mr.    |</span>
+<span class="go">| Babbage, if you put into the machine   |</span>
+<span class="go">| wrong figures, will the right answers  |</span>
+<span class="go">| come out?&quot; I am not able rightly to    |</span>
+<span class="go">| apprehend the kind of confusion of     |</span>
+<span class="go">| ideas that could provoke such a        |</span>
+<span class="go">| question.                              |</span>
+<span class="go">|                                        |</span>
+<span class="go">\ -- Charles Babbage                     /</span>
+<span class="go"> ----------------------------------------</span>
+<span class="go">   \</span>
+<span class="go">    \</span>
+<span class="go">        .--.</span>
+<span class="go">       |o_o |</span>
+<span class="go">       |:_/ |</span>
+<span class="go">      //   \ \</span>
+<span class="go">     (|     | )</span>
+<span class="go">    /&#39;\_   _/`\</span>
+<span class="go">    \___)=(___/</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="linux-logo">
+<h3><code class="docutils literal"><span class="pre">linux-logo</span></code><a class="headerlink" href="#linux-logo" title="Permalink to this headline">¶</a></h3>
+<p>Pretty self-explanatory (<code class="docutils literal"><span class="pre">app-misc/linux-logo</span></code>):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>$ linux_logo -a -L gentoo-alt
+
+
+                                            .
+      .vir.                                d$b
+   .d$$$$$$b.    .cd$$b.     .d$$b.   d$$$$$$$$$$$b  .d$$b.      .d$$b.
+   $$$$( )$$$b d$$$()$$$.   d$$$$$$$b Q$$$$$$$P$$$P.$$$$$$$b.  .$$$$$$$b.
+   Q$$$$$$$$$$B$$$$$$$$P&quot;  d$$$PQ$$$$b.   $$$$.   .$$$P&#39; `$$$ .$$$P&#39; `$$$
+     &quot;$$$$$$$P Q$$$$$$$b  d$$$P   Q$$$$b  $$$$b   $$$$b..d$$$ $$$$b..d$$$
+    d$$$$$$P&quot;   &quot;$$$$$$$$ Q$$$     Q$$$$  $$$$$   `Q$$$$$$$P  `Q$$$$$$$P
+|  $$$$$$$P       `&quot;&quot;&quot;&quot;&quot;   &quot;&quot;        &quot;&quot;   Q$$$P     &quot;Q$$$P&quot;     &quot;Q$$$P&quot;
+|  `Q$$P&quot;                                  &quot;&quot;&quot;
++--------------------------------------------------------- l  i  n  u  x
+
+ Linux Version 4.4.8-hardened-r1, Compiled #14 SMP Mon Jun 20 14:01:32 EDT 2016
+        Eight 4GHz Intel i7 Processors, 31.7GB RAM, 64127 Bogomips Total
+                                greenhippogriff
+</pre></div>
+</div>
+<p>Be sure to try all the logos:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> linux_logo -L list
+
+<span class="go">Available Built-in Logos:</span>
+<span class="go">        Num    Type    Ascii  Name            Description</span>
+<span class="go">        1      Banner  Yes    gentoo          Gentoo Logo</span>
+<span class="go">        2      Banner  Yes    gentoo-alt      Gentoo Linux Logo</span>
+<span class="go">        3      Banner  Yes    banner-simp     Simplified Banner Logo</span>
+<span class="go">        4      Banner  Yes    banner          The Default Banner Logo</span>
+<span class="go">        5      Classic Yes    classic-nodots  The Classic Logo, No Periods</span>
+<span class="go">        6      Classic Yes    classic-simp    Classic No Dots Or Letters</span>
+<span class="go">        7      Classic Yes    classic         The Default Classic Logo</span>
+
+<span class="go">Do &quot;linux_logo -L num&quot; where num is from above to get the appropriate logo.</span>
+<span class="go">Remember to also use -a to get ascii version.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="libcaca">
+<h3><code class="docutils literal"><span class="pre">libcaca</span></code><a class="headerlink" href="#libcaca" title="Permalink to this headline">¶</a></h3>
+<p>This one (<code class="docutils literal"><span class="pre">media-libs/libcaca</span></code>) will set your computer on fire: <code class="docutils literal"><span class="pre">aafire</span></code>. It can do more too.</p>
+</div>
+<div class="section" id="toilet">
+<h3><code class="docutils literal"><span class="pre">toilet</span></code><a class="headerlink" href="#toilet" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">toilet</span></code> (<code class="docutils literal"><span class="pre">app-misc/toilet</span></code>) actually stands for The Other Implementations LETters. Makes ASCII art. Try it: <code class="docutils literal"><span class="pre">toilet</span> <span class="pre">Hello</span> <span class="pre">World</span> <span class="pre">-f</span> <span class="pre">mono9</span> <span class="pre">--gay</span></code>.
+A useful option is <code class="docutils literal"><span class="pre">-t</span></code> which sets the output width to the width of the terminal. Also, <code class="docutils literal"><span class="pre">--html</span></code> outputs an HTML page. The available fonts are in <cite>/usr/share/figlet`</cite>.</p>
+</div>
+<div class="section" id="figlet">
+<h3><code class="docutils literal"><span class="pre">figlet</span></code><a class="headerlink" href="#figlet" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">figlet</span></code> (<code class="docutils literal"><span class="pre">app-misc/figlet</span></code>) also makes ASCII art. Try it: <code class="docutils literal"><span class="pre">figlet</span> <span class="pre">Hello</span> <span class="pre">World</span></code>.</p>
+</div>
+</div>
+<div class="section" id="cool-tricks">
+<h2>Cool tricks<a class="headerlink" href="#cool-tricks" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cool-login-prompts-with-etc-motd-and-etc-issue">
+<h3>Cool login prompts with <code class="docutils literal"><span class="pre">/etc/motd</span></code> and <code class="docutils literal"><span class="pre">/etc/issue</span></code><a class="headerlink" href="#cool-login-prompts-with-etc-motd-and-etc-issue" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal"><span class="pre">/etc/issue</span></code> file is the login prompt. The default file was this:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">This is \n.\O (\s \m \r) \t</span>
+</pre></div>
+</div>
+<p>The program <code class="docutils literal"><span class="pre">agetty</span></code> parses <code class="docutils literal"><span class="pre">/etc/issue</span></code>, supports the following escape sequences (from <code class="docutils literal"><span class="pre">man</span> <span class="pre">agetty</span></code>):</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">b   Insert the baudrate of the current line.</span>
+<span class="go">d   Insert the current date.</span>
+<span class="go">s   Insert the system name, the name of the operating system.</span>
+<span class="go">l   Insert the name of the current tty line.</span>
+<span class="go">m   Insert the architecture identifier of the machine, e.g., i686.</span>
+<span class="go">n   Insert the nodename of the machine, also known as the hostname.</span>
+<span class="go">o   Insert the domainname of the machine.</span>
+<span class="go">r   Insert the release number of the kernel, e.g., 2.6.11.12.</span>
+<span class="go">t   Insert the current time.</span>
+<span class="go">u   Insert the number of current users logged in.</span>
+<span class="go">U   Insert the string &quot;1 user&quot; or &quot;&lt;n&gt; users&quot; where &lt;n&gt; is the</span>
+<span class="go">    number of current users logged in.</span>
+<span class="go">v   Insert the version of the OS, e.g., the build-date etc.</span>
+</pre></div>
+</div>
+<p>An easy way to generate a nice <code class="docutils literal"><span class="pre">/etc/issue</span></code> file is with a script. I put mine in <code class="docutils literal"><span class="pre">/root/scripts</span></code> and called it <code class="docutils literal"><span class="pre">issue.sh</span></code>. It looks like this:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span><span class="ch">#! /bin/bash</span>
+
+clear &gt; /etc/issue
+linux_logo -L <span class="m">2</span> &gt;&gt; /etc/issue
+<span class="nb">echo</span> -e <span class="s2">&quot;\n&quot;</span> &gt;&gt; /etc/issue
+<span class="nb">echo</span> <span class="s2">&quot;This is \n (\s \m \r) \t&quot;</span> &gt;&gt; /etc/issue
+</pre></div>
+</div>
+<p>The script first deletes the file and replaces it with a new file which has the escape sequence which clears the screen. Then it appends to that file a nice gentoo logo, a blank line, and the standard message without the domain name.</p>
+<p>The <code class="docutils literal"><span class="pre">/etc/motd</span></code> file is displayed whenever a user logs in. I wrote a script to generate that too:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span><span class="ch">#! /bin/bash</span>
+
+<span class="nb">echo</span> -e <span class="s2">&quot;\033[1;32m&quot;</span> &gt; /etc/motd
+toilet -f slant <span class="s2">&quot;GreenHippogriff&quot;</span> -w <span class="m">100</span> &gt;&gt; /etc/motd
+</pre></div>
+</div>
+<p>This script first writes the color code for green to the file, and then appends a nice ASCII art version of my computer name. The output looks like this (but in green):</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">   ______                     __  ___                              _ ________</span>
+<span class="go">  / ____/_______  ___  ____  / / / (_)___  ____  ____  ____ ______(_) __/ __/</span>
+<span class="go"> / / __/ ___/ _ \/ _ \/ __ \/ /_/ / / __ \/ __ \/ __ \/ __ `/ ___/ / /_/ /_</span>
+<span class="go">/ /_/ / /  /  __/  __/ / / / __  / / /_/ / /_/ / /_/ / /_/ / /  / / __/ __/</span>
+<span class="go">\____/_/   \___/\___/_/ /_/_/ /_/_/ .___/ .___/\____/\__, /_/  /_/_/ /_/</span>
+<span class="go">                                 /_/   /_/          /____/</span>
+</pre></div>
+</div>
+<p>Some common ANSI color escape codes are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="56%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Color</th>
+<th class="head">Code</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Black</td>
+<td><code class="docutils literal"><span class="pre">0;30</span></code></td>
+</tr>
+<tr class="row-odd"><td>Dark Gray</td>
+<td><code class="docutils literal"><span class="pre">1;30</span></code></td>
+</tr>
+<tr class="row-even"><td>Red</td>
+<td><code class="docutils literal"><span class="pre">0;31</span></code></td>
+</tr>
+<tr class="row-odd"><td>Light Red</td>
+<td><code class="docutils literal"><span class="pre">1;31</span></code></td>
+</tr>
+<tr class="row-even"><td>Green</td>
+<td><code class="docutils literal"><span class="pre">0;32</span></code></td>
+</tr>
+<tr class="row-odd"><td>Light Green</td>
+<td><code class="docutils literal"><span class="pre">1;32</span></code></td>
+</tr>
+<tr class="row-even"><td>Brown/Orange</td>
+<td><code class="docutils literal"><span class="pre">0;33</span></code></td>
+</tr>
+<tr class="row-odd"><td>Yellow</td>
+<td><code class="docutils literal"><span class="pre">1;33</span></code></td>
+</tr>
+<tr class="row-even"><td>Blue</td>
+<td><code class="docutils literal"><span class="pre">0;34</span></code></td>
+</tr>
+<tr class="row-odd"><td>Light Blue</td>
+<td><code class="docutils literal"><span class="pre">1;34</span></code></td>
+</tr>
+<tr class="row-even"><td>Purple</td>
+<td><code class="docutils literal"><span class="pre">0;35</span></code></td>
+</tr>
+<tr class="row-odd"><td>Light Purple</td>
+<td><code class="docutils literal"><span class="pre">1;35</span></code></td>
+</tr>
+<tr class="row-even"><td>Cyan</td>
+<td><code class="docutils literal"><span class="pre">0;36</span></code></td>
+</tr>
+<tr class="row-odd"><td>Light Cyan</td>
+<td><code class="docutils literal"><span class="pre">1;36</span></code></td>
+</tr>
+<tr class="row-even"><td>Light Gray</td>
+<td><code class="docutils literal"><span class="pre">0;37</span></code></td>
+</tr>
+<tr class="row-odd"><td>White</td>
+<td><code class="docutils literal"><span class="pre">1;37</span></code></td>
+</tr>
+<tr class="row-even"><td>No Color</td>
+<td><code class="docutils literal"><span class="pre">0</span></code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="nice-console-font-with-consolefont">
+<h3>Nice console font with <code class="docutils literal"><span class="pre">consolefont</span></code><a class="headerlink" href="#nice-console-font-with-consolefont" title="Permalink to this headline">¶</a></h3>
+<p>This makes the console font more readable. Install <code class="docutils literal"><span class="pre">media-fonts/terminus-font</span></code> <a class="footnote-reference" href="#terminus" id="id1">[1]</a>. The available console fonts are in <code class="docutils literal"><span class="pre">/usr/share/consolefonts/</span></code>. Test the fonts with <code class="docutils literal"><span class="pre">setfont</span> <span class="pre">fontname</span></code>, leaving off the extension in the name. To reset the font to the default, use <code class="docutils literal"><span class="pre">setfont</span></code>. Set the font in <code class="docutils literal"><span class="pre">/etc/conf.d/consolefont</span></code> with <code class="docutils literal"><span class="pre">consolefont=&quot;ter-v18b&quot;</span></code> (I chose <code class="docutils literal"><span class="pre">ter-v18b</span></code>). Finally, add <code class="docutils literal"><span class="pre">consolefont</span></code> to the boot runlevel:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> rc-update add consolefont boot
+</pre></div>
+</div>
+<p>Before changing the console font, I sometimes had squares for quotes and other strange things, but changing the font fixed that <a class="footnote-reference" href="#squares" id="id2">[2]</a>.</p>
+</div>
+<div class="section" id="ascii-art-linux-penguin-at-boot-with-linux-logo">
+<h3>ASCII art Linux penguin at boot with <code class="docutils literal"><span class="pre">linux-logo</span></code><a class="headerlink" href="#ascii-art-linux-penguin-at-boot-with-linux-logo" title="Permalink to this headline">¶</a></h3>
+<p>Edit the <code class="docutils literal"><span class="pre">/etc/conf.d/linux-logo</span></code>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> Seq   Description             Output
+<span class="gp">#</span> ----------------------------------------------------------------
+<span class="gp">#</span> <span class="c1">##                            #</span>
+<span class="gp">#</span> <span class="c1">#B    Bogomips                374.37</span>
+<span class="gp">#</span> <span class="c1">#C    Compiled Date           #47 Fri Jan 8 10:37:09 EST 1999</span>
+<span class="gp">#</span> <span class="c1">#E    User Text               My Favorite Linux Distribution</span>
+<span class="gp">#</span>       Displayed with -t
+<span class="gp">#</span> <span class="c1">#H    Hostname                deranged</span>
+<span class="gp">#</span> <span class="c1">#L    Load average            Load average 0.04, 0.01, 0.01</span>
+<span class="gp">#</span> <span class="c1">#M    Megahertz               188Mhz</span>
+<span class="gp">#</span>       where supported
+<span class="gp">#</span> <span class="c1">#N    Number of CPU&#39;s         Two</span>
+<span class="gp">#</span> <span class="c1">#O    OS Name                 Linux</span>
+<span class="gp">#</span> <span class="c1">#P    Processor or Processors Processor</span>
+<span class="gp">#</span> <span class="c1">#R    Ram                     64M</span>
+<span class="gp">#</span>       in Megabytes
+<span class="gp">#</span> <span class="c1">#S    Plural                  s</span>
+<span class="gp">#</span> <span class="c1">#T    Type of CPU             K6</span>
+<span class="gp">#</span> <span class="c1">#U    Uptime                  Uptime 10 hours 59 minutes</span>
+<span class="gp">#</span> <span class="c1">#V    Version of OS           2.2.0-pre5</span>
+<span class="gp">#</span> <span class="c1">#X    CPU Vendor              AMD</span>
+<span class="gp">#</span> <span class="se">\\</span>n   carriage <span class="k">return</span>
+
+<span class="gp">#</span> Changed from gentoo to <span class="m">3</span> ------------------------------------------------
+<span class="go">LOGO=&quot;-L 3&quot;</span>
+<span class="go">FORMAT=&quot;Gentoo #O `cat /etc/gentoo-release | awk &#39;{ print $5,$6 }&#39;`\n#O #V, Compiled #C\n#N #X #T #M CPU#S, #R RAM, #B Bogomips\n#U\n#H / \l  \n&quot;</span>
+<span class="go">FORMATNET=&quot;Gentoo #O `cat /etc/gentoo-release | awk &#39;{ print $5,$6 }&#39;`\n#O #V, Compiled #C\n#N #X #T #M CPU#S, #R RAM, #B Bogomips\n#U\n#H\n&quot;</span>
+<span class="go">OPTIONS=&quot;-f -u&quot;</span>
+</pre></div>
+</div>
+<p>Add <code class="docutils literal"><span class="pre">linux-logo</span></code> to the default runlevel:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> rc-update add linux-logo default
+</pre></div>
+</div>
+<p>Note that the <code class="docutils literal"><span class="pre">linux-logo</span></code> init script overwrites <code class="docutils literal"><span class="pre">/etc/issue</span></code>.</p>
+</div>
+<div class="section" id="cool-grub-theme">
+<h3>Cool grub theme<a class="headerlink" href="#cool-grub-theme" title="Permalink to this headline">¶</a></h3>
+<p>GRUB comes with a nice starfield theme, so I enabled in in <cite>/etc/default/grub</cite>:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span><span class="nv">GRUB_THEME</span><span class="o">=</span><span class="s2">&quot;/boot/grub/themes/starfield/theme.txt&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="useful-commands">
+<h2>Useful commands<a class="headerlink" href="#useful-commands" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="image-a-failing-drive-with-dd">
+<h3>Image a failing drive with <code class="docutils literal"><span class="pre">dd</span></code><a class="headerlink" href="#image-a-failing-drive-with-dd" title="Permalink to this headline">¶</a></h3>
+<p>Just make <code class="docutils literal"><span class="pre">dd</span></code> ignore the errors:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span># dd if=/dev/sdd of=/path/to/output/file.bin conv=noerror,sync
+</pre></div>
+</div>
+</div>
+<div class="section" id="mount-images-made-with-dd-using-losetup">
+<h3>Mount images made with <code class="docutils literal"><span class="pre">dd</span></code> using <code class="docutils literal"><span class="pre">losetup</span></code><a class="headerlink" href="#mount-images-made-with-dd-using-losetup" title="Permalink to this headline">¶</a></h3>
+<p>To mount the image made about (of a failing drive or a good drive) use <code class="docutils literal"><span class="pre">losetup</span></code>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> losetup -P /dev/loop0 /path/to/super/cool/image.img
+</pre></div>
+</div>
+<p>To unmount it, do:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> losetup -d /dev/loop0
+</pre></div>
+</div>
+</div>
+<div class="section" id="use-fdisk-l-on-a-file">
+<h3>Use <code class="docutils literal"><span class="pre">fdisk</span> <span class="pre">-l</span></code> on a file<a class="headerlink" href="#use-fdisk-l-on-a-file" title="Permalink to this headline">¶</a></h3>
+<p>Perfect for an image made using <code class="docutils literal"><span class="pre">dd</span></code>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> fdisk -l imagefile.img
+<span class="go">Disk imagefile.img: 233.8 GiB, 251000193024 bytes, 490234752 sectors</span>
+<span class="go">Units: sectors of 1 * 512 = 512 bytes</span>
+<span class="go">Sector size (logical/physical): 512 bytes / 512 bytes</span>
+<span class="go">I/O size (minimum/optimal): 512 bytes / 512 bytes</span>
+<span class="go">Disklabel type: dos</span>
+<span class="go">Disk identifier: 0xe9b7948b</span>
+
+<span class="go">Device           Start       End   Sectors   Size Id Type</span>
+<span class="go">imagefile.img1    2048    999423    997376   487M 83 Linux</span>
+<span class="go">imagefile.img2 1001470 490233855 489232386 233.3G  5 Extended</span>
+<span class="go">imagefile.img5 1001472 490233855 489232384 233.3G 83 Linux</span>
+</pre></div>
+</div>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="terminus" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>See <a class="reference external" href="https://www.artembutusov.com/modify-linux-kernel-font/">https://www.artembutusov.com/modify-linux-kernel-font/</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="squares" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>See <a class="reference external" href="https://forums.gentoo.org/viewtopic-t-980980-start-0.html">https://forums.gentoo.org/viewtopic-t-980980-start-0.html</a>.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2016, Jacob Glueck.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

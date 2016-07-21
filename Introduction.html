@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &mdash; Gentoo Guide 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.3.6/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="Gentoo Guide 1.0.0 documentation" href="index.html" />
+    <link rel="next" title="Installation" href="Installation.html" />
+    <link rel="prev" title="Gentoo Guide" href="index.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          Gentoo Guide</a>
+        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cool-stuff">Cool stuff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conventions">Conventions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#booting">Booting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#configuring-the-network">Configuring the Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#partitioning">Partitioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#encrypting">Encrypting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configure-encryption">Configure encryption</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configure-lvm">Configure LVM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#create-the-filesystems">Create the filesystems</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#mount-the-filesystems">Mount the filesystems</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#installing-stage-3">Installing stage 3</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#set-the-date">Set the date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#downloading-the-stage-3-tarball">Downloading the stage 3 tarball</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#picking-an-editor">Picking an editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configuring-compile-options">Configuring compile options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configuring-the-main-gentoo-repository">Configuring the main Gentoo repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#copy-dns-configuration">Copy DNS configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#id19">Mount the filesystems</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#enter-the-new-environment">Enter the new environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configuring-portage">Configuring portage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configure-the-timezone">Configure the timezone</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configure-the-locale">Configure the locale</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#kernel">Kernel</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#install-the-sources">Install the sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configure-the-kernel">Configure the kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#make-the-initramfs">Make the initramfs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#naming-the-files">Naming the files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#system-configuration">System Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#filesystem-mounting">Filesystem Mounting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#name-the-computer">Name the computer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configuring-ethernet">Configuring ethernet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#set-a-root-password">Set a root password</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#set-up-a-system-logger">Set up a system logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#set-up-a-cron-daemon">Set up a cron daemon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#ssh">SSH</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#lvm">LVM</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#bootloader">Bootloader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#installing-the-bootloader">Installing the bootloader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#rebooting">Rebooting</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Installation.html#rescue">Rescue</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Setup.html">Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#gpg-signed-portage-snapshots">GPG signed portage snapshots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#paxtest">PaXtest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#setting-up-ccache">Setting up ccache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#configuring-wifi-using-wicd">Configuring WiFi using <code class="docutils literal"><span class="pre">wicd</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#sound">Sound</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Setup.html#alsa-setup">ALSA Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Setup.html#playing-music">Playing Music</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#grub-default-boot-choice">GRUB Default Boot Choice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#layman">Layman</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#avahi-daemon">Avahi Daemon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#common-unix-printing-system-cups">Common Unix Printing System (CUPS)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Setup.html#brother-printers">Brother Printers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#sensors">Sensors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#locate">Locate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#desktop-environment">Desktop environment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Cool-Stuff.html">Cool Stuff</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Cool-Stuff.html#cool-packages">Cool packages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#cowsay"><code class="docutils literal"><span class="pre">cowsay</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#fortune"><code class="docutils literal"><span class="pre">fortune</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#linux-logo"><code class="docutils literal"><span class="pre">linux-logo</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#libcaca"><code class="docutils literal"><span class="pre">libcaca</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#toilet"><code class="docutils literal"><span class="pre">toilet</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#figlet"><code class="docutils literal"><span class="pre">figlet</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Cool-Stuff.html#cool-tricks">Cool tricks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#cool-login-prompts-with-etc-motd-and-etc-issue">Cool login prompts with <code class="docutils literal"><span class="pre">/etc/motd</span></code> and <code class="docutils literal"><span class="pre">/etc/issue</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#nice-console-font-with-consolefont">Nice console font with <code class="docutils literal"><span class="pre">consolefont</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#ascii-art-linux-penguin-at-boot-with-linux-logo">ASCII art Linux penguin at boot with <code class="docutils literal"><span class="pre">linux-logo</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#cool-grub-theme">Cool grub theme</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Cool-Stuff.html#useful-commands">Useful commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#image-a-failing-drive-with-dd">Image a failing drive with <code class="docutils literal"><span class="pre">dd</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#mount-images-made-with-dd-using-losetup">Mount images made with <code class="docutils literal"><span class="pre">dd</span></code> using <code class="docutils literal"><span class="pre">losetup</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#use-fdisk-l-on-a-file">Use <code class="docutils literal"><span class="pre">fdisk</span> <span class="pre">-l</span></code> on a file</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Introduction</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#setup">Setup</a></li>
+<li><a class="reference internal" href="#cool-stuff">Cool stuff</a></li>
+<li><a class="reference internal" href="#conventions">Conventions</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="index.html" title="Previous Chapter: Gentoo Guide"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Gentoo Guide</span>
+    </a>
+  </li>
+  <li>
+    <a href="Installation.html" title="Next Chapter: Installation"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Installation &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/Introduction.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>As I built my own computer and installed Gentoo Linux on it, I ran into many confusing problems, and had to read many different guides in order to figure out how to proceed. In order to both record how my system is set up and to provide a reference for others seeking to configure similar setups, I wrote this guide. Throughout the guide, I tried to fully explain every command that I used by explaining the purpose of the command and that of every parameter. Furthermore, I tried to list every step so that anyone can easily follow this guide without the need to consult another reference. In cases where there is more than one good way to do something, I provided references to documentation which explains the alternative. I hope that you find this guide useful in setting up your own computer and in understanding the components of a Gentoo system.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>This guide documents the installation of Gentoo Linux on my computer. The computer has the following parts:</p>
+<ul class="simple">
+<li><strong>CPU:</strong> Intel Core i7-6700K 4.0GHz Quad-Core Processor</li>
+<li><strong>CPU Cooler:</strong> Cooler Master Hyper 212 EVO 82.9 CFM Sleeve Bearing CPU Cooler</li>
+<li><strong>Motherboard:</strong> ASRock Fatal1ty Z170 Gaming-ITX/ac Mini ITX LGA1151 Motherboard</li>
+<li><strong>Memory:</strong> G.Skill Ripjaws V Series 32GB (2 x 16GB) DDR4-3200 Memory</li>
+<li><strong>Storage:</strong> Mushkin Reactor 1TB 2.5&#8221; Solid State Drive</li>
+<li><strong>Case:</strong> Fractal Design Define Nano S Mini ITX Desktop Case</li>
+<li><strong>Power Supply:</strong> Cooler Master 550W 80+ Bronze Certified Semi-Modular ATX Power Supply</li>
+<li><strong>Keyboard:</strong> Corsair STRAFE RGB Wired Gaming Keyboard</li>
+<li><strong>Mouse:</strong> Corsair Sabre RGB Wired Optical Mouse</li>
+</ul>
+<p>The Gentoo installation is hardened and set up with an encrypted root partition. The purpose of the encrypted root partition is so that if someone gains physical access to the hard drive, he cannot read your information. However, with only the root partition encrypted (the boot partition is not encrypted), an attacker can replace the boot programs with malicious ones <a class="footnote-reference" href="#attack" id="id1">[1]</a>. The only way to solve this problem is to put the boot partition on a flash drive, and ensure no one has access to the flash drive. The purpose of the hardened installation is to protect against vulnerabilities in software. Essentially, should some software have a vulnerability that a hacker would normally be able to exploit, on a hardened system, exploiting it will be much harder <a class="footnote-reference" href="#hardened" id="id2">[2]</a>.</p>
+</div>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>This guide also documents the setup of the computer, including WiFi, sound, and printing.</p>
+</div>
+<div class="section" id="cool-stuff">
+<h2>Cool stuff<a class="headerlink" href="#cool-stuff" title="Permalink to this headline">¶</a></h2>
+<p>Finally, I list all the cool packages and neat tricks to make the computer as cool as possible.</p>
+</div>
+<div class="section" id="conventions">
+<h2>Conventions<a class="headerlink" href="#conventions" title="Permalink to this headline">¶</a></h2>
+<p>In this book, a <code class="docutils literal"><span class="pre">$</span></code> indicates a user prompt and <code class="docutils literal"><span class="pre">#</span></code> indicates a root prompt.</p>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="attack" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>See this post: <a class="reference external" href="https://twopointfouristan.wordpress.com/">https://twopointfouristan.wordpress.com/</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="hardened" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>For information about how exactly hardened software works, see the Gentoo wiki: <a class="reference external" href="https://wiki.gentoo.org/wiki/Hardened/Introduction_to_Hardened_Gentoo">https://wiki.gentoo.org/wiki/Hardened/Introduction_to_Hardened_Gentoo</a>.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2016, Jacob Glueck.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

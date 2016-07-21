@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Setup &mdash; Gentoo Guide 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.3.6/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="Gentoo Guide 1.0.0 documentation" href="index.html" />
+    <link rel="next" title="Cool Stuff" href="Cool-Stuff.html" />
+    <link rel="prev" title="Installation" href="Installation.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          Gentoo Guide</a>
+        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Introduction.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Introduction.html#setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Introduction.html#cool-stuff">Cool stuff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Introduction.html#conventions">Conventions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#booting">Booting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#configuring-the-network">Configuring the Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#partitioning">Partitioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#encrypting">Encrypting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configure-encryption">Configure encryption</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configure-lvm">Configure LVM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#create-the-filesystems">Create the filesystems</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#mount-the-filesystems">Mount the filesystems</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#installing-stage-3">Installing stage 3</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#set-the-date">Set the date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#downloading-the-stage-3-tarball">Downloading the stage 3 tarball</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#picking-an-editor">Picking an editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configuring-compile-options">Configuring compile options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configuring-the-main-gentoo-repository">Configuring the main Gentoo repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#copy-dns-configuration">Copy DNS configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#id19">Mount the filesystems</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#enter-the-new-environment">Enter the new environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configuring-portage">Configuring portage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configure-the-timezone">Configure the timezone</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configure-the-locale">Configure the locale</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#kernel">Kernel</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#install-the-sources">Install the sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configure-the-kernel">Configure the kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#make-the-initramfs">Make the initramfs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#naming-the-files">Naming the files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#system-configuration">System Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#filesystem-mounting">Filesystem Mounting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#name-the-computer">Name the computer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configuring-ethernet">Configuring ethernet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#set-a-root-password">Set a root password</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#set-up-a-system-logger">Set up a system logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#set-up-a-cron-daemon">Set up a cron daemon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#ssh">SSH</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#lvm">LVM</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#bootloader">Bootloader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#installing-the-bootloader">Installing the bootloader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#rebooting">Rebooting</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Installation.html#rescue">Rescue</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#gpg-signed-portage-snapshots">GPG signed portage snapshots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#paxtest">PaXtest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-ccache">Setting up ccache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuring-wifi-using-wicd">Configuring WiFi using <code class="docutils literal"><span class="pre">wicd</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sound">Sound</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#alsa-setup">ALSA Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#playing-music">Playing Music</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#grub-default-boot-choice">GRUB Default Boot Choice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#layman">Layman</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#avahi-daemon">Avahi Daemon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common-unix-printing-system-cups">Common Unix Printing System (CUPS)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#brother-printers">Brother Printers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sensors">Sensors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#locate">Locate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#desktop-environment">Desktop environment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Cool-Stuff.html">Cool Stuff</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Cool-Stuff.html#cool-packages">Cool packages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#cowsay"><code class="docutils literal"><span class="pre">cowsay</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#fortune"><code class="docutils literal"><span class="pre">fortune</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#linux-logo"><code class="docutils literal"><span class="pre">linux-logo</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#libcaca"><code class="docutils literal"><span class="pre">libcaca</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#toilet"><code class="docutils literal"><span class="pre">toilet</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#figlet"><code class="docutils literal"><span class="pre">figlet</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Cool-Stuff.html#cool-tricks">Cool tricks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#cool-login-prompts-with-etc-motd-and-etc-issue">Cool login prompts with <code class="docutils literal"><span class="pre">/etc/motd</span></code> and <code class="docutils literal"><span class="pre">/etc/issue</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#nice-console-font-with-consolefont">Nice console font with <code class="docutils literal"><span class="pre">consolefont</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#ascii-art-linux-penguin-at-boot-with-linux-logo">ASCII art Linux penguin at boot with <code class="docutils literal"><span class="pre">linux-logo</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#cool-grub-theme">Cool grub theme</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Cool-Stuff.html#useful-commands">Useful commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#image-a-failing-drive-with-dd">Image a failing drive with <code class="docutils literal"><span class="pre">dd</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#mount-images-made-with-dd-using-losetup">Mount images made with <code class="docutils literal"><span class="pre">dd</span></code> using <code class="docutils literal"><span class="pre">losetup</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#use-fdisk-l-on-a-file">Use <code class="docutils literal"><span class="pre">fdisk</span> <span class="pre">-l</span></code> on a file</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Setup</a><ul>
+<li><a class="reference internal" href="#gpg-signed-portage-snapshots">GPG signed portage snapshots</a></li>
+<li><a class="reference internal" href="#paxtest">PaXtest</a></li>
+<li><a class="reference internal" href="#setting-up-ccache">Setting up ccache</a></li>
+<li><a class="reference internal" href="#configuring-wifi-using-wicd">Configuring WiFi using <code class="docutils literal"><span class="pre">wicd</span></code></a></li>
+<li><a class="reference internal" href="#sound">Sound</a><ul>
+<li><a class="reference internal" href="#alsa-setup">ALSA Setup</a></li>
+<li><a class="reference internal" href="#playing-music">Playing Music</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#grub-default-boot-choice">GRUB Default Boot Choice</a></li>
+<li><a class="reference internal" href="#layman">Layman</a></li>
+<li><a class="reference internal" href="#avahi-daemon">Avahi Daemon</a></li>
+<li><a class="reference internal" href="#common-unix-printing-system-cups">Common Unix Printing System (CUPS)</a><ul>
+<li><a class="reference internal" href="#brother-printers">Brother Printers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sensors">Sensors</a></li>
+<li><a class="reference internal" href="#locate">Locate</a></li>
+<li><a class="reference internal" href="#desktop-environment">Desktop environment</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="Installation.html" title="Previous Chapter: Installation"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Installation</span>
+    </a>
+  </li>
+  <li>
+    <a href="Cool-Stuff.html" title="Next Chapter: Cool Stuff"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Cool Stuff &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/Setup.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="setup">
+<h1>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h1>
+<p>This section covers setting up useful things on Gentoo.</p>
+<div class="section" id="gpg-signed-portage-snapshots">
+<h2>GPG signed portage snapshots<a class="headerlink" href="#gpg-signed-portage-snapshots" title="Permalink to this headline">¶</a></h2>
+<p>Setting up portage to verify the tree with GPG signatures ensures that the tree is authentic and has not been changed by anyone other than the Gentoo developers. While portage does checks the hashes of source code it downloads against those in the portage tree <a class="footnote-reference" href="#portagehashes" id="id1">[1]</a>, it does not by default verify that the tree (and the hashes in it) are authentic. Thus, an attacker could launch a man in the middle attack and change the manifests and source code location in the tree. Then, when you installed the package the hacker changed, you would get a malicious version. To solve this problem, configure portage to verify the tree. First, get the Gentoo GPG keys:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge app-crypt/gentoo-keys
+</pre></div>
+</div>
+<p>Then, add <code class="docutils literal"><span class="pre">webrsync-gpg</span></code> to the <code class="docutils literal"><span class="pre">FEATURES</span></code> variable in <code class="docutils literal"><span class="pre">/etc/portage/make.conf</span></code>, and also configure the <code class="docutils literal"><span class="pre">PORTAGE_GPG_DIR</span></code>:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1"># Enabled GPG support in Portage</span>
+<span class="nv">FEATURES</span><span class="o">=</span><span class="s2">&quot;webrsync-gpg&quot;</span>
+<span class="nv">PORTAGE_GPG_DIR</span><span class="o">=</span><span class="s2">&quot;/var/lib/gentoo/gkeys/keyrings/gentoo/release&quot;</span>
+</pre></div>
+</div>
+<p>Edit the gentoo section of <code class="docutils literal"><span class="pre">/etc/portage/repos.conf/gentoo.conf</span></code> <a class="footnote-reference" href="#portagegpgconf" id="id2">[2]</a>:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span><span class="o">[</span>gentoo<span class="o">]</span>
+<span class="nv">location</span> <span class="o">=</span> /usr/portage
+<span class="c1"># Changed from rsync to webrsync ------------------</span>
+sync-type <span class="o">=</span> webrsync
+sync-uri <span class="o">=</span> rsync://rsync.gentoo.org/gentoo-portage
+auto-sync <span class="o">=</span> yes
+</pre></div>
+</div>
+<p>In order to the signatures to be valid, the keys must also be valid. To verify this, list the key fingerprints:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> gpg --homedir /var/lib/gentoo/gkeys/keyrings/gentoo/release --with-fingerprint --list-keys
+<span class="go">gpg: WARNING: unsafe permissions on homedir `/var/lib/gentoo/gkeys/keyrings/gentoo/release&#39;</span>
+<span class="go">/var/lib/gentoo/gkeys/keyrings/gentoo/release/pubring.gpg</span>
+<span class="go">---------------------------------------------------------</span>
+<span class="go">pub   4096R/F6CD6C97 2014-10-03 [expires: 2017-09-17]</span>
+<span class="go">      Key fingerprint = D2DE 1DBB A0F4 3EBA 341B  97D8 8255 33CB F6CD 6C97</span>
+<span class="go">uid       [ unknown] Gentoo-keys Team &lt;gkeys@gentoo.org&gt;</span>
+<span class="go">sub   4096R/151C3FC7 2014-10-03 [expires: 2017-09-17]</span>
+
+<span class="go">pub   1024D/17072058 2004-07-20 [expires: 2016-08-13]</span>
+<span class="go">      Key fingerprint = D99E AC73 79A8 50BC E47D  A5F2 9E64 38C8 1707 2058</span>
+<span class="go">uid       [ unknown] Gentoo Linux Release Engineering (Gentoo Linux Release Signing Key) &lt;releng@gentoo.org&gt;</span>
+<span class="go">sub   2048g/1415B4ED 2004-07-20 [expires: 2016-08-13]</span>
+
+<span class="go">pub   4096R/96D8BF6D 2011-11-25 [expires: 2016-07-01]</span>
+<span class="go">      Key fingerprint = DCD0 5B71 EAB9 4199 527F  44AC DB6B 8C1F 96D8 BF6D</span>
+<span class="go">uid       [ unknown] Gentoo Portage Snapshot Signing Key (Automated Signing Key)</span>
+<span class="go">sub   4096R/C9189250 2011-11-25 [expires: 2016-07-01]</span>
+
+<span class="go">pub   4096R/2D182910 2009-08-25 [expires: 2017-08-25]</span>
+<span class="go">      Key fingerprint = 13EB BDBE DE7A 1277 5DFD  B1BA BB57 2E0E 2D18 2910</span>
+<span class="go">uid       [ unknown] Gentoo Linux Release Engineering (Automated Weekly Release Key) &lt;releng@gentoo.org&gt;</span>
+</pre></div>
+</div>
+<p>Verify the fingerprints printed with those on Gentoo&#8217;s website: <a class="reference external" href="https://wiki.gentoo.org/wiki/Project:RelEng#Keys">https://wiki.gentoo.org/wiki/Project:RelEng#Keys</a>. Of course, this verification is only as trustworthy as the HTTPS connection, but it is the best you can do. To test it, run <code class="docutils literal"><span class="pre">emerge</span> <span class="pre">--sync</span></code>. It should output something like this:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">Checking signature ...</span>
+<span class="go">gpg: WARNING: unsafe permissions on homedir `/var/lib/gentoo/gkeys/keyrings/gentoo/release&#39;</span>
+<span class="go">gpg: Signature made Wed 22 Jun 2016 08:52:03 PM EDT using RSA key ID C9189250</span>
+<span class="go">gpg: checking the trustdb</span>
+<span class="go">gpg: no ultimately trusted keys found</span>
+<span class="go">gpg: Good signature from &quot;Gentoo Portage Snapshot Signing Key (Automated Signing Key)&quot; [unknown]</span>
+<span class="go">gpg: WARNING: This key is not certified with a trusted signature!</span>
+<span class="go">gpg:          There is no indication that the signature belongs to the owner.</span>
+<span class="go">Primary key fingerprint: DCD0 5B71 EAB9 4199 527F  44AC DB6B 8C1F 96D8 BF6D</span>
+<span class="go">     Subkey fingerprint: E1D6 ABB6 3BFC FB4B A02F  DF1C EC59 0EEA C918 9250</span>
+</pre></div>
+</div>
+<p>While it verified the signature, it prints warnings because the key is not signed by a trusted key. Since there is no easy way to verify the fingerprints without relaying on HTTPS, you should not sign the key, but can now be pretty confident that the portage tree is valid.</p>
+</div>
+<div class="section" id="paxtest">
+<h2>PaXtest<a class="headerlink" href="#paxtest" title="Permalink to this headline">¶</a></h2>
+<p>In order to verify that the PaX security extensions are working, use the <code class="docutils literal"><span class="pre">PaXtest</span></code> program. It is masked, so unmask it by editing <code class="docutils literal"><span class="pre">/etc/portage/package.accept_keywords/paxtest</span></code>:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1"># required by paxtest (argument)</span>
+<span class="o">=</span>app-admin/paxtest-0.9.14 ~amd64
+</pre></div>
+</div>
+<p>Install it, and then run it:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> paxtest blackhat
+<span class="go">PaXtest - Copyright(c) 2003-2014 by Peter Busser &lt;peter@adamantix.org&gt; and Brad Spengler &lt;spender@grsecurity.net&gt;</span>
+<span class="go">Released under the GNU Public Licence version 2 or later</span>
+
+<span class="go">Writing output to paxtest.log</span>
+<span class="go">It may take a while for the tests to complete</span>
+<span class="go">Test results:</span>
+<span class="go">PaXtest - Copyright(c) 2003-2014 by Peter Busser &lt;peter@adamantix.org&gt; and Brad Spengler &lt;spender@grsecurity.net&gt;</span>
+<span class="go">Released under the GNU Public Licence version 2 or later</span>
+
+<span class="go">Mode: blackhat</span>
+<span class="go">Linux greenhippogriff 4.4.8-hardened-r1 #15 SMP Thu Jul 7 21:37:20 EDT 2016 x86_64 Intel(R) Core(TM) i7-6700K CPU @ 4.00GHz GenuineIntel GNU/Linux</span>
+
+<span class="go">Executable anonymous mapping             : Killed</span>
+<span class="go">Executable bss                           : Killed</span>
+<span class="go">Executable data                          : Killed</span>
+<span class="go">Executable heap                          : Killed</span>
+<span class="go">Executable stack                         : Killed</span>
+<span class="go">Executable shared library bss            : Killed</span>
+<span class="go">Executable shared library data           : Killed</span>
+<span class="go">Executable anonymous mapping (mprotect)  : Killed</span>
+<span class="go">Executable bss (mprotect)                : Killed</span>
+<span class="go">Executable data (mprotect)               : Killed</span>
+<span class="go">Executable heap (mprotect)               : Killed</span>
+<span class="go">Executable stack (mprotect)              : Killed</span>
+<span class="go">Executable shared library bss (mprotect) : Killed</span>
+<span class="go">Executable shared library data (mprotect): Killed</span>
+<span class="go">Writable text segments                   : Killed</span>
+<span class="go">Anonymous mapping randomization test     : 33 quality bits (guessed)</span>
+<span class="go">Heap randomization test (ET_EXEC)        : 22 quality bits (guessed)</span>
+<span class="go">Heap randomization test (PIE)            : 40 quality bits (guessed)</span>
+<span class="go">Main executable randomization (ET_EXEC)  : 33 quality bits (guessed)</span>
+<span class="go">Main executable randomization (PIE)      : 33 quality bits (guessed)</span>
+<span class="go">Shared library randomization test        : 33 quality bits (guessed)</span>
+<span class="go">VDSO randomization test                  : 33 quality bits (guessed)</span>
+<span class="go">Stack randomization test (SEGMEXEC)      : 40 quality bits (guessed)</span>
+<span class="go">Stack randomization test (PAGEEXEC)      : 40 quality bits (guessed)</span>
+<span class="go">Arg/env randomization test (SEGMEXEC)    : 44 quality bits (guessed)</span>
+<span class="go">Arg/env randomization test (PAGEEXEC)    : 44 quality bits (guessed)</span>
+<span class="go">Randomization under memory exhaustion @~0: 33 bits (guessed)</span>
+<span class="go">Randomization under memory exhaustion @0 : 33 bits (guessed)</span>
+<span class="go">Return to function (strcpy)              : paxtest: return address contains a NULL byte.</span>
+<span class="go">Return to function (memcpy)              : Vulnerable</span>
+<span class="go">Return to function (strcpy, PIE)         : paxtest: return address contains a NULL byte.</span>
+<span class="go">Return to function (memcpy, PIE)         : Vulnerable</span>
+</pre></div>
+</div>
+<p>Note that the vulnerable functions are normal. See: <a class="reference external" href="https://wiki.gentoo.org/wiki/Hardened/Grsecurity2_Quickstart#Verifying_the_PaX_settings">https://wiki.gentoo.org/wiki/Hardened/Grsecurity2_Quickstart#Verifying_the_PaX_settings</a>.</p>
+</div>
+<div class="section" id="setting-up-ccache">
+<h2>Setting up ccache<a class="headerlink" href="#setting-up-ccache" title="Permalink to this headline">¶</a></h2>
+<p>The compiler cache (ccache) speeds up compilation by saving output from previous compilations and reusing it if the source files have not changed. This is useful when updating software because not all the files will change. To use it, first install it:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge dev-util/ccache
+</pre></div>
+</div>
+<p>The, add <code class="docutils literal"><span class="pre">ccache</span></code> to the <code class="docutils literal"><span class="pre">FEATURES</span></code> variable in <code class="docutils literal"><span class="pre">/etc/portage/make.conf</span></code>, and also configure the <code class="docutils literal"><span class="pre">CCACHE_SIZE</span></code>:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span><span class="nv">FEATURES</span><span class="o">=</span><span class="s2">&quot;webrsync-gpg ccache&quot;</span>
+<span class="nv">CCACHE_SIZE</span><span class="o">=</span><span class="s2">&quot;10G&quot;</span>
+</pre></div>
+</div>
+<p>To check the status of the cache, use:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> <span class="nv">CCACHE_DIR</span><span class="o">=</span><span class="s2">&quot;/var/tmp/ccache&quot;</span> ccache -s
+<span class="go">cache directory                     /var/tmp/ccache</span>
+<span class="go">primary config                      /var/tmp/ccache/ccache.conf</span>
+<span class="go">secondary config      (readonly)    /etc/ccache.conf</span>
+<span class="go">cache hit (direct)                  1096</span>
+<span class="go">cache hit (preprocessed)            1729</span>
+<span class="go">cache miss                         32775</span>
+<span class="go">called for link                     3346</span>
+<span class="go">called for preprocessing            3973</span>
+<span class="go">multiple source files                  6</span>
+<span class="go">compiler produced stdout               1</span>
+<span class="go">compile failed                      1450</span>
+<span class="go">preprocessor error                   513</span>
+<span class="go">can&#39;t use precompiled header           6</span>
+<span class="go">bad compiler arguments               380</span>
+<span class="go">unsupported source language         1328</span>
+<span class="go">autoconf compile/link               9530</span>
+<span class="go">unsupported compiler option           85</span>
+<span class="go">no input file                       3983</span>
+<span class="go">files in cache                     74286</span>
+<span class="go">cache size                         694.7 MB</span>
+<span class="go">max cache size                      10.0 GB</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuring-wifi-using-wicd">
+<h2>Configuring WiFi using <code class="docutils literal"><span class="pre">wicd</span></code><a class="headerlink" href="#configuring-wifi-using-wicd" title="Permalink to this headline">¶</a></h2>
+<p>The Wireless Interface Connection Daemon (<code class="docutils literal"><span class="pre">wicd</span></code>) is a lightweight daemon for managing wired and wireless connections [#wicd_]. It can automatically switch to a wired connection if one becomes available, and also switch to a wireless connection if there is no wired connection. It also has a ncurses user interface. To emerge it, first set the <code class="docutils literal"><span class="pre">ncurses</span></code> use flag:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> <span class="nb">echo</span> <span class="s2">&quot;net-misc/wicd ncurses&quot;</span> &gt; /etc/portage/package.use/wicd
+</pre></div>
+</div>
+<p>Then emerge it:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge net-misc/wicd
+</pre></div>
+</div>
+<p>Make it start on boot:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> rc-update add wicd default
+</pre></div>
+</div>
+<p>Also, make sure no other network scripts run at boot. For example, to remove the standard netifrc ethernet script, run:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> rc-update del net.enp0s31f6
+</pre></div>
+</div>
+<p>Then, run the <cite>wicd</cite> configuration program:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> wicd-curses
+</pre></div>
+</div>
+<p>My computer had a <cite>BCM4352</cite> chip, so I had to emerge the <code class="docutils literal"><span class="pre">net-wireless/broadcom-sta</span></code> package. The package requires the following settings:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">B43: If you insist on building this, you must blacklist it!</span>
+<span class="go">BCMA: If you insist on building this, you must blacklist it!</span>
+<span class="go">SSB: If you insist on building this, you must blacklist it!</span>
+<span class="go">LIB80211: Please enable it. If you can&#39;t find it: enabling the driver for &quot;Intel PRO/Wireless 2100&quot; or &quot;Intel PRO/Wireless 2200BG&quot; (IPW2100 or IPW2200) should suffice.</span>
+<span class="go">MAC80211: If you insist on building this, you must blacklist it!</span>
+<span class="go">LIB80211_CRYPT_TKIP: You will need this for WPA.</span>
+</pre></div>
+</div>
+<p>For information about other Broadcom chips, see: <a class="reference external" href="https://wireless.wiki.kernel.org/en/users/Drivers/b43#Supported_devices">https://wireless.wiki.kernel.org/en/users/Drivers/b43#Supported_devices</a>.</p>
+</div>
+<div class="section" id="sound">
+<h2>Sound<a class="headerlink" href="#sound" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="alsa-setup">
+<h3>ALSA Setup<a class="headerlink" href="#alsa-setup" title="Permalink to this headline">¶</a></h3>
+<p>ALSA is the Advanced Linux Sound Architecture <a class="footnote-reference" href="#alsawiki" id="id3">[4]</a>. The sound might just work. But, if it does not or you want to change the sound output, first list the sound devices:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> aplay -L
+<span class="go">null</span>
+<span class="go">    Discard all samples (playback) or generate zero samples (capture)</span>
+<span class="go">default:CARD=PCH</span>
+<span class="go">    HDA Intel PCH, ALC1150 Analog</span>
+<span class="go">    Default Audio Device</span>
+<span class="go">sysdefault:CARD=PCH</span>
+<span class="go">    HDA Intel PCH, ALC1150 Analog</span>
+<span class="go">    Default Audio Device</span>
+<span class="go">front:CARD=PCH,DEV=0</span>
+<span class="go">    HDA Intel PCH, ALC1150 Analog</span>
+<span class="go">    Front speakers</span>
+<span class="go">surround21:CARD=PCH,DEV=0</span>
+<span class="go">    HDA Intel PCH, ALC1150 Analog</span>
+<span class="go">    2.1 Surround output to Front and Subwoofer speakers</span>
+<span class="go">surround40:CARD=PCH,DEV=0</span>
+<span class="go">    HDA Intel PCH, ALC1150 Analog</span>
+<span class="go">    4.0 Surround output to Front and Rear speakers</span>
+<span class="go">surround41:CARD=PCH,DEV=0</span>
+<span class="go">    HDA Intel PCH, ALC1150 Analog</span>
+<span class="go">    4.1 Surround output to Front, Rear and Subwoofer speakers</span>
+<span class="go">surround50:CARD=PCH,DEV=0</span>
+<span class="go">    HDA Intel PCH, ALC1150 Analog</span>
+<span class="go">    5.0 Surround output to Front, Center and Rear speakers</span>
+<span class="go">surround51:CARD=PCH,DEV=0</span>
+<span class="go">    HDA Intel PCH, ALC1150 Analog</span>
+<span class="go">    5.1 Surround output to Front, Center, Rear and Subwoofer speakers</span>
+<span class="go">surround71:CARD=PCH,DEV=0</span>
+<span class="go">    HDA Intel PCH, ALC1150 Analog</span>
+<span class="go">    7.1 Surround output to Front, Center, Side, Rear and Woofer speakers</span>
+<span class="go">iec958:CARD=PCH,DEV=0</span>
+<span class="go">    HDA Intel PCH, ALC1150 Digital</span>
+<span class="go">    IEC958 (S/PDIF) Digital Audio Output</span>
+<span class="go">hdmi:CARD=PCH,DEV=0</span>
+<span class="go">    HDA Intel PCH, HDMI 0</span>
+<span class="go">    HDMI Audio Output</span>
+<span class="go">hdmi:CARD=PCH,DEV=1</span>
+<span class="go">    HDA Intel PCH, HDMI 1</span>
+<span class="go">    HDMI Audio Output</span>
+<span class="go">hdmi:CARD=PCH,DEV=2</span>
+<span class="go">    HDA Intel PCH, HDMI 2</span>
+<span class="go">    HDMI Audio Output</span>
+</pre></div>
+</div>
+<p>You can also look at <code class="docutils literal"><span class="pre">/proc/asound/cards</span></code>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> cat /proc/asound/cards
+<span class="go"> 0 [PCH            ]: HDA-Intel - HDA Intel PCH</span>
+<span class="go">                      HDA Intel PCH at 0xdf440000 irq 136</span>
+</pre></div>
+</div>
+<p>Then, test them with <code class="docutils literal"><span class="pre">speaker-test</span></code>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> speaker-test -Dfront:PCH -c2 -twav
+
+<span class="go">speaker-test 1.0.29</span>
+
+<span class="go">Playback device is front:PCH</span>
+<span class="go">Stream parameters are 48000Hz, S16_LE, 2 channels</span>
+<span class="go">WAV file(s)</span>
+<span class="go">Rate set to 48000Hz (requested 48000Hz)</span>
+<span class="go">Buffer size range from 64 to 16384</span>
+<span class="go">Period size range from 32 to 8192</span>
+<span class="go">Using max buffer size 16384</span>
+<span class="go">Periods = 4</span>
+<span class="go">was set period_size = 4096</span>
+<span class="go">was set buffer_size = 16384</span>
+<span class="go"> 0 - Front Left</span>
+<span class="go"> 1 - Front Right</span>
+</pre></div>
+</div>
+<p>Change the device until it works. For example, to use HDMI, try <code class="docutils literal"><span class="pre">-Dhdmi:PCH</span></code>. To make the device which works the default, use a <code class="docutils literal"><span class="pre">.asoundrc</span></code> file in your home directory. When I use a <code class="docutils literal"><span class="pre">genkernel</span></code> kernel, I need the following <code class="docutils literal"><span class="pre">.asoundrc</span></code> to make sound work:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">pcm.!default{</span>
+<span class="go">    type hw</span>
+<span class="go">    card 0</span>
+<span class="go">    device 0</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<p>However, with my manually-configured kernel, sound works find without the <code class="docutils literal"><span class="pre">.asoundrc</span></code>. For more information about the <code class="docutils literal"><span class="pre">.asoundrc</span></code> file, see: <a class="reference external" href="http://www.alsa-project.org/main/index.php/Asoundrc">http://www.alsa-project.org/main/index.php/Asoundrc</a>.</p>
+</div>
+<div class="section" id="playing-music">
+<h3>Playing Music<a class="headerlink" href="#playing-music" title="Permalink to this headline">¶</a></h3>
+<p>The simplest way to play music from the command line is with <code class="docutils literal"><span class="pre">media-sound/sox</span></code>. Install it with the following <code class="docutils literal"><span class="pre">USE</span></code> flags:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">amr</span></code>: adds support for Adaptive Multi-Rate Audio support</li>
+<li><code class="docutils literal"><span class="pre">flac</span></code>: adds support for the Free Lossless Audio Codec</li>
+<li><code class="docutils literal"><span class="pre">mad</span></code>: adds support for MP3</li>
+<li><code class="docutils literal"><span class="pre">ogg</span></code>: adds support for for ogg files</li>
+<li><code class="docutils literal"><span class="pre">wavpack</span></code>: adds support for wav files</li>
+<li><code class="docutils literal"><span class="pre">encode</span></code>: adds support for encoding</li>
+</ul>
+<p>Then, play music with <code class="docutils literal"><span class="pre">play</span></code>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> play Koji<span class="se">\ </span>Kondo/The<span class="se">\ </span>Legend<span class="se">\ </span>Of<span class="se">\ </span>Zelda<span class="se">\ </span>25th<span class="se">\ </span>Anniversary<span class="se">\ </span>Soundtrack/01<span class="se">\ </span>-<span class="se">\ </span>The<span class="se">\ </span>Legend<span class="se">\ </span>Of<span class="se">\ </span>Zelda<span class="se">\ </span>25th<span class="se">\ </span>Anniversary<span class="se">\ </span>Medley.mp3
+<span class="go">play WARN alsa: can&#39;t encode 0-bit Unknown or not applicable</span>
+
+<span class="go">Koji Kondo/The Legend Of Zelda 25th Anniversary Soundtrack/01 - The Legend Of Zelda 25th Anniversary Medley.mp3:</span>
+
+<span class="go"> File Size: 16.0M     Bit Rate: 263k</span>
+<span class="go">  Encoding: MPEG audio</span>
+<span class="go">  Channels: 2 @ 16-bit</span>
+<span class="go">Samplerate: 44100Hz</span>
+<span class="go">Replaygain: off</span>
+<span class="go">  Duration: 00:08:08.41</span>
+
+
+<span class="gp">In:0.00%</span> 00:00:00.00 <span class="o">[</span>00:08:08.41<span class="o">]</span> Out:0     <span class="o">[</span>      <span class="p">|</span>      <span class="o">]</span>        Clip:0
+</pre></div>
+</div>
+<p>For some reason, adding the flag <code class="docutils literal"><span class="pre">-t</span> <span class="pre">alsa</span></code> prevents the <code class="docutils literal"><span class="pre">can't</span> <span class="pre">encode</span> <span class="pre">0-bit</span></code> warning <a class="footnote-reference" href="#bitwarning" id="id4">[5]</a>.</p>
+</div>
+</div>
+<div class="section" id="grub-default-boot-choice">
+<h2>GRUB Default Boot Choice<a class="headerlink" href="#grub-default-boot-choice" title="Permalink to this headline">¶</a></h2>
+<p>In order to set the default boot choice in GRUB, edit the <code class="docutils literal"><span class="pre">GRUB_DEFAULT</span></code> variable in <code class="docutils literal"><span class="pre">/etc/default/grub</span></code>. It identifies the kernel to start counting from 0. For example, to boot the 5<sup>th</sup> kernel on the menu, use:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span><span class="nv">GRUB_DEFAULT</span><span class="o">=</span>4
+</pre></div>
+</div>
+<p>In order for this to work, I had to disable the GRUB submenus:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span><span class="nv">GRUB_DISABLE_SUBMENU</span><span class="o">=</span>y
+</pre></div>
+</div>
+</div>
+<div class="section" id="layman">
+<h2>Layman<a class="headerlink" href="#layman" title="Permalink to this headline">¶</a></h2>
+<p>Layman (<code class="docutils literal"><span class="pre">app-portage/layman</span></code>) is a program which makes it easy to manage overlays. When I installed the most recent unmaksed version (2.0.0-r3), I got the following warning:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">!!! Repository &#39;x-portage&#39; is missing masters attribute in &#39;/usr/local/portage/metadata/layout.conf&#39;</span>
+<span class="go">!!! Set &#39;masters = gentoo&#39; in this file for future compatibility</span>
+</pre></div>
+</div>
+<p>While I could fix the warning by creating that file and putting the line <code class="docutils literal"><span class="pre">masters</span> <span class="pre">=</span> <span class="pre">gentoo</span></code> in it, I decided to try the new version of layman (2.4.1-r1), even though it was masked. To install it, first set the <code class="docutils literal"><span class="pre">git</span></code> (for supporting overlays from git), <code class="docutils literal"><span class="pre">gpg</span></code> (for verifying overlays, but I am not sure if it is used), and  <code class="docutils literal"><span class="pre">sync-plugin-portage</span></code> (for using portage&#8217;s plugin system, which is what makes the new version different from the old one). In order to determine the keyword changes necessary, try to emerge it:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">emerge -pv =layman-2.4.1-r1</span>
+</pre></div>
+</div>
+<p>I had to make the following keyword changes in <code class="docutils literal"><span class="pre">/etc/portage/package.accept_keywords/layman</span></code>:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span><span class="c1"># required by app-portage/layman-2.4.1-r1::gentoo</span>
+<span class="c1"># required by =layman-2.4.1-r1 (argument)</span>
+<span class="o">=</span>dev-python/ssl-fetch-0.4 ~amd64
+<span class="c1"># required by =layman-2.4.1-r1 (argument)</span>
+<span class="o">=</span>app-portage/layman-2.4.1-r1 ~amd64
+<span class="c1"># required by app-portage/layman-2.4.1-r1::gentoo[gpg]</span>
+<span class="c1"># required by =layman-2.4.1-r1 (argument)</span>
+<span class="o">=</span>dev-python/pyGPG-0.2 ~amd64
+</pre></div>
+</div>
+<p>Run <code class="docutils literal"><span class="pre">layman-updater</span></code> to set it up:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> layman-updater -R
+<span class="go"> *   Creating layman&#39;s repos.conf file</span>
+<span class="go"> *   You are now ready to add overlays into your system.</span>
+<span class="go"> *</span>
+<span class="go"> *     layman -L</span>
+<span class="go"> *</span>
+<span class="go"> *   will display a list of available overlays.</span>
+<span class="go"> *</span>
+<span class="go"> *   Select an overlay and add it using</span>
+<span class="go"> *</span>
+<span class="go"> *     layman -a overlay-name</span>
+<span class="go"> *</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="avahi-daemon">
+<h2>Avahi Daemon<a class="headerlink" href="#avahi-daemon" title="Permalink to this headline">¶</a></h2>
+<p>The Avahi mDNS/DNS-SD daemon allows you to find computers and other things by name on the local network. It has two components: the deamon, <code class="docutils literal"><span class="pre">net-dns/avahi</span></code>, and the client, <code class="docutils literal"><span class="pre">sys-auth/nss-mdns</span></code>. In order to get the <code class="docutils literal"><span class="pre">avahi-browse</span></code> command and lots of other useful commands, <code class="docutils literal"><span class="pre">avahi</span></code> needs the <code class="docutils literal"><span class="pre">dbus</span></code> <code class="docutils literal"><span class="pre">USE</span></code> flag. After installing, start the daemon:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> rc-update add avahi-daemon default
+<span class="gp">#</span> rc-service avahi-daemon start
+</pre></div>
+</div>
+<p>To configure the client, edit the <code class="docutils literal"><span class="pre">/etc/nsswitch.conf</span></code> file. Find the line:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">hosts:       files dns</span>
+</pre></div>
+</div>
+<p>Change it to:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">hosts:       files mdns_minimal [NOTFOUND=return] dns mdns</span>
+</pre></div>
+</div>
+<p>While this option enables IPv6 support, to use only IPv4, use the line:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">hosts:       files mdns4_minimal [NOTFOUND=return] dns mdns4</span>
+</pre></div>
+</div>
+<p>If this line is wrong, the DNS system will not work properly (you will be able to ping 8.8.8.8, but not google.com). You should now be able to ping your computer:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> ping hostname.local
+</pre></div>
+</div>
+</div>
+<div class="section" id="common-unix-printing-system-cups">
+<h2>Common Unix Printing System (CUPS)<a class="headerlink" href="#common-unix-printing-system-cups" title="Permalink to this headline">¶</a></h2>
+<p>First, emerge <code class="docutils literal"><span class="pre">net-print/cups</span></code>. For a USB printer, set the <code class="docutils literal"><span class="pre">usb</span></code> <code class="docutils literal"><span class="pre">USE</span></code> flag. However, if USB printer support is enabled in the kernel, do not set the USB use flag. In order for CUPS to work properly, it needs to interface with Avahi, and so must have the <code class="docutils literal"><span class="pre">zeroconf</span></code> and <code class="docutils literal"><span class="pre">dbus</span></code> flags.</p>
+<p>Add users who will need to print to the <code class="docutils literal"><span class="pre">lp</span></code> group:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> gpasswd -a username lp
+</pre></div>
+</div>
+<p>Add users who will need to add printers to the <code class="docutils literal"><span class="pre">lpadmin</span></code> group:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> gpasswd -a username lpadmin
+</pre></div>
+</div>
+<p>Make the CUPS daemon start at boot:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> rc-update add cupsd default
+</pre></div>
+</div>
+<p>Scan for printers with <code class="docutils literal"><span class="pre">lpinfo</span></code>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> lpinfo -l -v
+<span class="go">Device: uri = https</span>
+<span class="go">        class = network</span>
+<span class="go">        info = Internet Printing Protocol (https)</span>
+<span class="go">        make-and-model = Unknown</span>
+<span class="go">        device-id =</span>
+<span class="go">        location =</span>
+<span class="go">Device: uri = ipps</span>
+<span class="go">        class = network</span>
+<span class="go">        info = Internet Printing Protocol (ipps)</span>
+<span class="go">        make-and-model = Unknown</span>
+<span class="go">        device-id =</span>
+<span class="go">        location =</span>
+<span class="go">Device: uri = http</span>
+<span class="go">        class = network</span>
+<span class="go">        info = Internet Printing Protocol (http)</span>
+<span class="go">        make-and-model = Unknown</span>
+<span class="go">        device-id =</span>
+<span class="go">        location =</span>
+<span class="go">Device: uri = lpd</span>
+<span class="go">        class = network</span>
+<span class="go">        info = LPD/LPR Host or Printer</span>
+<span class="go">        make-and-model = Unknown</span>
+<span class="go">        device-id =</span>
+<span class="go">        location =</span>
+<span class="go">Device: uri = ipp</span>
+<span class="go">        class = network</span>
+<span class="go">        info = Internet Printing Protocol (ipp)</span>
+<span class="go">        make-and-model = Unknown</span>
+<span class="go">        device-id =</span>
+<span class="go">        location =</span>
+<span class="go">Device: uri = socket</span>
+<span class="go">        class = network</span>
+<span class="go">        info = AppSocket/HP JetDirect</span>
+<span class="go">        make-and-model = Unknown</span>
+<span class="go">        device-id =</span>
+<span class="go">        location =</span>
+<span class="go">Device: uri = lpd://BRW008092859C92/BINARY_P1</span>
+<span class="go">        class = network</span>
+<span class="go">        info = Brother MFC-8950DW</span>
+<span class="go">        make-and-model = Brother MFC-8950DW</span>
+<span class="go">        device-id = MFG:Brother;CMD:PJL,PCL,PCLXL,URF;MDL:MFC-8950DW;CLS:PRINTER;CID:Brother Laser Type2;URF:W8,CP1,IS11-19-4,MT1-3-4-5-8-11,OB10,PQ4,RS300-600-1200,DM1;</span>
+<span class="go">        location = spaceport</span>
+<span class="go">Device: uri = dnssd://Brother%20MFC-8950DW._ipp._tcp.local/?uuid=e3248000-80ce-11db-8000-001ba9c62678</span>
+<span class="go">        class = network</span>
+<span class="go">        info = Brother MFC-8950DW</span>
+<span class="go">        make-and-model = Brother MFC-8950DW</span>
+<span class="go">        device-id = MFG:Brother;MDL:MFC-8950DW;CMD:PJL,PCL,PCLXL,URF;</span>
+<span class="go">        location =</span>
+</pre></div>
+</div>
+<p>To get a shorter output, just use the <code class="docutils literal"><span class="pre">-v</span></code> flag:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> lpinfo -v
+<span class="go">network https</span>
+<span class="go">network ipps</span>
+<span class="go">network http</span>
+<span class="go">network lpd</span>
+<span class="go">network ipp</span>
+<span class="go">network socket</span>
+<span class="go">network dnssd://Brother%20MFC-8950DW._ipps._tcp.local/?uuid=e3248000-80ce-11db-8000-001ba9c62678</span>
+<span class="go">network lpd://BRW008092859C92/BINARY_P1</span>
+</pre></div>
+</div>
+<p>Above, the <code class="docutils literal"><span class="pre">dnssd</span></code> addresses use the Internet Printing Protocol (IPP), which is newer the LPD protocol the other addresses use <a class="footnote-reference" href="#cupsprotocol" id="id5">[7]</a>. IPP also provides bidirectional communication, while LPD does not. Thus, choose IPP when possible.</p>
+<p>Look at the available drivers using <code class="docutils literal"><span class="pre">lpinfo</span></code>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> lpinfo -m
+<span class="go">lsb/usr/cupsfilters/Fuji_Xerox-DocuPrint_CM305_df-PDF.ppd Fuji Xerox</span>
+<span class="go">brother-BrGenML1-cups-en.ppd Brother BrGenML1 for CUPS</span>
+<span class="go">drv:///sample.drv/dymo.ppd Dymo Label Printer</span>
+<span class="go">drv:///sample.drv/epson9.ppd Epson 9-Pin Series</span>
+<span class="go">drv:///sample.drv/epson24.ppd Epson 24-Pin Series</span>
+<span class="go">drv:///cupsfilters.drv/pwgrast.ppd Generic IPP Everywhere Printer</span>
+<span class="go">drv:///sample.drv/generpcl.ppd Generic PCL Laser Printer</span>
+<span class="go">lsb/usr/cupsfilters/Generic-PDF_Printer-PDF.ppd Generic PDF Printer</span>
+<span class="go">drv:///sample.drv/generic.ppd Generic PostScript Printer</span>
+<span class="go">lsb/usr/cupsfilters/textonly.ppd Generic text-only printer</span>
+<span class="go">lsb/usr/cupsfilters/HP-Color_LaserJet_CM3530_MFP-PDF.ppd HP Color LaserJet CM3530 MFP PDF</span>
+<span class="go">lsb/usr/cupsfilters/pxlcolor.ppd HP Color LaserJet Series PCL 6 CUPS</span>
+<span class="go">drv:///cupsfilters.drv/dsgnjt600pcl.ppd HP DesignJet 600 pcl, 1.0</span>
+<span class="go">drv:///cupsfilters.drv/dsgnjt750cpcl.ppd HP DesignJet 750c pcl, 1.0</span>
+<span class="go">drv:///cupsfilters.drv/dsgnjt1050cpcl.ppd HP DesignJet 1050c pcl, 1.0</span>
+<span class="go">drv:///cupsfilters.drv/dsgnjt4000pcl.ppd HP DesignJet 4000 pcl, 1.0</span>
+<span class="go">drv:///cupsfilters.drv/dsgnjtt790pcl.ppd HP DesignJet T790 pcl, 1.0</span>
+<span class="go">drv:///cupsfilters.drv/dsgnjtt1100pcl.ppd HP DesignJet T1100 pcl, 1.0</span>
+<span class="go">drv:///sample.drv/deskjet.ppd HP DeskJet Series</span>
+<span class="go">drv:///sample.drv/laserjet.ppd HP LaserJet Series PCL 4/5</span>
+<span class="go">lsb/usr/cupsfilters/pxlmono.ppd HP LaserJet Series PCL 6 CUPS</span>
+<span class="go">lsb/usr/cupsfilters/HP-PhotoSmart_Pro_B8300-hpijs-pdftoijs.ppd HP PhotoSmart Pro B8300 CUPS/pdftoijs/hpijs</span>
+<span class="go">drv:///sample.drv/intelbar.ppd Intellitech IntelliBar Label Printer, 2.1</span>
+<span class="go">drv:///sample.drv/okidata9.ppd Oki 9-Pin Series</span>
+<span class="go">drv:///sample.drv/okidat24.ppd Oki 24-Pin Series</span>
+<span class="go">raw Raw Queue</span>
+<span class="go">lsb/usr/cupsfilters/Ricoh-PDF_Printer-PDF.ppd Ricoh PDF Printer</span>
+<span class="go">drv:///sample.drv/zebracpl.ppd Zebra CPCL Label Printer</span>
+<span class="go">drv:///sample.drv/zebraep1.ppd Zebra EPL1 Label Printer</span>
+<span class="go">drv:///sample.drv/zebraep2.ppd Zebra EPL2 Label Printer</span>
+<span class="go">drv:///sample.drv/zebra.ppd Zebra ZPL Label Printer</span>
+</pre></div>
+</div>
+<p>Then, install the printer:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> lpadmin -p Brother_MFC-8950DW -E -v dnssd://Brother%20MFC-8950DW._ipps._tcp.local/?uuid<span class="o">=</span>e3248000-80ce-11db-8000-001ba9c62678 -m brother-BrGenML1-cups-en.ppd
+</pre></div>
+</div>
+<p>Verify the setup with <code class="docutils literal"><span class="pre">lpstat</span></code>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> lpstat -d -l -t
+<span class="go">system default destination: Brother_MFC-8950DW</span>
+<span class="go">scheduler is running</span>
+<span class="go">system default destination: Brother_MFC-8950DW</span>
+<span class="go">device for Brother_MFC-8950DW: dnssd://Brother%20MFC-8950DW._ipps._tcp.local/?uuid=e3248000-80ce-11db-8000-001ba9c62678</span>
+<span class="go">Brother_MFC-8950DW accepting requests since Tue 19 Jul 2016 06:42:55 AM EDT</span>
+<span class="go">printer Brother_MFC-8950DW is idle.  enabled since Tue 19 Jul 2016 06:42:55 AM EDT</span>
+<span class="go">    Form mounted:</span>
+<span class="go">    Content types: any</span>
+<span class="go">    Printer types: unknown</span>
+<span class="go">    Description: Brother_MFC-8950DW</span>
+<span class="go">    Alerts: none</span>
+<span class="go">    Location:</span>
+<span class="go">    Connection: direct</span>
+<span class="go">    Interface: /etc/cups/ppd/Brother_MFC-8950DW.ppd</span>
+<span class="go">    On fault: no alert</span>
+<span class="go">    After fault: continue</span>
+<span class="go">    Users allowed:</span>
+<span class="go">            (all)</span>
+<span class="go">    Forms allowed:</span>
+<span class="go">            (none)</span>
+<span class="go">    Banner required</span>
+<span class="go">    Charset sets:</span>
+<span class="go">            (none)</span>
+<span class="go">    Default pitch:</span>
+<span class="go">    Default page size:</span>
+<span class="go">    Default port settings:</span>
+</pre></div>
+</div>
+<p>To set the default printer for a user, use <code class="docutils literal"><span class="pre">lpoptions</span></code>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> lpoptions -d Brother_MFC-8950DW
+<span class="go">copies=1 device-uri=dnssd://Brother%20MFC-8950DW._ipps._tcp.local/?uuid=e3248000-80ce-11db-8000-001ba9c62678 finishings=3 job-cancel-after=10800 job-hold-until=no-hold job-priority=50 job-sheets=none,none marker-change-time=0 number-up=1 printer-commands=AutoConfigure,Clean,PrintSelfTestPage printer-info=Brother_MFC-8950DW printer-is-accepting-jobs=true printer-is-shared=true printer-location printer-make-and-model=&#39;Brother BrGenML1 for CUPS &#39; printer-state=3 printer-state-change-time=1468924975 printer-state-reasons=none printer-type=8425492 printer-uri-supported=ipp://localhost/printers/Brother_MFC-8950DW</span>
+</pre></div>
+</div>
+<p>To view all the options for the printer, use <code class="docutils literal"><span class="pre">-l</span></code>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> lpoptions -p Brother_MFC-8950DW -l
+<span class="go">OptionTrays/Number of Input Trays: *1Trays 2Trays 3Trays</span>
+<span class="go">PageSize/Media Size: Custom.WIDTHxHEIGHT Letter Legal Executive FanFoldGermanLegal *A4 A5 A6 Env10 EnvMonarch EnvDL EnvC5 ISOB5 B5 ISOB6 B6 4x6 Postcard DoublePostcardRotated EnvYou4 195x270mm 184x260mm 197x273mm CUSTOM1 CUSTOM2 CUSTOM3</span>
+<span class="go">BrMediaType/MediaType: *PLAIN THIN THICK THICKERPAPER2 BOND ENV ENVTHICK ENVTHIN</span>
+<span class="go">InputSlot/InputSlot: MPTRAY TRAY1 TRAY2 TRAY3 MANUAL *AUTO</span>
+<span class="go">Duplex/Duplex: DuplexTumble DuplexNoTumble *None</span>
+<span class="go">Resolution/Resolution: 300dpi *600dpi 600x300dpi 2400x600dpi 1200dpi</span>
+<span class="go">TonerSaveMode/Toner Save: *OFF ON</span>
+<span class="go">Sleep/Sleep Time [Min.]: *PrinterDefault 2minutes 10minutes 30minutes</span>
+</pre></div>
+</div>
+<p>Set the options for the printer using the <code class="docutils literal"><span class="pre">-o</span></code> flag for each option:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> lpoptions -p Brother_MFC-8950DW -o <span class="nv">PageSize</span><span class="o">=</span>Letter -o <span class="nv">Duplex</span><span class="o">=</span>DuplexNoTumble -o <span class="nv">TonerSaveMode</span><span class="o">=</span>ON
+
+<span class="gp">$</span> lpoptions -p Brother_MFC-8950DW -l
+<span class="go">OptionTrays/Number of Input Trays: *1Trays 2Trays 3Trays</span>
+<span class="go">PageSize/Media Size: Custom.WIDTHxHEIGHT *Letter Legal Executive FanFoldGermanLegal A4 A5 A6 Env10 EnvMonarch EnvDL EnvC5 ISOB5 B5 ISOB6 B6 4x6 Postcard DoublePostcardRotated EnvYou4 195x270mm 184x260mm 197x273mm CUSTOM1 CUSTOM2 CUSTOM3</span>
+<span class="go">BrMediaType/MediaType: *PLAIN THIN THICK THICKERPAPER2 BOND ENV ENVTHICK ENVTHIN</span>
+<span class="go">InputSlot/InputSlot: MPTRAY TRAY1 TRAY2 TRAY3 MANUAL *AUTO</span>
+<span class="go">Duplex/Duplex: DuplexTumble *DuplexNoTumble None</span>
+<span class="go">Resolution/Resolution: 300dpi *600dpi 600x300dpi 2400x600dpi 1200dpi</span>
+<span class="go">TonerSaveMode/Toner Save: OFF *ON</span>
+<span class="go">Sleep/Sleep Time [Min.]: *PrinterDefault 2minutes 10minutes 30minutes</span>
+</pre></div>
+</div>
+<p>For duplex, <code class="docutils literal"><span class="pre">DuplexTumble</span></code> means short-side stapling and <code class="docutils literal"><span class="pre">DuplexNoTumble</span></code> means long-side stapling.</p>
+<p>To print a test page from the command line, use:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> locate testprint
+<span class="go">/usr/share/cups/data/testprint</span>
+<span class="gp">$</span> lp /usr/share/cups/data/testprint
+<span class="go">request id is Brother_MFC-8950DW-9 (1 file(s))</span>
+</pre></div>
+</div>
+<div class="section" id="brother-printers">
+<h3>Brother Printers<a class="headerlink" href="#brother-printers" title="Permalink to this headline">¶</a></h3>
+<p>This section explains how I installed the driver for my Brother printer <a class="footnote-reference" href="#brotherprinters" id="id6">[8]</a>.</p>
+<p>To get the Brother printer drivers, the easiest way is to use the Brother overlay: <a class="reference external" href="https://github.com/stefan-langenmaier/brother-overlay/tree/master/">https://github.com/stefan-langenmaier/brother-overlay/tree/master/</a>. Install the overlay with Layman:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> layman -o https://raw.github.com/stefan-langenmaier/brother-overlay/master/repositories.xml -f -a brother-overlay
+
+<span class="go"> * Fetching remote list...</span>
+<span class="go"> * Fetch Ok</span>
+
+<span class="go"> * Adding overlay...</span>
+<span class="go"> * Overlay &quot;brother-overlay&quot; is not official. Continue installing? [y/n]: y</span>
+<span class="go"> * Running Git... # ( cd /var/lib/layman  &amp;&amp; /usr/bin/git clone git://github.com/stefan-langenmaier/brother-overlay.git /var/lib/layman/brother-overlay )</span>
+<span class="go">Cloning into &#39;/var/lib/layman/brother-overlay&#39;...</span>
+<span class="go">remote: Counting objects: 2077, done.</span>
+<span class="go">remote: Total 2077 (delta 0), reused 0 (delta 0), pack-reused 2077</span>
+<span class="go">Receiving objects: 100% (2077/2077), 386.25 KiB | 166.00 KiB/s, done.</span>
+<span class="go">Resolving deltas: 100% (1018/1018), done.</span>
+<span class="go">Checking connectivity... done.</span>
+<span class="go"> * Running Git... # ( cd /var/lib/layman/brother-overlay  &amp;&amp; /usr/bin/git config user.name &quot;layman&quot; )</span>
+<span class="go"> * Running Git... # ( cd /var/lib/layman/brother-overlay  &amp;&amp; /usr/bin/git config user.email &quot;layman@localhost&quot; )</span>
+<span class="go"> * Successfully added overlay(s) brother-overlay.</span>
+</pre></div>
+</div>
+<p>Search for the printer driver:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> eix *8950*
+<span class="go">* media-gfx/brother-mfc8950dw-bin [1]</span>
+<span class="go">     Available versions:  1.0</span>
+<span class="go">     Homepage:            http://support.brother.com</span>
+<span class="go">     Description:         Scanner driver for Brother MFC-8950DW (brscan4)</span>
+
+<span class="go">* net-print/brother-mfc8950dw-bin [1]</span>
+<span class="go">     Available versions:  1.0</span>
+<span class="go">     Installed versions:  1.0(06:37:35 AM 07/19/2016)</span>
+<span class="go">     Homepage:            http://support.brother.com</span>
+<span class="go">     Description:         Printer driver for Brother MFC-8950DW (brgenml1)</span>
+
+<span class="go">* net-print/brother-mfc8950dwt-bin [1]</span>
+<span class="go">     Available versions:  1.0</span>
+<span class="go">     Homepage:            http://support.brother.com</span>
+<span class="go">     Description:         Printer driver for Brother MFC-8950DWT (brgenml1)</span>
+
+<span class="go">[1] &quot;brother-overlay&quot; /usr/local/portage/brother-overlay</span>
+
+<span class="go">Found 3 matches</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">net-print</span></code> prefix contains the printer drivers, and the <code class="docutils literal"><span class="pre">media-gfx</span></code> contains the scanner drivers.</p>
+</div>
+</div>
+<div class="section" id="sensors">
+<h2>Sensors<a class="headerlink" href="#sensors" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">sys-apps/lm_sensors</span></code> allows the computer to detect the processor temperature, fan speed, and other things. I used the <code class="docutils literal"><span class="pre">sensord</span></code> use flag to get a daemon which can log the sensor data, but I never used the deamon. Install it, and then run <code class="docutils literal"><span class="pre">sensors-detect</span></code> to determine which kernel modules are needed for the sensors. I think this only works properly if all the possible sensor drivers are built as modules already, and then the program determines which ones need to be used. I had to use the following kernel modules:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> For sensors
+<span class="go">I2C support ---&gt;</span>
+<span class="go">    -*- I2C support</span>
+<span class="go">    &lt;*&gt;       I2C device interface</span>
+<span class="go">-*- Hardware Monitoring support ---&gt;</span>
+<span class="go">    &lt;*&gt; Intel Core/Core2/Atom temperature sensor</span>
+<span class="go">    &lt;*&gt; Nuvoton NCT6775F and compatibles</span>
+</pre></div>
+</div>
+<p>I figured them out using a test Ubuntu installation, which had all the modules built. I am not sure if there is an easier way to do it. Once that is done, run <code class="docutils literal"><span class="pre">sensors</span></code> to get the readings:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sensors
+<span class="go">coretemp-isa-0000</span>
+<span class="go">Adapter: ISA adapter</span>
+<span class="go">Physical id 0:  +19.0°C  (high = +80.0°C, crit = +100.0°C)</span>
+<span class="go">Core 0:         +16.0°C  (high = +80.0°C, crit = +100.0°C)</span>
+<span class="go">Core 1:         +17.0°C  (high = +80.0°C, crit = +100.0°C)</span>
+<span class="go">Core 2:         +16.0°C  (high = +80.0°C, crit = +100.0°C)</span>
+<span class="go">Core 3:         +18.0°C  (high = +80.0°C, crit = +100.0°C)</span>
+
+<span class="go">nct6791-isa-0290</span>
+<span class="go">Adapter: ISA adapter</span>
+<span class="go">in0:                    +0.38 V  (min =  +0.00 V, max =  +1.74 V)</span>
+<span class="go">in1:                    +1.70 V  (min =  +0.00 V, max =  +0.00 V)  ALARM</span>
+<span class="go">in2:                    +3.41 V  (min =  +0.00 V, max =  +0.00 V)  ALARM</span>
+<span class="go">in3:                    +3.41 V  (min =  +0.00 V, max =  +0.00 V)  ALARM</span>
+<span class="go">in4:                    +1.02 V  (min =  +0.00 V, max =  +0.00 V)  ALARM</span>
+<span class="go">in5:                    +1.02 V  (min =  +0.00 V, max =  +0.00 V)  ALARM</span>
+<span class="go">in6:                    +1.02 V  (min =  +0.00 V, max =  +0.00 V)  ALARM</span>
+<span class="go">in7:                    +3.50 V  (min =  +0.00 V, max =  +0.00 V)  ALARM</span>
+<span class="go">in8:                    +3.22 V  (min =  +0.00 V, max =  +0.00 V)  ALARM</span>
+<span class="go">in9:                    +1.02 V  (min =  +0.00 V, max =  +0.00 V)  ALARM</span>
+<span class="go">in10:                   +0.00 V  (min =  +0.00 V, max =  +0.00 V)</span>
+<span class="go">in11:                   +0.97 V  (min =  +0.00 V, max =  +0.00 V)  ALARM</span>
+<span class="go">in12:                   +1.38 V  (min =  +0.00 V, max =  +0.00 V)  ALARM</span>
+<span class="go">in13:                   +1.28 V  (min =  +0.00 V, max =  +0.00 V)  ALARM</span>
+<span class="go">in14:                   +1.07 V  (min =  +0.00 V, max =  +0.00 V)  ALARM</span>
+<span class="go">fan1:                   903 RPM  (min =    0 RPM)</span>
+<span class="go">fan2:                   738 RPM  (min =    0 RPM)</span>
+<span class="go">fan3:                   549 RPM  (min =    0 RPM)</span>
+<span class="go">fan4:                     0 RPM  (min =    0 RPM)</span>
+<span class="go">fan5:                     0 RPM  (min =    0 RPM)</span>
+<span class="go">fan6:                     0 RPM</span>
+<span class="go">SYSTIN:                 +29.0°C  (high =  +0.0°C, hyst =  +0.0°C)  ALARM  sensor = thermistor</span>
+<span class="go">CPUTIN:                 +24.0°C  (high = +80.0°C, hyst = +75.0°C)  sensor = thermistor</span>
+<span class="go">AUXTIN0:                +25.0°C    sensor = thermistor</span>
+<span class="go">AUXTIN1:               -128.0°C    sensor = thermistor</span>
+<span class="go">AUXTIN2:                +28.0°C    sensor = thermistor</span>
+<span class="go">AUXTIN3:                +22.0°C    sensor = thermistor</span>
+<span class="go">PECI Agent 0:           +18.5°C  (high = +80.0°C, hyst = +75.0°C)</span>
+<span class="go">                                 (crit = +100.0°C)</span>
+<span class="go">PCH_CHIP_CPU_MAX_TEMP:   +0.0°C</span>
+<span class="go">PCH_CHIP_TEMP:           +0.0°C</span>
+<span class="go">PCH_CPU_TEMP:            +0.0°C</span>
+<span class="go">intrusion0:            ALARM</span>
+<span class="go">intrusion1:            ALARM</span>
+<span class="go">beep_enable:           disabled</span>
+</pre></div>
+</div>
+<p>The core temperatures are way to low to be right; 17-19 °C is far below room temperature. I beleive they are off by about 20 °C because the UEFI setup tool shows that the processor idles at around 38 °C.</p>
+</div>
+<div class="section" id="locate">
+<h2>Locate<a class="headerlink" href="#locate" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">sys-apps/mlocate</span></code> makes it easy to locate files. See more information here: <a class="reference external" href="https://wiki.gentoo.org/wiki/Mlocate">https://wiki.gentoo.org/wiki/Mlocate</a>.</p>
+</div>
+<div class="section" id="desktop-environment">
+<h2>Desktop environment<a class="headerlink" href="#desktop-environment" title="Permalink to this headline">¶</a></h2>
+<p>Coming soon!</p>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="portagehashes" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>See <a class="reference external" href="https://forums-web2.gentoo.org/viewtopic-t-831293-start-0.html">https://forums-web2.gentoo.org/viewtopic-t-831293-start-0.html</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="portagegpgconf" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>This is simliar to the Gentoo website (<a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Working/Features#Validated_Portage_tree_snapshots">https://wiki.gentoo.org/wiki/Handbook:AMD64/Working/Features#Validated_Portage_tree_snapshots</a>), but I had to modify it to make it work.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="wicd" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[3]</td><td>See <a class="reference external" href="https://wiki.gentoo.org/wiki/Wicd">https://wiki.gentoo.org/wiki/Wicd</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="alsawiki" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[4]</a></td><td>See <a class="reference external" href="https://wiki.gentoo.org/wiki/ALSA">https://wiki.gentoo.org/wiki/ALSA</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="bitwarning" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[5]</a></td><td>See <a class="reference external" href="https://github.com/floere/playa/issues/6">https://github.com/floere/playa/issues/6</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[6]</td><td>See <a class="reference external" href="https://wiki.gentoo.org/wiki/Layman">https://wiki.gentoo.org/wiki/Layman</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="cupsprotocol" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[7]</a></td><td>See <a class="reference external" href="http://askubuntu.com/questions/401119/should-i-set-up-my-cups-printing-to-use-ipp-lpd-or-url">http://askubuntu.com/questions/401119/should-i-set-up-my-cups-printing-to-use-ipp-lpd-or-url</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="brotherprinters" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[8]</a></td><td>For more information about Brother printers, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Brother_networked_printer">https://wiki.gentoo.org/wiki/Brother_networked_printer</a>.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2016, Jacob Glueck.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

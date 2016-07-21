@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installation &mdash; Gentoo Guide 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.3.6/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="Gentoo Guide 1.0.0 documentation" href="index.html" />
+    <link rel="next" title="Setup" href="Setup.html" />
+    <link rel="prev" title="Introduction" href="Introduction.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          Gentoo Guide</a>
+        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Introduction.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Introduction.html#setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Introduction.html#cool-stuff">Cool stuff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Introduction.html#conventions">Conventions</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#booting">Booting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuring-the-network">Configuring the Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#partitioning">Partitioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#encrypting">Encrypting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configure-encryption">Configure encryption</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configure-lvm">Configure LVM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-the-filesystems">Create the filesystems</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mount-the-filesystems">Mount the filesystems</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-stage-3">Installing stage 3</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#set-the-date">Set the date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#downloading-the-stage-3-tarball">Downloading the stage 3 tarball</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#picking-an-editor">Picking an editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuring-compile-options">Configuring compile options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuring-the-main-gentoo-repository">Configuring the main Gentoo repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#copy-dns-configuration">Copy DNS configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id19">Mount the filesystems</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#enter-the-new-environment">Enter the new environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuring-portage">Configuring portage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configure-the-timezone">Configure the timezone</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configure-the-locale">Configure the locale</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#kernel">Kernel</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#install-the-sources">Install the sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configure-the-kernel">Configure the kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#make-the-initramfs">Make the initramfs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#naming-the-files">Naming the files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#system-configuration">System Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#filesystem-mounting">Filesystem Mounting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#name-the-computer">Name the computer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuring-ethernet">Configuring ethernet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-a-root-password">Set a root password</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-up-a-system-logger">Set up a system logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-up-a-cron-daemon">Set up a cron daemon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ssh">SSH</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lvm">LVM</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#bootloader">Bootloader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installing-the-bootloader">Installing the bootloader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rebooting">Rebooting</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rescue">Rescue</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Setup.html">Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#gpg-signed-portage-snapshots">GPG signed portage snapshots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#paxtest">PaXtest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#setting-up-ccache">Setting up ccache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#configuring-wifi-using-wicd">Configuring WiFi using <code class="docutils literal"><span class="pre">wicd</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#sound">Sound</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Setup.html#alsa-setup">ALSA Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Setup.html#playing-music">Playing Music</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#grub-default-boot-choice">GRUB Default Boot Choice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#layman">Layman</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#avahi-daemon">Avahi Daemon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#common-unix-printing-system-cups">Common Unix Printing System (CUPS)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Setup.html#brother-printers">Brother Printers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#sensors">Sensors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#locate">Locate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#desktop-environment">Desktop environment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Cool-Stuff.html">Cool Stuff</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Cool-Stuff.html#cool-packages">Cool packages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#cowsay"><code class="docutils literal"><span class="pre">cowsay</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#fortune"><code class="docutils literal"><span class="pre">fortune</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#linux-logo"><code class="docutils literal"><span class="pre">linux-logo</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#libcaca"><code class="docutils literal"><span class="pre">libcaca</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#toilet"><code class="docutils literal"><span class="pre">toilet</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#figlet"><code class="docutils literal"><span class="pre">figlet</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Cool-Stuff.html#cool-tricks">Cool tricks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#cool-login-prompts-with-etc-motd-and-etc-issue">Cool login prompts with <code class="docutils literal"><span class="pre">/etc/motd</span></code> and <code class="docutils literal"><span class="pre">/etc/issue</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#nice-console-font-with-consolefont">Nice console font with <code class="docutils literal"><span class="pre">consolefont</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#ascii-art-linux-penguin-at-boot-with-linux-logo">ASCII art Linux penguin at boot with <code class="docutils literal"><span class="pre">linux-logo</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#cool-grub-theme">Cool grub theme</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Cool-Stuff.html#useful-commands">Useful commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#image-a-failing-drive-with-dd">Image a failing drive with <code class="docutils literal"><span class="pre">dd</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#mount-images-made-with-dd-using-losetup">Mount images made with <code class="docutils literal"><span class="pre">dd</span></code> using <code class="docutils literal"><span class="pre">losetup</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cool-Stuff.html#use-fdisk-l-on-a-file">Use <code class="docutils literal"><span class="pre">fdisk</span> <span class="pre">-l</span></code> on a file</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Installation</a><ul>
+<li><a class="reference internal" href="#setup">Setup</a></li>
+<li><a class="reference internal" href="#booting">Booting</a></li>
+<li><a class="reference internal" href="#configuring-the-network">Configuring the Network</a></li>
+<li><a class="reference internal" href="#partitioning">Partitioning</a></li>
+<li><a class="reference internal" href="#encrypting">Encrypting</a><ul>
+<li><a class="reference internal" href="#configure-encryption">Configure encryption</a></li>
+<li><a class="reference internal" href="#configure-lvm">Configure LVM</a></li>
+<li><a class="reference internal" href="#create-the-filesystems">Create the filesystems</a></li>
+<li><a class="reference internal" href="#mount-the-filesystems">Mount the filesystems</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#installing-stage-3">Installing stage 3</a><ul>
+<li><a class="reference internal" href="#set-the-date">Set the date</a></li>
+<li><a class="reference internal" href="#downloading-the-stage-3-tarball">Downloading the stage 3 tarball</a></li>
+<li><a class="reference internal" href="#picking-an-editor">Picking an editor</a></li>
+<li><a class="reference internal" href="#configuring-compile-options">Configuring compile options</a></li>
+<li><a class="reference internal" href="#configuring-the-main-gentoo-repository">Configuring the main Gentoo repository</a></li>
+<li><a class="reference internal" href="#copy-dns-configuration">Copy DNS configuration</a></li>
+<li><a class="reference internal" href="#id19">Mount the filesystems</a></li>
+<li><a class="reference internal" href="#enter-the-new-environment">Enter the new environment</a></li>
+<li><a class="reference internal" href="#configuring-portage">Configuring portage</a></li>
+<li><a class="reference internal" href="#configure-the-timezone">Configure the timezone</a></li>
+<li><a class="reference internal" href="#configure-the-locale">Configure the locale</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kernel">Kernel</a><ul>
+<li><a class="reference internal" href="#install-the-sources">Install the sources</a></li>
+<li><a class="reference internal" href="#configure-the-kernel">Configure the kernel</a></li>
+<li><a class="reference internal" href="#make-the-initramfs">Make the initramfs</a></li>
+<li><a class="reference internal" href="#naming-the-files">Naming the files</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#system-configuration">System Configuration</a><ul>
+<li><a class="reference internal" href="#filesystem-mounting">Filesystem Mounting</a></li>
+<li><a class="reference internal" href="#name-the-computer">Name the computer</a></li>
+<li><a class="reference internal" href="#configuring-ethernet">Configuring ethernet</a></li>
+<li><a class="reference internal" href="#set-a-root-password">Set a root password</a></li>
+<li><a class="reference internal" href="#set-up-a-system-logger">Set up a system logger</a></li>
+<li><a class="reference internal" href="#set-up-a-cron-daemon">Set up a cron daemon</a></li>
+<li><a class="reference internal" href="#ssh">SSH</a></li>
+<li><a class="reference internal" href="#lvm">LVM</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bootloader">Bootloader</a><ul>
+<li><a class="reference internal" href="#installing-the-bootloader">Installing the bootloader</a></li>
+<li><a class="reference internal" href="#rebooting">Rebooting</a><ul>
+<li><a class="reference internal" href="#rescue">Rescue</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="Introduction.html" title="Previous Chapter: Introduction"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Introduction</span>
+    </a>
+  </li>
+  <li>
+    <a href="Setup.html" title="Next Chapter: Setup"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Setup &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/Installation.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>This section covers installing hardened Gentoo with an encrypted root partition on a machine which boots using UEFI. This section follows the Gentoo Handbook (<a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64">https://wiki.gentoo.org/wiki/Handbook:AMD64</a>), but explains specifically how I configured my system, and thus does not explain all the different choices discussed in the handbook.</p>
+<div class="section" id="setup">
+<span id="setup-verify"></span><h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>Fist, make a flash drive with a bootable version of Gentoo on it. Either a minimal installation disk or a LiveDVD works, and both are available from <a class="reference external" href="https://www.gentoo.org/downloads/">https://www.gentoo.org/downloads/</a>. However, only the LiveDVD can boot using UEFI, and thus only the LiveDVD can be used to set up a system which will boot from UEFI <a class="footnote-reference" href="#uefi" id="id1">[1]</a> . The LiveDVD has a full KDE desktop environment which might be easier to use, but is not necessary. Download the image and the <code class="docutils literal"><span class="pre">.DIGESTS.asc</span></code> file. Next, get the Gentoo keys:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> gpg --keyserver hkps.pool.sks-keyservers.net --recv-keys 0xBB572E0E2D182910
+</pre></div>
+</div>
+<p>A list of the keys is available at <a class="reference external" href="https://www.gentoo.org/downloads/signatures/">https://www.gentoo.org/downloads/signatures/</a>. The <code class="docutils literal"><span class="pre">0xBB572E0E2D182910</span></code> key ID is the &#8220;Gentoo Linux Release Engineering (Automated Weekly Release Key)&#8221; which is probably the key that the ISO file was signed with. Then, verify the file:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> gpg --verify install-amd64-minimal-20141204.iso.DIGESTS.asc
+</pre></div>
+</div>
+<p>GPG should say something like <code class="docutils literal"><span class="pre">Good</span> <span class="pre">signature</span> <span class="pre">from</span> <span class="pre">&quot;Gentoo</span> <span class="pre">Linux</span> <span class="pre">Release</span> <span class="pre">Engineering</span> <span class="pre">(Automated</span> <span class="pre">Weekly</span> <span class="pre">Release</span> <span class="pre">Key)</span> <span class="pre">&lt;releng&#64;gentoo.org&gt;&quot;</span></code>. After that, it will print the fingerprint of the key: <code class="docutils literal"><span class="pre">Primary</span> <span class="pre">key</span> <span class="pre">fingerprint:</span> <span class="pre">13EB</span> <span class="pre">BDBE</span> <span class="pre">DE7A</span> <span class="pre">1277</span> <span class="pre">5DFD</span> <span class="pre">B1BA</span> <span class="pre">BB57</span> <span class="pre">2E0E</span> <span class="pre">2D18</span> <span class="pre">2910</span></code>. If the signature is good and the key fingerprint matches the one at <a class="reference external" href="https://www.gentoo.org/downloads/signatures/">https://www.gentoo.org/downloads/signatures/</a>, then the digests file is good. Next, compute the SHA 512 sum of the ISO file. On Linux, use:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sha512sum install-amd64-minimal-20141204.iso
+</pre></div>
+</div>
+<p>On OS X, use:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> shasum -a <span class="m">512</span> install-amd64-minimal-20141204.iso
+</pre></div>
+</div>
+<p>Finally, get the expected hash, which will be:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> grep -m <span class="m">1</span> -i sha512 install-amd64-minimal-20141204.iso.DIGESTS.asc
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">-m</span> <span class="pre">1</span></code> makes <code class="docutils literal"><span class="pre">grep</span></code> only print the first match, and the <code class="docutils literal"><span class="pre">-i</span></code> makes it case insensitive. If the expected hash matches the actual hash, continue. Otherwise, try downloading the file again, perhaps from a different mirror.</p>
+<p>Next, burn the ISO file to a CD, or copy it to a flash drive. The standard way to copy the image to a flash drive is with <code class="docutils literal"><span class="pre">dd</span></code>:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>$ dd if=install-amd64-minimal-20141204.iso of=/dev/sda bs=1M
+</pre></div>
+</div>
+<p>The input file (<code class="docutils literal"><span class="pre">if</span></code>) is the downloaded ISO, and the output file (<code class="docutils literal"><span class="pre">of</span></code>) is the flash drive. To determine the name of the flash drive, use <code class="docutils literal"><span class="pre">fdisk</span> <span class="pre">-l</span></code> on Linux or, on OS X, use <code class="docutils literal"><span class="pre">diskutil</span> <span class="pre">list</span></code>. Finally, <code class="docutils literal"><span class="pre">bs</span></code> is the block size. 1 mebibyte generally works well. On OS X, use <code class="docutils literal"><span class="pre">bs=1m</span></code>. While this works, <code class="docutils literal"><span class="pre">dd</span></code> does not have a progress indicator, which can be annoying. To solve this, use a combination of <code class="docutils literal"><span class="pre">pv</span></code> and <code class="docutils literal"><span class="pre">dd</span></code>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> pv install-amd64-minimal-20141204.iso <span class="p">|</span> dd <span class="nv">of</span><span class="o">=</span>/dev/sdb <span class="nv">bs</span><span class="o">=</span>1M
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">pv</span></code> copies its input file to standard output, and displays a progress bar with the status of the copy. It is also possible to use <code class="docutils literal"><span class="pre">pv</span></code> by itself:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> pv install-amd64-minimal-20141204.iso &gt; /dev/sdb
+</pre></div>
+</div>
+<p>However, then you cannot control the block size. According to a benchmark online <a class="footnote-reference" href="#catdd" id="id2">[2]</a>, <code class="docutils literal"><span class="pre">cat</span></code> (which is about the same as <code class="docutils literal"><span class="pre">pv</span></code>) performs about the same as <code class="docutils literal"><span class="pre">dd</span></code>:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="46%" />
+<col width="26%" />
+<col width="29%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Command</th>
+<th class="head">Same (s)</th>
+<th class="head">Diff (s)</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">dd</span> <span class="pre">bs=64M</span></code></td>
+<td>71.1</td>
+<td>51.3</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">dd</span> <span class="pre">bs=1M</span></code></td>
+<td>73.9</td>
+<td>41.8</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">dd</span> <span class="pre">bs=4k</span></code></td>
+<td>79.6</td>
+<td>48.5</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">dd</span> <span class="pre">bs=512</span></code></td>
+<td>85.3</td>
+<td>48.9</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">cat</span></code></td>
+<td>76.2</td>
+<td>41.7</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">cp</span></code></td>
+<td>77.8</td>
+<td>45.3</td>
+</tr>
+</tbody>
+</table>
+<p>The same column is the copying time of a 2 GB file from the original filesystem to a different file on the same filesystem. The diff column is the copying of a 2 GB file to a different drive. For the same column, <code class="docutils literal"><span class="pre">cat</span></code> is about 7.2% slower than <code class="docutils literal"><span class="pre">dd</span></code>. For the diff column, <code class="docutils literal"><span class="pre">cat</span></code> is about equal to the fastest <code class="docutils literal"><span class="pre">dd</span></code> run. Thus, just using <code class="docutils literal"><span class="pre">pv</span></code> by itself is probably fine.</p>
+</div>
+<div class="section" id="booting">
+<h2>Booting<a class="headerlink" href="#booting" title="Permalink to this headline">¶</a></h2>
+<p>Plug the flash drive into the computer, and boot the computer from the flash drive <a class="footnote-reference" href="#boot" id="id3">[3]</a>. (Use the BIOS or UEFI boot menu.)</p>
+</div>
+<div class="section" id="configuring-the-network">
+<h2>Configuring the Network<a class="headerlink" href="#configuring-the-network" title="Permalink to this headline">¶</a></h2>
+<p>If the computer is plugged in with an Ethernet cable and is assigned an IP address using DHCP, then the network probably just works. Test it by pinging Google:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> ping google.com
+</pre></div>
+</div>
+<p>If the network does not work, follow the Gentoo handbook: <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Networking">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Networking</a>.</p>
+</div>
+<div class="section" id="partitioning">
+<h2>Partitioning<a class="headerlink" href="#partitioning" title="Permalink to this headline">¶</a></h2>
+<p>The encrypted disk will have three partitions on it: one for GRUB (the GRand Unified Bootloader), one for <code class="docutils literal"><span class="pre">/boot</span></code>, and the encrypted partition. The encrypted partition (<code class="docutils literal"><span class="pre">encr</span></code>) will be set up with Logical Volume Management (LVM) have one volume group on it (<code class="docutils literal"><span class="pre">vg1</span></code>), which will hold two logical volumes: the root filesystem and swap. Assuming the disk is at <code class="docutils literal"><span class="pre">/dev/sda</span></code>, the partition structure will look like this:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">/dev/sda</span>
+<span class="go">|-- /dev/sda1 (vfat, grub)</span>
+<span class="go">|-- /dev/sda2 (ext4, boot)</span>
+<span class="go">`-- /dev/sda3 (encr)</span>
+<span class="go">    `-- vg1</span>
+<span class="go">        |-- dev/vg1/root (ext4, root)</span>
+<span class="go">        `-- /dev/vg1/swap (swap)</span>
+</pre></div>
+</div>
+<p>As the computer will use the Unified Extensible Firmware Interface (UEFI) <a class="footnote-reference" href="#uefibios" id="id4">[4]</a> to book, the disk must use a GUID Partition Table (GPT). To make a GPT partition table, first install <code class="docutils literal"><span class="pre">gdisk</span></code>: <code class="docutils literal"><span class="pre">emerge</span> <span class="pre">gptfdisk</span></code>. Then, run it:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> gdisk
+<span class="go">GPT fdisk (gdisk) version 1.0.1</span>
+
+<span class="go">Type device filename, or press &lt;Enter&gt; to exit: /dev/sda</span>
+<span class="go">Partition table scan:</span>
+<span class="go">  MBR: not present</span>
+<span class="go">  BSD: not present</span>
+<span class="go">  APM: not present</span>
+<span class="go">  GPT: not present</span>
+
+<span class="go">Creating new GPT entries.</span>
+
+<span class="go">Command (? for help):</span>
+</pre></div>
+</div>
+<p>Type in the name of the drive to install Gentoo on instead of <code class="docutils literal"><span class="pre">/dev/sda</span></code>. <code class="docutils literal"><span class="pre">gdisk</span></code> provides the following commands:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">b    back up GPT data to a file</span>
+<span class="go">c    change a partition&#39;s name</span>
+<span class="go">d    delete a partition</span>
+<span class="go">i    show detailed information on a partition</span>
+<span class="go">l    list known partition types</span>
+<span class="go">n    add a new partition</span>
+<span class="go">o    create a new empty GUID partition table (GPT)</span>
+<span class="go">p    print the partition table</span>
+<span class="go">q    quit without saving changes</span>
+<span class="go">r    recovery and transformation options (experts only)</span>
+<span class="go">s    sort partitions</span>
+<span class="go">t    change a partition&#39;s type code</span>
+<span class="go">v    verify disk</span>
+<span class="go">w    write table to disk and exit</span>
+<span class="go">x    extra functionality (experts only)</span>
+<span class="go">?    print this menu</span>
+</pre></div>
+</div>
+<p>Now, make the <code class="docutils literal"><span class="pre">grub</span></code> partition:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">Command (? for help): n</span>
+<span class="go">Partition number (1-128, default 1):</span>
+<span class="go">First sector (34-16383966, default = 2048) or {+-}size{KMGTP}:</span>
+<span class="go">Last sector (2048-16383966, default = 16383966) or {+-}size{KMGTP}: +2M</span>
+<span class="go">Current type is &#39;Linux filesystem&#39;</span>
+<span class="go">Hex code or GUID (L to show codes, Enter = 8300): EF02</span>
+<span class="go">Changed type of partition to &#39;BIOS boot partition&#39;</span>
+</pre></div>
+</div>
+<p>The 2 MiB size is the size specified in the Gentoo handbook, as is the initial 2048 byte offset <a class="footnote-reference" href="#offset" id="id5">[6]</a>. The <code class="docutils literal"><span class="pre">0xEF02</span></code> code is the partition type <a class="footnote-reference" href="#typecodes" id="id6">[5]</a>. Next, make the boot partition:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">Command (? for help): n</span>
+<span class="go">Partition number (2-128, default 2):</span>
+<span class="go">First sector (34-16383966, default = 6144) or {+-}size{KMGTP}:</span>
+<span class="go">Last sector (6144-16383966, default = 16383966) or {+-}size{KMGTP}: +128M</span>
+<span class="go">Current type is &#39;Linux filesystem&#39;</span>
+<span class="go">Hex code or GUID (L to show codes, Enter = 8300):</span>
+<span class="go">Changed type of partition to &#39;Linux filesystem&#39;</span>
+</pre></div>
+</div>
+<p>Once again, the 128 MiB size is from the Gentoo handbook. Finally, make the encrypted partition:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">Command (? for help): n</span>
+<span class="go">Partition number (3-128, default 3):</span>
+<span class="go">First sector (34-16383966, default = 268288) or {+-}size{KMGTP}:</span>
+<span class="go">Last sector (268288-16383966, default = 16383966) or {+-}size{KMGTP}:</span>
+<span class="go">Current type is &#39;Linux filesystem&#39;</span>
+<span class="go">Hex code or GUID (L to show codes, Enter = 8300):</span>
+<span class="go">Changed type of partition to &#39;Linux filesystem&#39;</span>
+</pre></div>
+</div>
+<p>This uses up the rest of the disk. Now, name the partitions. Call the first partition <code class="docutils literal"><span class="pre">grub</span></code>, the second one <code class="docutils literal"><span class="pre">boot</span></code> and the third one <code class="docutils literal"><span class="pre">encr</span></code>. Use the <code class="docutils literal"><span class="pre">c</span></code> command to do this:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">Command (? for help): c</span>
+<span class="go">Partition number (1-3): 1</span>
+<span class="go">Enter name: grub</span>
+</pre></div>
+</div>
+<p>Type <code class="docutils literal"><span class="pre">p</span></code> to see the result:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">Command (? for help): p</span>
+<span class="go">Disk /dev/sda: 16384000 sectors, 7.8 GiB</span>
+<span class="go">Logical sector size: 512 bytes</span>
+<span class="go">Disk identifier (GUID): E394C90D-8445-4B21-8247-A0BFCCD827B9</span>
+<span class="go">Partition table holds up to 128 entries</span>
+<span class="go">First usable sector is 34, last usable sector is 16383966</span>
+<span class="go">Partitions will be aligned on 2048-sector boundaries</span>
+<span class="go">Total free space is 2014 sectors (1007.0 KiB)</span>
+
+<span class="go">Number  Start (sector)    End (sector)  Size       Code  Name</span>
+<span class="go">   1            2048            6143   2.0 MiB     EF02  grub</span>
+<span class="go">   2            6144          268287   128.0 MiB   8300  boot</span>
+<span class="go">   3          268288        16383966   7.7 GiB     8300  encr</span>
+</pre></div>
+</div>
+<p>Use the <code class="docutils literal"><span class="pre">w</span></code> command to write the new partition to the disk:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">Command (? for help): w</span>
+
+<span class="go">Final checks complete. About to write GPT data. THIS WILL OVERWRITE EXISTING</span>
+<span class="go">PARTITIONS!!</span>
+
+<span class="go">Do you want to proceed? (Y/N): Y</span>
+<span class="go">OK; writing new GUID partition table (GPT) to /dev/sda.</span>
+<span class="go">The operation has completed successfully.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="encrypting">
+<h2>Encrypting<a class="headerlink" href="#encrypting" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="configure-encryption">
+<h3>Configure encryption<a class="headerlink" href="#configure-encryption" title="Permalink to this headline">¶</a></h3>
+<p>There are two ways to encrypt the disk: with a keyfile or with a passphrase. The Linux Unified Key Setup (LUKS) supports 8 key slots, each of which can be either a passphrase or keyfile. The purpose of using a keyfile rather than a passphrase is that the keyfile can be stored on a flash drive. Then, the computer will only boot with the flash drive plugged in.</p>
+<p>To used a keyfile, first plug in the flash drive where you will store it. Determine the disk ID of the flash drive (using <code class="docutils literal"><span class="pre">fdisk</span> <span class="pre">-l</span></code>), and then mount it:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> mkdir -p /media/usb
+<span class="gp">#</span> mount /dev/sdb1 /media/usb
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">mkdir</span></code> command makes the directory for mounting the drive, and the <code class="docutils literal"><span class="pre">-p</span></code> flag causes it to make all intermediate directories (first it makes /media, then  it makes /media/usb; without the <code class="docutils literal"><span class="pre">-p</span></code> flag it would fail because <code class="docutils literal"><span class="pre">/media</span></code> would not exist). The mount command mounts the first partition of the flash drive (<code class="docutils literal"><span class="pre">/dev/sdb1</span></code>) at the <code class="docutils literal"><span class="pre">/media/usb</span></code> folder.</p>
+<p>Next, create the key file:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> head -c <span class="m">512</span> /dev/urandom &gt; /media/usb/keyfile.bin
+</pre></div>
+</div>
+<p>This command takes the first 512 bytes from the random number stream <code class="docutils literal"><span class="pre">/dev/urandom</span></code> <a class="footnote-reference" href="#random" id="id7">[7]</a> and writes them to the file <code class="docutils literal"><span class="pre">/media/usb/keyfile.bin</span></code>. It is a good idea to give the key file a meaningful name to keep track of which drive it decrypts. For example, incorporate the hard drive&#8217;s make, model, serial number, and partition number to into its name. To get this information, use <code class="docutils literal"><span class="pre">lshw</span></code>. To look at the keyfile, do <code class="docutils literal"><span class="pre">hexdump</span> <span class="pre">/media/usb/keyfile.bin</span></code>. For an extra layer of security, encrypt the keyfile. Then, not only will the flash drive have to be plugged into the computer for it to boot, but you will also have to type a password. To do this, use <code class="docutils literal"><span class="pre">gpg</span></code>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> gpg --symmetric -o /media/usb/keyfile.bin.gpg /media/usb/keyfile.bin
+</pre></div>
+</div>
+<p>The GNU Privacy Guard (<code class="docutils literal"><span class="pre">gpg</span></code>) is a general purpose encryption program. The <code class="docutils literal"><span class="pre">--symmetric</span></code> flag makes it use a symmetric cipher (which uses the same key for encryption and decrypting) as opposed to the default public key cipher. The <code class="docutils literal"><span class="pre">-o</span></code> file specifies the output file, and the final argument is the input file. <code class="docutils literal"><span class="pre">gpg</span></code> will prompt you for a password.</p>
+<p>One optional step is writing random data to the drive:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> pv /dev/urandom -s 1000G <span class="p">|</span> dd <span class="nv">of</span><span class="o">=</span>/dev/sda3 <span class="nv">bs</span><span class="o">=</span>1M
+</pre></div>
+</div>
+<p>After this, the whole drive will look random so it will be impossible to figure out how much stuff is on it. This improves the security of the drive <a class="footnote-reference" href="#driverandom" id="id8">[8]</a>.However, this took me about 24 hours for the 1 TB drive that I used. For a 3 TB WD Red drive, it took 78 hours. Also, the <code class="docutils literal"><span class="pre">-s</span></code> argument to <code class="docutils literal"><span class="pre">pv</span></code> does not have to be exactly right; anything pretty close will produce a good progress bar.</p>
+<p>Next, encrypt the drive. If using a key file, type:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> cryptsetup --cipher aes-xts-plain -s <span class="m">512</span> --key-file /media/usb/keyfile.bin luksFormat /dev/sda3
+</pre></div>
+</div>
+<p>The cipher <code class="docutils literal"><span class="pre">aes-xts-plain</span></code> with the <code class="docutils literal"><span class="pre">sha-512</span></code> hash is a pretty standard combination <a class="footnote-reference" href="#cipher" id="id9">[9]</a>. The <code class="docutils literal"><span class="pre">--key-file</span> <span class="pre">/media/usb/keyfile.bin</span></code> specifies the key file to use. This must be the plaintext keyfile even if you plan on using an encrypted key. To use a passphrase, omit this argument. The <code class="docutils literal"><span class="pre">luksFormat</span></code> command makes <code class="docutils literal"><span class="pre">cryptsetup</span></code> format the disk as an encrypted volume. Finally, <code class="docutils literal"><span class="pre">/dev/sda3</span></code> is the third partition on <code class="docutils literal"><span class="pre">/dev/sda</span></code>, which is the encrypted partition. To see the new LUKS setup, use:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> cryptsetup luksDump /dev/sda3
+<span class="go">LUKS header information for /dev/sda3</span>
+
+<span class="go">Version:        1</span>
+<span class="go">Cipher name:    aes</span>
+<span class="go">Cipher mode:    xts-plain</span>
+<span class="go">Hash spec:      sha1</span>
+<span class="go">Payload offset: 4096</span>
+<span class="go">MK bits:        512</span>
+<span class="go">MK digest:      b0 db 17 55 b7 58 94 5b 1c b0 19 9d 79 68 2f 1a 3a 87 cf 49</span>
+<span class="go">MK salt:        23 f8 05 f5 1e db 64 66 31 e7 73 26 2b 91 3f 50</span>
+<span class="go">                17 e5 65 99 7c 63 88 bb 65 11 b7 90 8d 11 c1 c6</span>
+<span class="go">MK iterations:  192750</span>
+<span class="go">UUID:           74117333-2efa-462b-9dde-22ca6deace42</span>
+
+<span class="go">Key Slot 0: ENABLED</span>
+<span class="go">        Iterations:             773413</span>
+<span class="go">        Salt:                   ed 1b 8f 47 90 84 23 3d 5c de 7d 7d 51 55 6e 99</span>
+<span class="go">                                61 a4 ab 18 3f 80 5f 2f 45 1e 69 ac 82 9b 31 da</span>
+<span class="go">        Key material offset:    8</span>
+<span class="go">        AF stripes:             4000</span>
+<span class="go">Key Slot 1: DISABLED</span>
+<span class="go">Key Slot 2: DISABLED</span>
+<span class="go">Key Slot 3: DISABLED</span>
+<span class="go">Key Slot 4: DISABLED</span>
+<span class="go">Key Slot 5: DISABLED</span>
+<span class="go">Key Slot 6: DISABLED</span>
+<span class="go">Key Slot 7: DISABLED</span>
+</pre></div>
+</div>
+<p>Now, mount an unencrypted view of the encrypted partition:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> cryptsetup --key-file /media/usb/keyfile.bin luksOpen /dev/sda3 encr
+</pre></div>
+</div>
+<p>This opens a decrypted view of the drive at <code class="docutils literal"><span class="pre">/dev/mapper/encr</span></code>.</p>
+</div>
+<div class="section" id="configure-lvm">
+<h3>Configure LVM<a class="headerlink" href="#configure-lvm" title="Permalink to this headline">¶</a></h3>
+<p>Now that the encryption has been set up, the next step is to set up the <code class="docutils literal"><span class="pre">root</span></code> and <code class="docutils literal"><span class="pre">swap</span></code> logical volumes. First, create the physical volume, which will hold the logical volumes:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> pvcreate /dev/mapper/encr
+</pre></div>
+</div>
+<p>Then, create a volume group named <code class="docutils literal"><span class="pre">vg1</span></code> to hold the volumes:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> vgcreate vg1/dev/mapper/encr
+</pre></div>
+</div>
+<p>Create the swap logical volume:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> lvcreate -L 1G y -n swap vg1
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">-L</span></code> flag species the size of the partition, which is in this case 1 GB. In order to support hibernation (saving the contents of RAM to swap), the swap partition must be at least as big as the amount of RAM installed <a class="footnote-reference" href="#swap" id="id10">[10]</a>. Finally, <code class="docutils literal"><span class="pre">vg1</span></code> is the parent volume group. The swap volume will be at <code class="docutils literal"><span class="pre">/dev/vg1/swap</span></code>.
+Create the root logical volume:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> lvcreate -l 100%FREE -n root vg1
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">100%FREE</span></code> makes the root volume use up the remaining space. Note the lowercase <code class="docutils literal"><span class="pre">l</span></code>. The swap volume will be at <code class="docutils literal"><span class="pre">/dev/vg1/root</span></code>.</p>
+</div>
+<div class="section" id="create-the-filesystems">
+<h3>Create the filesystems<a class="headerlink" href="#create-the-filesystems" title="Permalink to this headline">¶</a></h3>
+<p>The newly created partitions need to be formatted in order to hold data. First, the <code class="docutils literal"><span class="pre">grub</span></code> partition must be <code class="docutils literal"><span class="pre">FAT</span></code> according to the UEFI standard:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> mkdosfs /dev/sda1
+</pre></div>
+</div>
+<p>Remember that the <code class="docutils literal"><span class="pre">grub</span></code> partition is as <code class="docutils literal"><span class="pre">/dev/sda1</span></code>.</p>
+<p>Second, the make the boot partition and the root partition <code class="docutils literal"><span class="pre">ext4</span></code> <a class="footnote-reference" href="#filesystems" id="id11">[11]</a>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> mkfs.ext4 /dev/sda2
+<span class="gp">#</span> mkfs.ext4 /dev/vg1/root
+</pre></div>
+</div>
+<p>Finally, set up the swap partition and turn it on:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> mkswap /dev/vg1/swap
+<span class="gp">#</span> swapon /dev/vg1/swap
+</pre></div>
+</div>
+</div>
+<div class="section" id="mount-the-filesystems">
+<h3>Mount the filesystems<a class="headerlink" href="#mount-the-filesystems" title="Permalink to this headline">¶</a></h3>
+<p>The last step is to mount the filesystems:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> mkdir -p /mnt/gentoo
+<span class="gp">#</span> mount /dev/vg1/root /mnt/gentoo
+<span class="gp">#</span> mkdir -p /mnt/gentoo/boot
+<span class="gp">#</span> mount /dev/sda2 /mnt/gentoo/boot
+<span class="gp">#</span> mkdir -p /mnt/gentoo/boot/efi
+<span class="gp">#</span> mount /dev/sda1 /mnt/gentoo/boot/efi
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="installing-stage-3">
+<h2>Installing stage 3<a class="headerlink" href="#installing-stage-3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="set-the-date">
+<h3>Set the date<a class="headerlink" href="#set-the-date" title="Permalink to this headline">¶</a></h3>
+<p>Check the date:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> date
+<span class="go">Wed Jun 15 09:58:45 UTC 2016</span>
+</pre></div>
+</div>
+<p>If the date is wrong, set it, using UTC time (the timezone will be set later):</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> date MMDDhhmmYYYY
+</pre></div>
+</div>
+<p>For example, Janurary 2 2016 at 15:42 (UTC) would be:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> date 010215422016
+</pre></div>
+</div>
+</div>
+<div class="section" id="downloading-the-stage-3-tarball">
+<h3>Downloading the stage 3 tarball<a class="headerlink" href="#downloading-the-stage-3-tarball" title="Permalink to this headline">¶</a></h3>
+<p>This guide uses a hardened 64 bit stage 3 tarball with multilib. The difference between the multilib and no multilib tarballs is that a no multilib system will only run 64 bit libraries, while the multilib system tries to use 64 bit libraries whenever possible, but will use 32 bit libraries if needed <a class="footnote-reference" href="#multilib" id="id12">[12]</a> .</p>
+<p>First, go to the Gentoo directory:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> <span class="nb">cd</span> /mnt/gentoo
+</pre></div>
+</div>
+<p>Then, using the <code class="docutils literal"><span class="pre">lynx</span></code> browser, pick a mirror:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> lynx https://www.gentoo.org/downloads/mirrors/
+</pre></div>
+</div>
+<p>Go to <code class="docutils literal"><span class="pre">releases/amd64/autobuilds/current-stage3-amd64-hardened/</span></code> and download <code class="docutils literal"><span class="pre">stage3-amd64-hardened-20160609.tar.bz2</span></code> and <code class="docutils literal"><span class="pre">stage3-amd64-hardened-20160609.tar.bz2.DIGESTS.asc</span></code>. Verify the files in the same way as the ISO file (<a class="reference internal" href="#setup-verify"><span class="std std-ref">Setup</span></a>):</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> gpg --keyserver hkps.pool.sks-keyservers.net --recv-keys 0xBB572E0E2D182910
+<span class="gp">#</span> gpg --verify stage3-amd64-hardened-20160609.tar.bz2.DIGESTS.asc
+<span class="gp">#</span> sha512sum stage3-amd64-hardened-20160609.tar.bz2
+</pre></div>
+</div>
+<p>Unpack the tarball <a class="footnote-reference" href="#tar" id="id13">[13]</a>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> tar xvjpf stage3-*.tar.bz2 --xattrs
+</pre></div>
+</div>
+</div>
+<div class="section" id="picking-an-editor">
+<h3>Picking an editor<a class="headerlink" href="#picking-an-editor" title="Permalink to this headline">¶</a></h3>
+<p>The remaining steps require edits to many configuration files. The editor installed by default is <code class="docutils literal"><span class="pre">nano</span></code>. To install <code class="docutils literal"><span class="pre">vim</span></code>, do:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge vim
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuring-compile-options">
+<h3>Configuring compile options<a class="headerlink" href="#configuring-compile-options" title="Permalink to this headline">¶</a></h3>
+<p>The compile options go in <code class="docutils literal"><span class="pre">/mnt/gentoo/etc/portage/make.conf</span></code>. Good values are <a class="footnote-reference" href="#compile" id="id14">[14]</a>:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span><span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-march=native -O2 -pipe&quot;</span>
+<span class="c1"># Use the same settings for both variables</span>
+<span class="nv">CXXFLAGS</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CFLAGS</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">-march=native</span></code> causes GCC to detect the CPU architecture <a class="footnote-reference" href="#cflags" id="id15">[15]</a>. The <code class="docutils literal"><span class="pre">-O2</span></code> enables optimizations, and the <code class="docutils literal"><span class="pre">-pipe</span></code> makes GCC use pipes rather than temporary files. This makes GCC go faster, but requires more memory. The <code class="docutils literal"><span class="pre">CXXFLAGS</span></code> are set to equal the <code class="docutils literal"><span class="pre">CFLAGS</span></code>.</p>
+<p>Also set the <code class="docutils literal"><span class="pre">MAKEOPTS</span></code> in <code class="docutils literal"><span class="pre">/mnt/gentoo/etc/portage/make.conf</span></code>:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span><span class="nv">MAKEOPTS</span><span class="o">=</span><span class="s2">&quot;-j9 -l8&quot;</span>
+</pre></div>
+</div>
+<p>Because I had an i7-6700K processor which has 4 cores and hyper-threading, the processor can run 8 threads at once. Thus, the <code class="docutils literal"><span class="pre">-j</span></code> options sets the maximum number of parallel compilation jobs to be 9, and the <code class="docutils literal"><span class="pre">-l</span></code> option prevents a new parallel job from starting unless the load is below 8 jobs <a class="footnote-reference" href="#makeopts" id="id16">[16]</a>.</p>
+</div>
+<div class="section" id="configuring-the-main-gentoo-repository">
+<h3>Configuring the main Gentoo repository<a class="headerlink" href="#configuring-the-main-gentoo-repository" title="Permalink to this headline">¶</a></h3>
+<p>Make a directory to hold the repository configuration:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> mkdir /mnt/gentoo/etc/portage/repos.conf
+</pre></div>
+</div>
+<p>Copy the default file to the new directory <a class="footnote-reference" href="#repos" id="id17">[17]</a>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> cp /mnt/gentoo/usr/share/portage/config/repos.conf /mnt/gentoo/etc/portage/repos.conf/gentoo.conf
+</pre></div>
+</div>
+</div>
+<div class="section" id="copy-dns-configuration">
+<h3>Copy DNS configuration<a class="headerlink" href="#copy-dns-configuration" title="Permalink to this headline">¶</a></h3>
+<p>To set up the DNS configuration in the new Gentoo environment, copy the current configuration into the new environment <a class="footnote-reference" href="#dns" id="id18">[18]</a>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> cp -L /etc/resolv.conf /mnt/gentoo/etc/
+</pre></div>
+</div>
+</div>
+<div class="section" id="id19">
+<h3>Mount the filesystems<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<p>Make all the filesystems available in the new environment <a class="footnote-reference" href="#mounting" id="id20">[19]</a>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> mount -t proc proc /mnt/gentoo/proc
+<span class="gp">#</span> mount --rbind /sys /mnt/gentoo/sys
+<span class="gp">#</span> mount --make-rslave /mnt/gentoo/sys
+<span class="gp">#</span> mount --rbind /dev /mnt/gentoo/dev
+<span class="gp">#</span> mount --make-rslave /mnt/gentoo/dev
+</pre></div>
+</div>
+</div>
+<div class="section" id="enter-the-new-environment">
+<h3>Enter the new environment<a class="headerlink" href="#enter-the-new-environment" title="Permalink to this headline">¶</a></h3>
+<p>This step changes the root directory from that of the installation drive to the computer&#8217;s hard drive:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> chroot /mnt/gentoo /bin/bash
+<span class="gp">#</span> <span class="nb">source</span> /etc/profile
+<span class="gp">#</span> <span class="nb">export</span> <span class="nv">PS1</span><span class="o">=</span><span class="s2">&quot;(chroot) </span><span class="nv">$PS1</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>Sourcing the <code class="docutils literal"><span class="pre">/etc/profile</span></code> file loads the settings into the new environment, and changing the prompt (the <code class="docutils literal"><span class="pre">PS1</span></code> value) makes it clear that the computer is in the new environment.</p>
+</div>
+<div class="section" id="configuring-portage">
+<h3>Configuring portage<a class="headerlink" href="#configuring-portage" title="Permalink to this headline">¶</a></h3>
+<p>First, update the portage tree:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge-webrsync
+</pre></div>
+</div>
+<p>Then, check the profile:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> eselect profile list
+<span class="go">Available profile symlink targets:</span>
+<span class="go">  [1]   default/linux/amd64/13.0</span>
+<span class="go">  [2]   default/linux/amd64/13.0/selinux</span>
+<span class="go">  [3]   default/linux/amd64/13.0/desktop</span>
+<span class="go">  [4]   default/linux/amd64/13.0/desktop/gnome</span>
+<span class="go">  [5]   default/linux/amd64/13.0/desktop/gnome/systemd</span>
+<span class="go">  [6]   default/linux/amd64/13.0/desktop/kde</span>
+<span class="go">  [7]   default/linux/amd64/13.0/desktop/kde/systemd</span>
+<span class="go">  [8]   default/linux/amd64/13.0/desktop/plasma</span>
+<span class="go">  [9]   default/linux/amd64/13.0/desktop/plasma/systemd</span>
+<span class="go">  [10]  default/linux/amd64/13.0/developer</span>
+<span class="go">  [11]  default/linux/amd64/13.0/no-multilib</span>
+<span class="go">  [12]  default/linux/amd64/13.0/systemd</span>
+<span class="go">  [13]  default/linux/amd64/13.0/x32</span>
+<span class="go">  [14]  hardened/linux/amd64 *</span>
+<span class="go">  [15]  hardened/linux/amd64/selinux</span>
+<span class="go">  [16]  hardened/linux/amd64/no-multilib</span>
+<span class="go">  [17]  hardened/linux/amd64/no-multilib/selinux</span>
+<span class="go">  [18]  hardened/linux/amd64/x32</span>
+<span class="go">  [19]  hardened/linux/musl/amd64</span>
+<span class="go">  [20]  hardened/linux/musl/amd64/x32</span>
+<span class="go">  [21]  default/linux/uclibc/amd64</span>
+<span class="go">  [22]  hardened/linux/uclibc/amd64</span>
+</pre></div>
+</div>
+<p>The selected profile should be <code class="docutils literal"><span class="pre">hardened/linux/amd64</span></code>. The profile species default values for many variables <a class="footnote-reference" href="#profile" id="id21">[20]</a>.</p>
+<p>Next, configure the <code class="docutils literal"><span class="pre">USE</span></code> variable. To see the current use flags, use:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge --info <span class="p">|</span> grep ^USE
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">USE</span></code> variable is set in <code class="docutils literal"><span class="pre">/etc/portage/make.conf</span></code>. The original value was <code class="docutils literal"><span class="pre">USE=&quot;bindist</span> <span class="pre">mmx</span> <span class="pre">sse</span> <span class="pre">sse2&quot;</span></code>. I added <code class="docutils literal"><span class="pre">qt4</span></code> and <code class="docutils literal"><span class="pre">kde</span></code> because I planned on used the KDE desktop environment later, and I added <code class="docutils literal"><span class="pre">alsa</span></code> for sound support <a class="footnote-reference" href="#use" id="id22">[21]</a>.</p>
+</div>
+<div class="section" id="configure-the-timezone">
+<h3>Configure the timezone<a class="headerlink" href="#configure-the-timezone" title="Permalink to this headline">¶</a></h3>
+<p>Put the desired timezone in <code class="docutils literal"><span class="pre">/etc/timezone</span></code>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> <span class="nb">echo</span> <span class="s2">&quot;America/New_York&quot;</span> &gt; /etc/timezone
+</pre></div>
+</div>
+<p>To determine the proper timezone, look in <code class="docutils literal"><span class="pre">/usr/share/zoneinfo/</span></code>, and the path to the desired place is the timezone name. Next, reconfigure the <code class="docutils literal"><span class="pre">sys-libs/timezone-data</span></code> package to set the local time:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge --config sys-libs/timezone-data
+</pre></div>
+</div>
+</div>
+<div class="section" id="configure-the-locale">
+<h3>Configure the locale<a class="headerlink" href="#configure-the-locale" title="Permalink to this headline">¶</a></h3>
+<p>Uncomment or add the proper locales to <code class="docutils literal"><span class="pre">/etc/locale.gen</span></code>. I used:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">en_US ISO-8859-1</span>
+<span class="go">en_US.UTF-8 UTF-8</span>
+</pre></div>
+</div>
+<p>Run <code class="docutils literal"><span class="pre">locale-gen</span></code> to generate the locales. Then, select the right local:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> eselect locale list
+<span class="go">Available targets for the LANG variable:</span>
+<span class="go">  [1]   C</span>
+<span class="go">  [2]   en_US</span>
+<span class="go">  [3]   en_US.iso88591</span>
+<span class="go">  [4]   en_US.utf8 *</span>
+<span class="go">  [5]   POSIX</span>
+<span class="go">  [ ]   (free form)</span>
+<span class="gp">#</span> eselect locale <span class="nb">set</span> 4
+</pre></div>
+</div>
+<p>I chose the <code class="docutils literal"><span class="pre">en_US.utf8</span></code> <a class="footnote-reference" href="#locales" id="id23">[22]</a>. Reload the environment:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> env-update <span class="o">&amp;&amp;</span> <span class="nb">source</span> /etc/profile <span class="o">&amp;&amp;</span> <span class="nb">export</span> <span class="nv">PS1</span><span class="o">=</span><span class="s2">&quot;(chroot) </span><span class="nv">$PS1</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="kernel">
+<h2>Kernel<a class="headerlink" href="#kernel" title="Permalink to this headline">¶</a></h2>
+<p>There are two main choices for the kernel: the normal kernel or the hardened kernel. The hardened kernel includes the grsecurity patch, which provide PaX <a class="footnote-reference" href="#pax" id="id24">[23]</a>. PaX increases the system’s security with non-executable memory, Address Space Layout Randomization (ASLR), and other features. To build a normal kernel, ignore the grsecurity options in the configuration below.</p>
+<div class="section" id="install-the-sources">
+<h3>Install the sources<a class="headerlink" href="#install-the-sources" title="Permalink to this headline">¶</a></h3>
+<p>For the normal kernel:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge sys-kernel/gentoo-sources
+</pre></div>
+</div>
+<p>For the hardened kernel:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge sys-kernel/hardened-sources
+</pre></div>
+</div>
+<p>The kernel sources are installed into <code class="docutils literal"><span class="pre">/usr/src</span></code>. The file <code class="docutils literal"><span class="pre">/usr/src/linux</span></code> is a symbolic link to the most recently install kernel. For example, with both the hardened sources and the normal sources installed, <code class="docutils literal"><span class="pre">/usr/src</span></code> might look like this:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> ls -Fl
+<span class="go">total 8</span>
+<span class="go">lrwxrwxrwx  1 root root   23 Jun  8 19:48 linux -&gt; linux-4.4.8-hardened-r1/</span>
+<span class="go">drwxr-xr-x 26 root root 4096 Jun  7 22:04 linux-4.4.6-gentoo/</span>
+<span class="go">drwxr-xr-x 26 root root 4096 Jun 21 14:29 linux-4.4.8-hardened-r1/</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="configure-the-kernel">
+<h3>Configure the kernel<a class="headerlink" href="#configure-the-kernel" title="Permalink to this headline">¶</a></h3>
+<p>There are two ways to configure the kernel: manually and automatically. While building the kernel manually is difficult and time-consuming, it generally produces a kernel which boots much faster then the automatically generated kernel because the automatically generated kernel has to detect all the hardware at boot time and load the proper modules. This section explains how to configure the kernel manually. For information about how to configure it automatically with <code class="docutils literal"><span class="pre">genkernel</span></code>, see <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Kernel#Alternative:_Using_genkernel">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Kernel#Alternative:_Using_genkernel</a>.</p>
+<p>First, determine the system’s hardware using <code class="docutils literal"><span class="pre">lspci</span></code>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge sys-apps/pciutils
+<span class="go">lspci</span>
+<span class="go">00:00.0 Host bridge: Intel Corporation Sky Lake Host Bridge/DRAM Registers (rev 07)</span>
+<span class="go">00:02.0 VGA compatible controller: Intel Corporation Sky Lake Integrated Graphics (rev 06)</span>
+<span class="go">00:14.0 USB controller: Intel Corporation Sunrise Point-H USB 3.0 xHCI Controller (rev 31)</span>
+<span class="go">00:14.2 Signal processing controller: Intel Corporation Sunrise Point-H Thermal subsystem (rev 31)</span>
+<span class="go">00:16.0 Communication controller: Intel Corporation Sunrise Point-H CSME HECI #1 (rev 31)</span>
+<span class="go">00:17.0 SATA controller: Intel Corporation Device a102 (rev 31)</span>
+<span class="go">00:1c.0 PCI bridge: Intel Corporation Sunrise Point-H PCI Express Root Port #1 (rev f1)</span>
+<span class="go">00:1c.4 PCI bridge: Intel Corporation Sunrise Point-H PCI Express Root Port #5 (rev f1)</span>
+<span class="go">00:1c.6 PCI bridge: Intel Corporation Sunrise Point-H PCI Express Root Port #7 (rev f1)</span>
+<span class="go">00:1d.0 PCI bridge: Intel Corporation Sunrise Point-H PCI Express Root Port #9 (rev f1)</span>
+<span class="go">00:1f.0 ISA bridge: Intel Corporation Sunrise Point-H LPC Controller (rev 31)</span>
+<span class="go">00:1f.2 Memory controller: Intel Corporation Sunrise Point-H PMC (rev 31)</span>
+<span class="go">00:1f.3 Audio device: Intel Corporation Sunrise Point-H HD Audio (rev 31)</span>
+<span class="go">00:1f.4 SMBus: Intel Corporation Sunrise Point-H SMBus (rev 31)</span>
+<span class="go">00:1f.6 Ethernet controller: Intel Corporation Ethernet Connection (2) I219-V (rev 31)</span>
+<span class="go">02:00.0 USB controller: ASMedia Technology Inc. ASM1142 USB 3.1 Host Controller</span>
+<span class="go">03:00.0 Network controller: Broadcom Corporation BCM4352 802.11ac Wireless Network Adapter (rev 03)</span>
+</pre></div>
+</div>
+<p>Then, do <code class="docutils literal"><span class="pre">cd</span> <span class="pre">/usr/src/linux</span></code>, and enter the kernel configuration menu with <code class="docutils literal"><span class="pre">make</span> <span class="pre">menuconfig</span></code>. Then, try to select all the right options. Here are the options I selected (which were either not selected by default or which are important), with some short comments about why I selected them (My computer had a BCM4352 wireless card which required the <code class="docutils literal"><span class="pre">broadcom-sta</span></code> driver):</p>
+<div class="highlight-shell"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115</pre></div></td><td class="code"><div class="highlight"><pre><span></span>General setup ---&gt;
+    Stack Protector buffer overflow detection <span class="o">(</span>Strong<span class="o">)</span>
+Processor <span class="nb">type</span> and features ---&gt;
+    <span class="o">[</span>*<span class="o">]</span> EFI Runtime service support ---&gt;
+    <span class="o">[</span>*<span class="o">]</span>   EFI stub support
+    <span class="o">[</span> <span class="o">]</span>     EFI mixed-mode support
+Power management and ACPI options ---&gt;
+    <span class="o">[</span>*<span class="o">]</span> Suspend to RAM and standby
+    <span class="o">[</span>*<span class="o">]</span> Opportunistic sleep
+    <span class="o">[</span>*<span class="o">]</span> SMT <span class="o">(</span>Hyperthreading<span class="o">)</span> scheduler support
+    <span class="o">[</span>*<span class="o">]</span> Multi-core scheduler support
+Networking support ---&gt;
+    -*- Wireless ---&gt;
+        &lt;*&gt; cfg80211 - wireless configuration API
+        <span class="o">[</span>*<span class="o">]</span>   <span class="nb">enable</span> powersave by default
+        <span class="o">[</span>*<span class="o">]</span>	  cfg80211 wireless extensions compatibility
+        &lt; &gt; Generic IEEE 802.11 Networking Stack <span class="o">(</span>mac80211<span class="o">)</span> <span class="c1"># Must be disabled for broadcom-sta to work</span>
+Device Drivers ---&gt;
+    &lt;*&gt; Sound card support ---&gt;
+        &lt;*&gt; Advanced Linux Sound Architecture ---&gt;
+            HD-Audio ---&gt;
+                <span class="o">[</span>*<span class="o">]</span> Support digital beep via input layer
+                <span class="o">(</span>1<span class="o">)</span>    Digital beep registration mode <span class="o">(</span><span class="nv">0</span><span class="o">=</span>off, <span class="nv">1</span><span class="o">=</span>on<span class="o">)</span>
+                &lt;*&gt; Build Realtek HD-audio coced support
+                &lt;*&gt; Build HDMI/DisplayPort HD-audio codec support
+            <span class="c1"># To prevent the error:</span>
+            <span class="c1">#   Too many HDMI devices</span>
+            <span class="c1">#   Consider building the kernel with CONFIG_SND_DYNAMIC_MINORS=y</span>
+            <span class="o">[</span>*<span class="o">]</span> Dynamic device file minor numbers
+            <span class="o">(</span>32<span class="o">)</span>	Max number of sound cards
+    HID support ---&gt;
+        Special HID drivers ---&gt;
+            &lt;*&gt; Corsair devices
+    <span class="o">[</span>*<span class="o">]</span> Real Time Clock ---&gt;
+        <span class="o">[</span>*<span class="o">]</span> Set system <span class="nb">time</span> from RTC on startup and resume
+    <span class="o">[</span>*<span class="o">]</span> USB support ---&gt;
+        &lt;*&gt; Support <span class="k">for</span> Host-side USB
+        <span class="o">[</span>*<span class="o">]</span>   xHCI HCD <span class="o">(</span>USB 3.0<span class="o">)</span> support
+        &lt; &gt;     Generic xHCI driver <span class="k">for</span> a platform device
+        &lt;*&gt;   EHCI HCD <span class="o">(</span>USB 2.0<span class="o">)</span> support
+        <span class="o">[</span> <span class="o">]</span>     Root Hub Transaction Translators
+        <span class="o">[</span>*<span class="o">]</span>	    Improved Transaction Translator scheduling
+    <span class="o">[</span>*<span class="o">]</span> Multiple devices drive support <span class="o">(</span>RAID and LVM<span class="o">)</span> ---&gt;
+        &lt;*&gt; Device mapper support
+        &lt;*&gt;   Crypt target support <span class="c1"># Needed for encrypted disk</span>
+    <span class="o">[</span>*<span class="o">]</span> Network device support ---&gt;
+        <span class="o">[</span>*<span class="o">]</span> Wireless LAN ---&gt;
+            &lt; &gt; Broadcom 43xx wireless support <span class="o">(</span>mac80211 stack<span class="o">)</span>
+            &lt;*&gt; Intel PRO/Wireless <span class="m">2100</span> Network Connection <span class="c1"># Needed for broadcom-sta</span>
+                <span class="o">[</span> <span class="o">]</span> Enable promiscuous mode
+                <span class="o">[</span> <span class="o">]</span> Enable full debugging output in IPW2100 module
+        <span class="o">[</span>*<span class="o">]</span> Ethernet driver support ---&gt;
+            <span class="o">[</span>*<span class="o">]</span> Intel devices
+            &lt;*&gt;   Intel <span class="o">(</span>R<span class="o">)</span> PRO/1000 PCI-Express Gigabit Ethernet support
+    <span class="c1"># These 2 must be disabled for broadcom-sta</span>
+    Broadcom specific AMBA ---&gt;
+        &lt; &gt; BCMA support
+    Sonics Silicon Backplane ---&gt;
+        &lt; &gt; Sonics Silicon Backplane support
+    <span class="c1"># For sensors</span>
+    I2C support ---&gt;
+        -*- I2C support
+        &lt;*&gt;	  I2C device interface
+    -*- Hardware Monitoring support ---&gt;
+        &lt;*&gt; Intel Core/Core2/Atom temperature sensor
+        &lt;*&gt; Nuvoton NCT6775F and compatibles
+File systems ---&gt;
+    &lt;*&gt; Second extended fs support ---&gt;
+    -*-   Ext2 extended attributes ---&gt;
+    <span class="o">[</span>*<span class="o">]</span>     Ext2 POSIX Axxess Control Lists
+    <span class="o">[</span>*<span class="o">]</span>     Ext2 Security Labels
+    &lt;*&gt; The Extended <span class="m">3</span> <span class="o">(</span>ext3<span class="o">)</span> filesystem ---&gt;
+    <span class="o">[</span>*<span class="o">]</span>   Ext3 POSIX Access Control Lists
+    <span class="o">[</span>*<span class="o">]</span>   Ext3 Security Labels
+    -*- The Extended <span class="m">4</span> <span class="o">(</span>ext4<span class="o">)</span> filesystem
+    -*-   Ext4 POSIX Access Control Lists
+    -*-   Ext4 Security Labels
+    &lt; &gt;   Ext4 Encryption
+    <span class="o">[</span> <span class="o">]</span>   EXT4 debugging support
+    &lt;*&gt; FUSE <span class="o">(</span>Filesystem in Userspace<span class="o">)</span> support
+    &lt;*&gt;   Character device in Userspace support
+    <span class="o">[</span>*<span class="o">]</span> Miscellaneous filesystems ---&gt;
+        &lt;*&gt; Apple Macintosh file system support
+        &lt;*&gt; Apple Extended HFS file system support ---&gt;
+        <span class="o">[</span>*<span class="o">]</span>   HFS+ POSIX Access Control Lists
+Security options ---&gt;
+    Grsecurity ---&gt;
+        <span class="o">[</span>*<span class="o">]</span> Grsecurity
+            Configuration Method <span class="o">(</span>Automatic<span class="o">)</span>
+            Usage Type <span class="o">(</span>Desktop<span class="o">)</span>
+            Virtualization Type <span class="o">(</span>Host<span class="o">)</span>
+            Virtualization Hardware <span class="o">(</span>EPT/RVI Processor Support<span class="o">)</span>
+            Virtualization Software <span class="o">(</span>VirtualBox<span class="o">)</span>
+            Required Priorities <span class="o">(</span>Performance<span class="o">)</span>
+            Customize Configuration ---&gt;
+                PaX ---&gt;
+                    <span class="o">[</span>*<span class="o">]</span> Enable various PaX features
+                        PaX Control ---&gt;
+                            <span class="o">[</span> <span class="o">]</span> Support soft mode
+                            <span class="o">[</span> <span class="o">]</span> Use ELF program header marking
+                            <span class="o">[</span>*<span class="o">]</span> Use filesystem extended attributesmarking
+Cryptographic API ---&gt;
+    -*- CBC support
+    -*- ECB support
+    -*- XTS support
+    -*- CRC32c CRC algorithm
+    &lt;*&gt; CRC32c INTEL hardware acceleration
+    -*- Michael MIC keyed digest algorithm
+    -*- SH1 digest algorithm
+    &lt;*&gt; SHA1 digest algorithm <span class="o">(</span>SSSE3/AVX/AVX2/SHA-NI<span class="o">)</span>
+    &lt;*&gt; SHA256 digest algorithm <span class="o">(</span>SSSE3/AVX/AVX2/SHA-NI<span class="o">)</span>
+    &lt;*&gt; SHA512 digest algorithm <span class="o">(</span>SSSE3/AVX/AVX2<span class="o">)</span>
+    -*- AES cipher algorithms
+    -*- AES cipher algorithms <span class="o">(</span>x86_64<span class="o">)</span>
+    &lt;*&gt; AES cipher algorithms <span class="o">(</span>AES-NI<span class="o">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>Compile the kernel with <code class="docutils literal"><span class="pre">make</span> <span class="pre">&amp;&amp;</span> <span class="pre">make</span> <span class="pre">modules_install</span></code>. Then, run <code class="docutils literal"><span class="pre">make</span> <span class="pre">install</span></code> to copy the kernel to <code class="docutils literal"><span class="pre">/boot</span></code>.</p>
+</div>
+<div class="section" id="make-the-initramfs">
+<h3>Make the initramfs<a class="headerlink" href="#make-the-initramfs" title="Permalink to this headline">¶</a></h3>
+<p>Because the root partition is encrypted, and the commands to decrypt it are stored on the root partition, the computer will need an initial RAM file system (initramfs) in order to decrypt the root partition when it boots. One easy way to make it is with <code class="docutils literal"><span class="pre">genkernel</span></code> <a class="footnote-reference" href="#initramfs" id="id25">[24]</a>. First, install it:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge sys-kernel/genkernel
+</pre></div>
+</div>
+<p>To boot, the system needs:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">lvm</span></code>: because the computer uses LVM</li>
+<li><code class="docutils literal"><span class="pre">luks</span></code>: to decrypt the drive</li>
+<li><code class="docutils literal"><span class="pre">gpg</span></code>: to decrypt the encrypted key file</li>
+<li><code class="docutils literal"><span class="pre">busybox</span></code>: to look nice when booting</li>
+<li><code class="docutils literal"><span class="pre">disklabel</span></code>: to find disks by UUID (used later)</li>
+</ul>
+<p>Make sure all these programs are installed:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge sys-fs/cryptsetup sys-apps/busybox app-crypt/gnupg
+</pre></div>
+</div>
+<p>There are two ways to set these options. The first is with command line options:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> genkernel --lvm --luks --gpg --busybox --disklabel --install initramfs
+</pre></div>
+</div>
+<p>The second way is to set the options in <code class="docutils literal"><span class="pre">/etc/genkernel.conf</span></code>. To do that, add the following lines:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span><span class="nv">LVM</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span>
+<span class="nv">LUKS</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span>
+<span class="nv">GPG</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span>
+<span class="nv">BUSYBOX</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span>
+<span class="nv">DISKLABEL</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span>
+</pre></div>
+</div>
+<p>Then, run <code class="docutils literal"><span class="pre">genkernel</span></code>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> genkernel --install initramfs
+</pre></div>
+</div>
+<p>By saving the parameters, it is easy to regenerate the initramfs. However, when <code class="docutils literal"><span class="pre">genkernel</span></code> gets updated, portage will download a new copy of <code class="docutils literal"><span class="pre">/etc/genkernel.conf</span></code>, and ask you to invoke <code class="docutils literal"><span class="pre">etc-update</span></code> to handle the differences.</p>
+</div>
+<div class="section" id="naming-the-files">
+<h3>Naming the files<a class="headerlink" href="#naming-the-files" title="Permalink to this headline">¶</a></h3>
+<p>All the new kernel files were installed in <code class="docutils literal"><span class="pre">/boot</span></code>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> ls -Fl /boot
+<span class="go">total 36608</span>
+<span class="go">-rw-r--r-- 1 root root  104171 Jun 20 14:01 config-4.4.8-hardened-r1-manual</span>
+<span class="go">drwxr-xr-x 2 root root    1024 Jun  9 21:11 efi/</span>
+<span class="go">-rw-r--r-- 1 root root 2777140 Jun 17 17:53 initramfs-4.4.8-hardened-r1-manual.img</span>
+<span class="go">-rw-r--r-- 1 root root 7064480 Jun 20 14:01 kernel-4.4.8-hardened-r1-manual</span>
+<span class="go">-rw-r--r-- 1 root root 3431015 Jun 20 14:01 System.map-4.4.8-hardened-r1-manual</span>
+</pre></div>
+</div>
+<p>Each kernel has four files: the configuration used to make it, an initramfs and a kernel file. The kernel will initially have a name that starts with <code class="docutils literal"><span class="pre">vmlinux</span></code>, but it can be renamed to start with <code class="docutils literal"><span class="pre">kernel</span></code> too. The initramfs file must start with either <code class="docutils literal"><span class="pre">initramfs</span></code> or <code class="docutils literal"><span class="pre">initrd</span></code> and must end with <code class="docutils literal"><span class="pre">.img</span></code> unless it is named with the default genkernel name <a class="footnote-reference" href="#naming" id="id26">[25]</a>. They all must have the same suffix.</p>
+</div>
+</div>
+<div class="section" id="system-configuration">
+<h2>System Configuration<a class="headerlink" href="#system-configuration" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="filesystem-mounting">
+<h3>Filesystem Mounting<a class="headerlink" href="#filesystem-mounting" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal"><span class="pre">/etc/fstab</span></code> file controls how partitions are mounted. It is a table composed of 6 fields per row:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">&lt;partition&gt;  &lt;mountpoint&gt;  &lt;file system&gt;  &lt;options&gt;  &lt;dump&gt;  &lt;pass&gt;</span>
+</pre></div>
+</div>
+<p>The partition can be specified with a path like <code class="docutils literal"><span class="pre">/dev/sda3</span></code> or with a UUID like <code class="docutils literal"><span class="pre">UUID=308c6383-ab83-40d1-823a-676ff7ec475d</span></code> or with a PARTUUID like <code class="docutils literal"><span class="pre">PARTUUID=3f63ebb3-b9b7-4180-aa5d-ac3fd33e87c2</span></code>. While <code class="docutils literal"><span class="pre">/dev/sd*</span></code> style devices generally work, they could change if drives are plugged into different ports on the motherboard or if new drives are added. To determine the UUID of a drive, use <code class="docutils literal"><span class="pre">blkid</span></code>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> blkid
+<span class="go">/dev/sda1: SEC_TYPE=&quot;msdos&quot; UUID=&quot;649B-BEC3&quot; TYPE=&quot;vfat&quot; PARTLABEL=&quot;grub&quot; PARTUUID=&quot;3f63ebb3-b9b7-4180-aa5d-ac3fd33e87c2&quot;</span>
+<span class="go">/dev/sda2: UUID=&quot;308c6383-ab83-40d1-823a-676ff7ec475d&quot; TYPE=&quot;ext4&quot; PARTLABEL=&quot;boot&quot; PARTUUID=&quot;28cf59de-815b-4760-8697-26d01eccaa13&quot;</span>
+<span class="go">/dev/sda3: UUID=&quot;6736ac91-fa8c-4736-83f5-3c7996c9e678&quot; TYPE=&quot;crypto_LUKS&quot; PARTLABEL=&quot;rootfs&quot; PARTUUID=&quot;34024962-293f-45c2-92e1-a0e6c3d6499f&quot;</span>
+<span class="go">/dev/mapper/encr: UUID=&quot;rz2zxF-GWxf-NMbG-MdzE-TDV5-yAUW-Ix0Fy6&quot; TYPE=&quot;LVM2_member&quot;</span>
+<span class="go">/dev/mapper/vg1-swap: UUID=&quot;dff59ad6-9f75-4a2b-816c-bcfa9ad861de&quot; TYPE=&quot;swap&quot;</span>
+<span class="go">/dev/mapper/vg1-root: UUID=&quot;ecb7836f-e6ee-480a-b4ab-67071657d789&quot; TYPE=&quot;ext4&quot;</span>
+</pre></div>
+</div>
+<p>The mount point is the directory where the file system should be mounted. The options specify options to use when <code class="docutils literal"><span class="pre">mount</span></code> mounts the partition. The common ones are <a class="footnote-reference" href="#fstab" id="id27">[26]</a>:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">noauto</span></code>: does not mount the partition automatically (to use it, the user must mount it)</li>
+<li><code class="docutils literal"><span class="pre">noatime</span></code>: does not record the time at which files are accessed. This makes the system faster.</li>
+<li><code class="docutils literal"><span class="pre">discard</span></code>: makes the <code class="docutils literal"><span class="pre">TRIM</span></code> command work when using SSDs with the <code class="docutils literal"><span class="pre">ext4</span></code> or <code class="docutils literal"><span class="pre">btrfs</span></code> filesystems.</li>
+<li><code class="docutils literal"><span class="pre">errors=remount-ro</span></code>: if there are errors when mounting, mount the file system read only.</li>
+<li><code class="docutils literal"><span class="pre">sw</span></code>: swap</li>
+</ul>
+<p>The dump field is normally 0 <a class="footnote-reference" href="#fstab" id="id28">[26]</a>.The pass field controls the order in which the filesystem is checked for errors. The drives marked with 1 are checked first, then the drives marked with 2. The drives marked with 0 are never checked.  The root filesystem should be checked first, followed by all the others <a class="footnote-reference" href="#fstab" id="id29">[26]</a>. Swap does not need to be checked.</p>
+<p>Edit <code class="docutils literal"><span class="pre">/etc/fstab</span></code> to look like this (substituting in the right UUIDs and removing <code class="docutils literal"><span class="pre">discard</span></code> if not using an SSD):</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span><span class="nv">UUID</span><span class="o">=</span>308c6383-ab83-40d1-823a-676ff7ec475d       /boot      ext4  noauto,noatime,discard             <span class="m">0</span> 2
+<span class="nv">UUID</span><span class="o">=</span>ecb7836f-e6ee-480a-b4ab-67071657d789       /          ext4  noatime,discard,errors<span class="o">=</span>remount-ro  <span class="m">0</span> 1
+<span class="nv">UUID</span><span class="o">=</span>dff59ad6-9f75-4a2b-816c-bcfa9ad861de       none       swap  sw                                 <span class="m">0</span> 0
+<span class="nv">PARTUUID</span><span class="o">=</span>3f63ebb3-b9b7-4180-aa5d-ac3fd33e87c2   /boot/efi  vfat  noauto,noatime,discard             <span class="m">0</span> 2
+</pre></div>
+</div>
+</div>
+<div class="section" id="name-the-computer">
+<h3>Name the computer<a class="headerlink" href="#name-the-computer" title="Permalink to this headline">¶</a></h3>
+<p>Give the computer a good name by editing <code class="docutils literal"><span class="pre">/etc/conf.d/hostname</span></code>. The syntax is <code class="docutils literal"><span class="pre">hostname=&quot;supercoolgentoocomputer&quot;</span></code>.</p>
+</div>
+<div class="section" id="configuring-ethernet">
+<h3>Configuring ethernet<a class="headerlink" href="#configuring-ethernet" title="Permalink to this headline">¶</a></h3>
+<p>For now, set up basic ethernet. Later in the guide, I discus WiFi. First, determine the network interface name, by looking in the <code class="docutils literal"><span class="pre">/sys/class/net</span></code> directory:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> ls -Fl /sys/class/net
+<span class="go">total 0</span>
+<span class="go">lrwxrwxrwx 1 root root 0 Jun 20 18:08 enp0s31f6 -&gt; ../../devices/pci0000:00/0000:00:1f.6/net/enp0s31f6/</span>
+<span class="go">lrwxrwxrwx 1 root root 0 Jun 20 18:08 lo -&gt; ../../devices/virtual/net/lo/</span>
+<span class="go">lrwxrwxrwx 1 root root 0 Jun 20 18:08 sit0 -&gt; ../../devices/virtual/net/sit0/</span>
+<span class="go">lrwxrwxrwx 1 root root 0 Jun 20 18:08 wlp3s0 -&gt; ../../devices/pci0000:00/0000:00:1c.6/0000:03:00.0/net/wlp3s0/</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">enp0s31f6</span></code> is the Ethernet card, and <code class="docutils literal"><span class="pre">wlp3s0</span></code> is the wireless card. To set up simple DHCP, type the line <code class="docutils literal"><span class="pre">config_enp0s31f6</span> <span class="pre">=&quot;dhcp&quot;</span></code> into <code class="docutils literal"><span class="pre">/etc/conf.d/net</span></code> <a class="footnote-reference" href="#complexnet" id="id30">[27]</a>. Also, install a DHCP daemon:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge net-misc/dhcpcd
+</pre></div>
+</div>
+<p>Now, make the networking start at boot:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> <span class="nb">cd</span> /etc/init.d
+<span class="go">ln -s net.lo net.enp0s31f6</span>
+<span class="go">rc-update add net.enp0s31f6 default</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="set-a-root-password">
+<h3>Set a root password<a class="headerlink" href="#set-a-root-password" title="Permalink to this headline">¶</a></h3>
+<p>The root account can do anything, so it needs a password. Set one:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> passwd
+</pre></div>
+</div>
+</div>
+<div class="section" id="set-up-a-system-logger">
+<h3>Set up a system logger<a class="headerlink" href="#set-up-a-system-logger" title="Permalink to this headline">¶</a></h3>
+<p>There are many loggers (<a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Tools#System_logger">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Tools#System_logger</a>), but <code class="docutils literal"><span class="pre">sysklogd</span></code> is the simplest:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge app-admin/sysklogd
+<span class="go">rc-update add sysklogd default</span>
+</pre></div>
+</div>
+<p>With <code class="docutils literal"><span class="pre">sysklogd</span></code>, I got an error like <code class="docutils literal"><span class="pre">sysklogd:</span> <span class="pre">/dev/xconsole:</span> <span class="pre">No</span> <span class="pre">such</span> <span class="pre">file</span> <span class="pre">or</span> <span class="pre">directory</span></code> printed out about once a day. To fix it, I commented out the following section in <code class="docutils literal"><span class="pre">/etc/syslog.conf</span></code> <a class="footnote-reference" href="#xconsole" id="id31">[28]</a>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">daemon.*;mail.*;\</span>
+<span class="go">       news.err;\</span>
+<span class="go">       *.=debug;*.=info;\</span>
+<span class="go">       *.=notice;*.=warn       |/dev/xconsole</span>
+</pre></div>
+</div>
+<p>Also about once a day, I got errors like:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">syslogd: /var/log/news/news.crit: No such file or directory</span>
+<span class="go">syslogd: /var/log/news/news.err: No such file or directory</span>
+<span class="go">syslogd: /var/log/news/news.notice: No such file or directory</span>
+</pre></div>
+</div>
+<p>I fixed those by creating the three directories <a class="footnote-reference" href="#newsdir" id="id32">[29]</a>.</p>
+</div>
+<div class="section" id="set-up-a-cron-daemon">
+<h3>Set up a cron daemon<a class="headerlink" href="#set-up-a-cron-daemon" title="Permalink to this headline">¶</a></h3>
+<p>A cron daemon runs commands at scheduled times. Again, there are many (<a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Tools#Optional:_Cron_daemon">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Tools#Optional:_Cron_daemon</a>). Emerge one:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge sys-process/cronie
+<span class="gp">#</span> rc-update add cronie default
+</pre></div>
+</div>
+</div>
+<div class="section" id="ssh">
+<h3>SSH<a class="headerlink" href="#ssh" title="Permalink to this headline">¶</a></h3>
+<p>To enable remote access, have the SSH daemon start on boot:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> rc-update add sshd default
+</pre></div>
+</div>
+</div>
+<div class="section" id="lvm">
+<h3>LVM<a class="headerlink" href="#lvm" title="Permalink to this headline">¶</a></h3>
+<p>Because the system uses LVM, it must start at boot:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> rc-update add lvm boot
+</pre></div>
+</div>
+<p>When I did not have LVM running, I got the following error message every time I did something involving disks:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">WARNING: failed to connect lvmetad. Falling back to internal scanning</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="bootloader">
+<h2>Bootloader<a class="headerlink" href="#bootloader" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="installing-the-bootloader">
+<h3>Installing the bootloader<a class="headerlink" href="#installing-the-bootloader" title="Permalink to this headline">¶</a></h3>
+<p>I used the GRand Unified Bootloader version 2 (GRUB2). To use GRUB2 with UEFI, add this to <code class="docutils literal"><span class="pre">/etc/portage/make.conf</span></code>:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span><span class="nv">GRUB_PLATFORMS</span><span class="o">=</span><span class="s2">&quot;efi-64&quot;</span>
+</pre></div>
+</div>
+<p>Then, install GRUB2:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge sys-boot/grub:2
+</pre></div>
+</div>
+<p>Install GRUB2 to the EFI partition (<code class="docutils literal"><span class="pre">/dev/sda1</span></code>), which is mounted at <code class="docutils literal"><span class="pre">/boot/efi</span></code>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> grub2-install --target<span class="o">=</span>x86_64-efi --efi-directory<span class="o">=</span>/boot/efi
+</pre></div>
+</div>
+<p>If this outputs errors like <code class="docutils literal"><span class="pre">EFI</span> <span class="pre">variables</span> <span class="pre">are</span> <span class="pre">not</span> <span class="pre">supported</span> <span class="pre">on</span> <span class="pre">this</span> <span class="pre">system</span></code>, then the system is not currently booted using UEFI, and it will be impossible to install a UEFI version of GRUB without rebooting the system using UEFI.</p>
+<p>Next, configure GRUB by editing <code class="docutils literal"><span class="pre">/etc/default/grub</span></code>. The only parameter required to make the system boot is <code class="docutils literal"><span class="pre">GRUB_CMDLINE_LINUX_DEFAULT</span></code>, which specifies the options passed to the linux kernel. In order to boot from an encrypted drive, the kernel requires the following options:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">crypt_root</span></code>: the encrypted partition (in this case <code class="docutils literal"><span class="pre">/dev/sda3</span></code>)</li>
+<li><code class="docutils literal"><span class="pre">real_root</span></code>: the decrypted root partition (in this case <code class="docutils literal"><span class="pre">/dev/mapper/vg1-root</span></code>)</li>
+<li><code class="docutils literal"><span class="pre">root_keydev</span></code>: the partition which the encrypted key file is stored, if a key file is used</li>
+<li><code class="docutils literal"><span class="pre">root_key</span></code>: the path to the key file on the <code class="docutils literal"><span class="pre">root_keydev</span></code> parition, if a key file is used</li>
+<li><code class="docutils literal"><span class="pre">dolvm</span></code>: enables LVM support</li>
+</ul>
+<p>Thus, to boot with an encrypted key file named <code class="docutils literal"><span class="pre">keyfile.bin.gpg</span></code> stored on a flash drive with a UUID of <code class="docutils literal"><span class="pre">308c6383-ab83-40d1-823a-676ff7ec475d</span></code> (use the UUID for the flash drive because it can be unplugged and will not always stay at <code class="docutils literal"><span class="pre">/dev/sdc1</span></code>, for example), set <code class="docutils literal"><span class="pre">GRUB_CMDLINE_LINUX_DEFAULT</span></code> to the following (substituting in the right UUIDs):</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span><span class="nv">GRUB_CMDLINE_LINUX_DEFAULT</span><span class="o">=</span><span class="s2">&quot;crypt_root=UUID=6736ac91-fa8c-4736-83f5-3c7996c9e678 real_root=/dev/mapper/vg1-root root_keydev=UUID=308c6383-ab83-40d1-823a-676ff7ec475d root_key=keyfile.bin.gpg dolvm&quot;</span>
+</pre></div>
+</div>
+<p>To boot with a passphrase, omit the key file parameters:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span><span class="nv">GRUB_CMDLINE_LINUX_DEFAULT</span><span class="o">=</span><span class="s2">&quot;crypt_root=UUID=6736ac91-fa8c-4736-83f5-3c7996c9e678 real_root=/dev/mapper/vg1-root dolvm&quot;</span>
+</pre></div>
+</div>
+<p>There is one other GRUB option that appears relevant: <code class="docutils literal"><span class="pre">GRUB_ENABLE_CRYPTODISK=y</span></code>. However, that is only needed when the boot partition is also encrypted. Without an encrypted boot partition, that option causes the error <code class="docutils literal"><span class="pre">error:</span> <span class="pre">device</span> <span class="pre">name</span> <span class="pre">required</span></code> on boot. Leave it commented out.</p>
+<p>Now, generate the GRUB2 configuration file:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> grub2-mkconfig -o /boot/grub/grub.cfg
+</pre></div>
+</div>
+</div>
+<div class="section" id="rebooting">
+<h3>Rebooting<a class="headerlink" href="#rebooting" title="Permalink to this headline">¶</a></h3>
+<p>The final test is rebooting the system. If everything is right, it will boot from the new Gentoo installation, prompt for a passphrase if needed, decrypt the drive, and boot completely. To reboot, exit the <code class="docutils literal"><span class="pre">chroot</span></code>, unmount the partitions, and reboot:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> <span class="nb">exit</span>
+<span class="gp">#</span> umount -l /mnt/gentoo/dev<span class="o">{</span>/shm,/pts,<span class="o">}</span>
+<span class="gp">#</span> umount /mnt/gentoo<span class="o">{</span>/boot,/sys,/proc,<span class="o">}</span>
+<span class="gp">#</span> reboot
+</pre></div>
+</div>
+<div class="section" id="rescue">
+<h4>Rescue<a class="headerlink" href="#rescue" title="Permalink to this headline">¶</a></h4>
+<p>If the computer fails to boot fully, reboot it from the installation flash drive, remount the drives, and then enter the chroot and try to fix it. To do so, first open the encrypted drive:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> cryptsetup --key-file /media/usb/keyfile.bin luksOpen /dev/sda3 encr
+</pre></div>
+</div>
+<p>Activate the volume group:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> vgchange -a y vg1
+</pre></div>
+</div>
+<p>Activate the swap:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> swapon /dev/vg1/swap
+</pre></div>
+</div>
+<p>Mount the partitions:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> mkdir -p /mnt/gentoo
+<span class="gp">#</span> mount /dev/vg1/root /mnt/gentoo
+<span class="gp">#</span> mkdir -p /mnt/gentoo/boot
+<span class="gp">#</span> mount /dev/sda2 /mnt/gentoo/boot
+<span class="gp">#</span> mkdir -p /mnt/gentoo/boot/efi
+<span class="gp">#</span> mount /dev/sda1 /mnt/gentoo/boot/efi
+</pre></div>
+</div>
+<p>Copy the DNS information:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> cp -L /etc/resolv.conf /mnt/gentoo/etc/
+</pre></div>
+</div>
+<p>Mount the filesystems:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> mount -t proc proc /mnt/gentoo/proc
+<span class="gp">#</span> mount --rbind /sys /mnt/gentoo/sys
+<span class="gp">#</span> mount --make-rslave /mnt/gentoo/sys
+<span class="gp">#</span> mount --rbind /dev /mnt/gentoo/dev
+<span class="gp">#</span> mount --make-rslave /mnt/gentoo/dev
+</pre></div>
+</div>
+<p>Enter the new Gentoo installation:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> chroot /mnt/gentoo /bin/bash
+<span class="gp">#</span> <span class="nb">source</span> /etc/profile
+<span class="gp">#</span> <span class="nb">export</span> <span class="nv">PS1</span><span class="o">=</span><span class="s2">&quot;(chroot) </span><span class="nv">$PS1</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>Then, try to find and fix any problems.</p>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="uefi" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>For alternatives, see: <a class="reference external" href="https://forums.gentoo.org/viewtopic-p-7444862.html?sid=30a9928dedbe572722345bcf720d8879#7444862">https://forums.gentoo.org/viewtopic-p-7444862.html?sid=30a9928dedbe572722345bcf720d8879#7444862</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="catdd" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Data from: <a class="reference external" href="http://unix.stackexchange.com/questions/9432/is-there-a-way-to-determine-the-optimal-value-for-the-bs-parameter-to-dd/9492#9492">http://unix.stackexchange.com/questions/9432/is-there-a-way-to-determine-the-optimal-value-for-the-bs-parameter-to-dd/9492#9492</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="boot" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>For more information about booting, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Media">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Media</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="uefibios" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>UEFI is a replacement for the Basic Input/Output System (BIOS).</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="typecodes" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[5]</a></td><td>See <a class="reference external" href="http://www.ibm.com/developerworks/library/l-lpic1-104-1/">http://www.ibm.com/developerworks/library/l-lpic1-104-1/</a> for more information about partitioning and type codes.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="offset" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[6]</a></td><td>See <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Disks#Creating_the_BIOS_boot_partition">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Disks#Creating_the_BIOS_boot_partition</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="random" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id7">[7]</a></td><td>Some people suggest using <code class="docutils literal"><span class="pre">/dev/random</span></code> for cryptographic purposes, claiming that it is more random than <code class="docutils literal"><span class="pre">/dev/urandom</span></code>. For a detailed discussion, see: <a class="reference external" href="http://www.2uo.de/myths-about-urandom/">http://www.2uo.de/myths-about-urandom/</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="driverandom" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id8">[8]</a></td><td>See <a class="reference external" href="http://security.stackexchange.com/questions/26594/filling-the-disk-with-random-data-prior-to-encryption">http://security.stackexchange.com/questions/26594/filling-the-disk-with-random-data-prior-to-encryption</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="cipher" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id9">[9]</a></td><td>For a detailed discussion of the cipher and hash combination, see <a class="reference external" href="https://wiki.gentoo.org/wiki/DM-Crypt_LUKS#Which_cipher:hash_combination.3F">https://wiki.gentoo.org/wiki/DM-Crypt_LUKS#Which_cipher:hash_combination.3F</a>. Also, for information about key lengths, see: <a class="reference external" href="https://www.keylength.com/en/4/">https://www.keylength.com/en/4/</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="swap" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id10">[10]</a></td><td>For a discussion about how big to make it, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Disks#Designing_a_partition_scheme">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Disks#Designing_a_partition_scheme</a>. Also, some people suggest making it continuous (<a class="reference external" href="https://www.preney.ca/paul/archives/389">https://www.preney.ca/paul/archives/389</a>), but that does not seem to be necessary: <a class="reference external" href="http://unix.stackexchange.com/questions/58265/does-swap-need-to-be-on-a-contiguous-lvm-logical-volume">http://unix.stackexchange.com/questions/58265/does-swap-need-to-be-on-a-contiguous-lvm-logical-volume</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="filesystems" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id11">[11]</a></td><td>For information about choosing a filesystem, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Disks#Creating_file_systems">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Disks#Creating_file_systems</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="multilib" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id12">[12]</a></td><td>For a detailed discussion, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Stage#Choosing_a_stage_tarball">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Stage#Choosing_a_stage_tarball</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="tar" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id13">[13]</a></td><td>For information about the options, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Stage#Unpacking_the_stage_tarball">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Stage#Unpacking_the_stage_tarball</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="compile" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id14">[14]</a></td><td>For more information, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Stage#Configuring_compile_options">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Stage#Configuring_compile_options</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="cflags" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id15">[15]</a></td><td>For more information, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/CFLAGS">https://wiki.gentoo.org/wiki/CFLAGS</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="makeopts" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id16">[16]</a></td><td>The general consensus for the value of <code class="docutils literal"><span class="pre">MAKEOPTS</span></code> is either the number of cores or the number of cores plus 1. The Gentoo Handbook recommends the number of cores plus 1: <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Stage#MAKEOPTS">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Stage#MAKEOPTS</a>. However, according to one test, using just the number of cores results in faster compilation: <a class="reference external" href="https://blogs.gentoo.org/ago/2013/01/14/makeopts-jcore-1-is-not-the-best-optimization/">https://blogs.gentoo.org/ago/2013/01/14/makeopts-jcore-1-is-not-the-best-optimization/</a>. Finally, the <code class="docutils literal"><span class="pre">-l</span></code> option is recommended by <a class="reference external" href="https://www.preney.ca/paul/archives/341">https://www.preney.ca/paul/archives/341</a>. I have not run any tests myself, and use <code class="docutils literal"><span class="pre">-j9</span> <span class="pre">-l8</span></code>. I will try to test it later.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="repos" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id17">[17]</a></td><td>For more information, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Main_Gentoo_repository">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Main_Gentoo_repository</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="dns" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id18">[18]</a></td><td>For more information, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Copy_DNS_info">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Copy_DNS_info</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="mounting" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id20">[19]</a></td><td>For more information, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Mounting_the_necessary_filesystems">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Mounting_the_necessary_filesystems</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="profile" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id21">[20]</a></td><td>For more information, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Choosing_the_right_profile">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Choosing_the_right_profile</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="use" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id22">[21]</a></td><td>For a list of all the <code class="docutils literal"><span class="pre">USE</span></code> flags, see: <a class="reference external" href="https://www.gentoo.org/support/use-flags/">https://www.gentoo.org/support/use-flags/</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="locales" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id23">[22]</a></td><td>For more information on locales, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Localization/Guide">https://wiki.gentoo.org/wiki/Localization/Guide</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="pax" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id24">[23]</a></td><td>For more information, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Hardened/PaX_Quickstart">https://wiki.gentoo.org/wiki/Hardened/PaX_Quickstart</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="initramfs" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id25">[24]</a></td><td>There are many other programs which can generate an initramfs. See <a class="reference external" href="https://wiki.gentoo.org/wiki/Initramfs">https://wiki.gentoo.org/wiki/Initramfs</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="naming" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id26">[25]</a></td><td>See the GRUB page for more information on naming: <a class="reference external" href="https://wiki.gentoo.org/wiki/GRUB2_Quick_Start#Kernel_naming_scheme">https://wiki.gentoo.org/wiki/GRUB2_Quick_Start#Kernel_naming_scheme</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="fstab" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[26]</td><td><em>(<a class="fn-backref" href="#id27">1</a>, <a class="fn-backref" href="#id28">2</a>, <a class="fn-backref" href="#id29">3</a>)</em> For more information, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System#Filesystem_information">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System#Filesystem_information</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="complexnet" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id30">[27]</a></td><td>For more complex network configurations, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System#Configuring_the_network">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System#Configuring_the_network</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="xconsole" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id31">[28]</a></td><td>See <a class="reference external" href="https://forums.gentoo.org/viewtopic-t-1042218-start-0.html">https://forums.gentoo.org/viewtopic-t-1042218-start-0.html</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="newsdir" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id32">[29]</a></td><td>See <a class="reference external" href="https://forums.gentoo.org/viewtopic-t-881147-start-0.html">https://forums.gentoo.org/viewtopic-t-881147-start-0.html</a>.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2016, Jacob Glueck.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
