@@ -2,7 +2,7 @@
 Introduction
 ##############
 
-As I built my own computer and installed Gentoo Linux on it, I ran into many confusing problems, and had to read many different guides in order to figure out how to proceed. In order to both record how my system is set up and to provide a reference for others seeking to configure similar setups, I wrote this guide. Throughout the guide, I tried to fully explain every command that I used by explaining the purpose of the command and that of every parameter. Furthermore, I tried to list every step so that anyone can easily follow this guide without the need to consult another reference. In cases where there is more than one good way to do something, I provided references to documentation which explains the alternative. I hope that you find this guide useful in setting up your own computer and in understanding the components of a Gentoo system.
+As I built my own computer and installed Gentoo Linux on it, I ran into a number of issues, and had to read many different guides in order to figure out how to proceed. In order to both record how my system is set up and to provide a reference for others seeking to configure similar setups, I wrote this guide. Throughout the guide, I tried to fully explain every command that I used by explaining the purpose of the command and that of every parameter. Furthermore, I tried to list every step so that anyone can easily follow this guide without the need to consult another reference. In cases where there is more than one good way to do something, I provided references to documentation which explains the alternative. I hope that you find this guide useful in setting up your own computer and in understanding the components of a Gentoo system.
 
 ****************
 Installation

@@ -118,7 +118,7 @@ This one (``media-libs/libcaca``) will set your computer on fire: ``aafire``. It
 ==============
 
 ``toilet`` (``app-misc/toilet``) actually stands for The Other Implementations LETters. Makes ASCII art. Try it: ``toilet Hello World -f mono9 --gay``.
-A useful option is ``-t`` which sets the output width to the width of the terminal. Also, ``--html`` outputs an HTML page. The available fonts are in `/usr/share/figlet``.
+A useful option is ``-t`` which sets the output width to the width of the terminal. Also, ``--html`` outputs an HTML page. The available fonts are in ``/usr/share/figlet``.
 
 ``figlet``
 ==============
@@ -259,7 +259,7 @@ Cool grub theme
 
 .. highlight:: shell
 
-GRUB comes with a nice starfield theme, so I enabled in in `/etc/default/grub`::
+GRUB comes with a nice starfield theme, so I enabled in ``/etc/default/grub``::
 
     GRUB_THEME="/boot/grub/themes/starfield/theme.txt"
 
@@ -283,7 +283,7 @@ Just make ``dd`` ignore the errors::
 Mount images made with ``dd`` using ``losetup``
 ===================================================================
 
-To mount the image made about (of a failing drive or a good drive) use ``losetup``::
+To mount an image made with ``dd`` (of a failing drive or a good drive) use ``losetup``::
 
     # losetup -P /dev/loop0 /path/to/super/cool/image.img
 

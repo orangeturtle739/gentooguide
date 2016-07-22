@@ -6,10 +6,59 @@ Setup
 
 This section covers setting up useful things on Gentoo.
 
+************************************
+Sudo
+************************************
+
+The ``sudo`` command lets you run commands as root. One important ``USE`` flag is ``offensive``, which makes ``sudo`` print insults when the user types the wrong password. Set the ``USE`` flag with the following command::
+
+    # echo "app-admin/sudo offensive" > /etc/portage/package.use/sudo
+
+The ``offensive`` flag greatly improves ``sudo``::
+
+    $ sudo -i
+    Password:
+    Hold it up to the light --- not a brain in sight!
+    Password:
+    It can only be attributed to human error.
+    Password:
+    sudo: 3 incorrect password attempts
+    $ sudo -i
+    Password:
+    Maybe if you used more than just two fingers...
+    Password:
+    My mind is going. I can feel it.
+    Password:
+    $ sudo -i
+    Password:
+    My pet ferret can type better than you!
+    Password:
+    I've seen penguins that can type better than that.
+    Password:
+    sudo: 3 incorrect password attempts
+
+Then, install ``sudo``::
+
+    # emerge app-admin/sudo
+
+.. highlight:: shell
+
+The sudoers file is ``/etc/sudoers``. It says at the top it must be edited using the ``visudo`` command::
+
+    ## This file MUST be edited with the 'visudo' command as root.
+    ## Failure to use 'visudo' may result in syntax or file permission errors
+    ## that prevent sudo from running.
+
+To allow all users in the ``wheel`` group to execute all commands with ``sudo``, uncomment the following line::
+
+    %wheel ALL=(ALL) ALL
+
+.. highlight:: console
+
 ********************************
 GPG signed portage snapshots
 ********************************
-Setting up portage to verify the tree with GPG signatures ensures that the tree is authentic and has not been changed by anyone other than the Gentoo developers. While portage does checks the hashes of source code it downloads against those in the portage tree [#portagehashes]_, it does not by default verify that the tree (and the hashes in it) are authentic. Thus, an attacker could launch a man in the middle attack and change the manifests and source code location in the tree. Then, when you installed the package the hacker changed, you would get a malicious version. To solve this problem, configure portage to verify the tree. First, get the Gentoo GPG keys::
+Setting up portage to verify the tree with GPG signatures ensures that the tree is authentic and has not been changed by anyone other than the Gentoo developers. While portage does checks the hashes of source code it downloads against those in the portage tree [#portagehashes]_, it does not by default verify that the tree (and the hashes in it) are authentic. Thus, an attacker could launch a man-in-the-middle-attack and change the manifests and source code location in the tree. Then, when you installed the package the hacker changed, you would get a malicious version. To solve this problem, configure portage to verify the tree. First, get the Gentoo GPG keys::
 
    # emerge app-crypt/gentoo-keys
 
@@ -21,7 +70,7 @@ Then, add ``webrsync-gpg`` to the ``FEATURES`` variable in ``/etc/portage/make.c
     FEATURES="webrsync-gpg"
     PORTAGE_GPG_DIR="/var/lib/gentoo/gkeys/keyrings/gentoo/release"
 
-Edit the gentoo section of ``/etc/portage/repos.conf/gentoo.conf`` [#portagegpgconf]_::
+Edit the gentoo section of ``/etc/portage/repos.conf/gentoo.conf`` to make is read as follows [#portagegpgconf]_::
 
     [gentoo]
     location = /usr/portage
@@ -57,7 +106,7 @@ In order to the signatures to be valid, the keys must also be valid. To verify t
           Key fingerprint = 13EB BDBE DE7A 1277 5DFD  B1BA BB57 2E0E 2D18 2910
     uid       [ unknown] Gentoo Linux Release Engineering (Automated Weekly Release Key) <releng@gentoo.org>
 
-Verify the fingerprints printed with those on Gentoo's website: https://wiki.gentoo.org/wiki/Project:RelEng#Keys. Of course, this verification is only as trustworthy as the HTTPS connection, but it is the best you can do. To test it, run ``emerge --sync``. It should output something like this::
+Verify the fingerprints printed with those on Gentoo's website: https://wiki.gentoo.org/wiki/Project:RelEng#Keys. Of course, this verification is only as trustworthy as the HTTPS connection, but maybe the best you can do. To test it, run ``emerge --sync``. It should output something like this::
 
     Checking signature ...
     gpg: WARNING: unsafe permissions on homedir `/var/lib/gentoo/gkeys/keyrings/gentoo/release'
@@ -70,7 +119,7 @@ Verify the fingerprints printed with those on Gentoo's website: https://wiki.gen
     Primary key fingerprint: DCD0 5B71 EAB9 4199 527F  44AC DB6B 8C1F 96D8 BF6D
          Subkey fingerprint: E1D6 ABB6 3BFC FB4B A02F  DF1C EC59 0EEA C918 9250
 
-While it verified the signature, it prints warnings because the key is not signed by a trusted key. Since there is no easy way to verify the fingerprints without relaying on HTTPS, you should not sign the key, but can now be pretty confident that the portage tree is valid.
+While it verified the signature, it prints warnings because the key is not signed by a trusted key. Since there is no easy way to verify the fingerprints without relying on HTTPS, you should not sign the key.
 
 ********************************
 PaXtest
@@ -78,7 +127,7 @@ PaXtest
 
 .. highlight:: shell
 
-In order to verify that the PaX security extensions are working, use the ``PaXtest`` program. It is masked, so unmask it by editing ``/etc/portage/package.accept_keywords/paxtest``::
+In order to verify that the PaX security extensions are working, use the ``PaXtest`` program. It is masked for amd64, so unmask it by editing ``/etc/portage/package.accept_keywords/paxtest``::
 
     # required by paxtest (argument)
     =app-admin/paxtest-0.9.14 ~amd64
@@ -180,7 +229,7 @@ To check the status of the cache, use::
 Configuring WiFi using ``wicd``
 ********************************
 
-The Wireless Interface Connection Daemon (``wicd``) is a lightweight daemon for managing wired and wireless connections [#wicd_]. It can automatically switch to a wired connection if one becomes available, and also switch to a wireless connection if there is no wired connection. It also has a ncurses user interface. To emerge it, first set the ``ncurses`` use flag::
+The Wireless Interface Connection Daemon (``wicd``) is a lightweight daemon for managing wired and wireless connections [#wicd]_. It can automatically switch to a wired connection if one becomes available, and also switch to a wireless connection if there is no wired connection. It also has a ncurses user interface. To emerge it, first set the ``ncurses`` use flag::
 
     # echo "net-misc/wicd ncurses" > /etc/portage/package.use/wicd
 
@@ -196,11 +245,11 @@ Also, make sure no other network scripts run at boot. For example, to remove the
 
     # rc-update del net.enp0s31f6
 
-Then, run the `wicd` configuration program::
+Then, run the ``wicd`` configuration program::
 
     # wicd-curses
 
-My computer had a `BCM4352` chip, so I had to emerge the ``net-wireless/broadcom-sta`` package. The package requires the following settings::
+My computer had a ``BCM4352`` chip, so I had to emerge the ``net-wireless/broadcom-sta`` package. Unfortunately, this package is a proprietary binary package. The package requires the following settings::
 
     B43: If you insist on building this, you must blacklist it!
     BCMA: If you insist on building this, you must blacklist it!
@@ -310,6 +359,10 @@ The simplest way to play music from the command line is with ``media-sound/sox``
 * ``wavpack``: adds support for wav files
 * ``encode``: adds support for encoding
 
+To set the ``USE`` flags, put them in ``/etc/protage/package.use/sox``::
+
+    # echo "media-sound/sox amr flac mad ogg wavpack encode" > /etc/protage/package.use/sox
+
 Then, play music with ``play``::
 
     # play Koji\ Kondo/The\ Legend\ Of\ Zelda\ 25th\ Anniversary\ Soundtrack/01\ -\ The\ Legend\ Of\ Zelda\ 25th\ Anniversary\ Medley.mp3
@@ -334,7 +387,7 @@ GRUB Default Boot Choice
 
 .. highlight:: shell
 
-In order to set the default boot choice in GRUB, edit the ``GRUB_DEFAULT`` variable in ``/etc/default/grub``. It identifies the kernel to start counting from 0. For example, to boot the 5\ :sup:`th` kernel on the menu, use::
+In order to set the default boot choice in GRUB, edit the ``GRUB_DEFAULT`` variable in ``/etc/default/grub``. It identifies the kernel, with counting starting from 0. For example, to boot the 5\ :sup:`th` kernel on the menu, use::
 
     GRUB_DEFAULT=4
 
@@ -357,7 +410,17 @@ Layman (``app-portage/layman``) is a program which makes it easy to manage overl
 
 .. highlight:: console
 
-While I could fix the warning by creating that file and putting the line ``masters = gentoo`` in it, I decided to try the new version of layman (2.4.1-r1), even though it was masked. To install it, first set the ``git`` (for supporting overlays from git), ``gpg`` (for verifying overlays, but I am not sure if it is used), and  ``sync-plugin-portage`` (for using portage's plugin system, which is what makes the new version different from the old one). In order to determine the keyword changes necessary, try to emerge it::
+While I could fix the warning by creating that file and putting the line ``masters = gentoo`` in it, I decided to try the new version of layman (2.4.1-r1), even though it was masked for amd64. To install it, first set the the following ``USE`` flags:
+
+* ``git``: for supporting overlays from git
+* ``gpg``: for verifying overlays, but I am not sure if it is used
+* ``sync-plugin-portage``: for using portage's plugin system, which is what makes the new version different from the old one
+
+To set the ``USE`` flags, put them in ``/etc/protage/package.use/layman``::
+
+    # echo "app-portage/layman sync-plugin-portage gpg" > /etc/protage/package.use/layman
+
+In order to determine the keyword changes necessary, try to emerge it::
 
     emerge -pv =layman-2.4.1-r1
 
@@ -395,7 +458,11 @@ Run ``layman-updater`` to set it up::
 Avahi Daemon
 ************************************
 
-The Avahi mDNS/DNS-SD daemon allows you to find computers and other things by name on the local network. It has two components: the deamon, ``net-dns/avahi``, and the client, ``sys-auth/nss-mdns``. In order to get the ``avahi-browse`` command and lots of other useful commands, ``avahi`` needs the ``dbus`` ``USE`` flag. After installing, start the daemon::
+The Avahi mDNS/DNS-SD daemon allows you to find computers and other things by name on the local network. It has two components: the daemon, ``net-dns/avahi``, and the client, ``sys-auth/nss-mdns``. In order to get the ``avahi-browse`` command and lots of other useful commands, ``avahi`` needs the ``dbus`` ``USE`` flag. To set the ``USE`` flags, put them in ``/etc/protage/package.use/avahi``::
+
+    # echo "net-dns/avahi dbus" > /etc/protage/package.use/avahi
+
+After installing, start the daemon::
 
     # rc-update add avahi-daemon default
     # rc-service avahi-daemon start
@@ -408,7 +475,7 @@ Change it to::
 
     hosts:       files mdns_minimal [NOTFOUND=return] dns mdns
 
-While this option enables IPv6 support, to use only IPv4, use the line::
+While this option enables IPv6 support, to use only IPv4, instead use the line::
 
     hosts:       files mdns4_minimal [NOTFOUND=return] dns mdns4
 
@@ -498,7 +565,7 @@ To get a shorter output, just use the ``-v`` flag::
     network dnssd://Brother%20MFC-8950DW._ipps._tcp.local/?uuid=e3248000-80ce-11db-8000-001ba9c62678
     network lpd://BRW008092859C92/BINARY_P1
 
-Above, the ``dnssd`` addresses use the Internet Printing Protocol (IPP), which is newer the LPD protocol the other addresses use [#cupsprotocol]_. IPP also provides bidirectional communication, while LPD does not. Thus, choose IPP when possible.
+Above, the ``dnssd`` addresses use the Internet Printing Protocol (IPP), which is newer than the LPD protocol the other addresses use [#cupsprotocol]_. IPP also provides bidirectional communication, while LPD does not. Thus, choose IPP when possible.
 
 Look at the available drivers using ``lpinfo``::
 
@@ -663,7 +730,7 @@ The ``net-print`` prefix contains the printer drivers, and the ``media-gfx`` con
 Sensors
 ************************************
 
-The ``sys-apps/lm_sensors`` allows the computer to detect the processor temperature, fan speed, and other things. I used the ``sensord`` use flag to get a daemon which can log the sensor data, but I never used the deamon. Install it, and then run ``sensors-detect`` to determine which kernel modules are needed for the sensors. I think this only works properly if all the possible sensor drivers are built as modules already, and then the program determines which ones need to be used. I had to use the following kernel modules::
+The ``sys-apps/lm_sensors`` allows the computer to detect the processor temperature, fan speed, and other things. I used the ``sensord`` use flag to get a daemon which can log the sensor data, but I never used the daemon. Install the package, and then run ``sensors-detect`` to determine which kernel modules are needed for the sensors. I think this only works properly if all the possible sensor drivers are built as modules already, and then the program determines which ones need to be used. I had to use the following kernel modules::
 
     # For sensors
     I2C support --->
@@ -722,7 +789,7 @@ I figured them out using a test Ubuntu installation, which had all the modules b
     intrusion1:            ALARM
     beep_enable:           disabled
 
-The core temperatures are way to low to be right; 17-19 °C is far below room temperature. I beleive they are off by about 20 °C because the UEFI setup tool shows that the processor idles at around 38 °C.
+The core temperatures are way too low to be right; 17-19 °C is far below room temperature. I believe they are off by about 20 °C because the UEFI setup tool shows that the processor idles at around 38 °C.
 
 ************************************
 Locate
