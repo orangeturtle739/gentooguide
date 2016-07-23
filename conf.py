@@ -55,6 +55,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Gentoo Guide'
+title = u'Gentoo Guide: Encrypted Root, Hardened Kernel, and UEFI'
+filenamePrefix = u'GentooGuide'
 copyright = u'2016, Jacob Glueck'
 author = u'Jacob Glueck'
 
@@ -281,8 +283,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'GentooGuide.tex', u'Gentoo Guide',
-     u'Jacob Glueck', 'manual'),
+    (master_doc, filenamePrefix+'.tex', title, author, 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -327,7 +328,7 @@ latex_show_pagerefs = True
 # regardless of the global pdf_compressed setting.
 
 
-pdf_documents = [('index', u'GentooGuide', u'Gentoo Guide', u'Jacob Glueck'),]
+pdf_documents = [('index', filenamePrefix, title, author),]
 
 # A comma-separated list of custom stylesheets. Example:
 pdf_stylesheets = ['letter','freetype-serif']
@@ -449,8 +450,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'GentooGuide', u'Gentoo Guide Documentation',
-     author, 'GentooGuide', 'One line description of project.',
+    (master_doc, filenamePrefix, title,
+     author, filenamePrefix, 'One line description of project.',
      'Miscellaneous'),
 ]
 
@@ -474,13 +475,13 @@ texinfo_documents = [
 # -- Options for Epub output ----------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = project
+epub_title = title
 epub_author = author
 epub_publisher = author
 epub_copyright = copyright
 
 # The basename for the epub file. It defaults to the project name.
-# epub_basename = project
+epub_basename = filenamePrefix
 
 # The HTML theme for the epub output. Since the default themes are not
 # optimized for small screen space, using the same theme for HTML and epub
