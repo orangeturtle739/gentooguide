@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Gentoo Guide &mdash; Gentoo Guide 1.0.0 documentation</title>
+    <title>Gentoo Guide: Encrypted Root, Hardened Kernel, and UEFI &mdash; Gentoo Guide 1.0.1 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.0.0',
+        VERSION:     '1.0.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="Gentoo Guide 1.0.0 documentation" href="#" />
+    <link rel="top" title="Gentoo Guide 1.0.1 documentation" href="#" />
     <link rel="next" title="Introduction" href="Introduction.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -74,25 +74,32 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Installation.html#setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#setup">Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#make-a-bootable-flash-drive">Make a bootable flash drive</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="Installation.html#booting">Booting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Installation.html#configuring-the-network">Configuring the Network</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Installation.html#partitioning">Partitioning</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Installation.html#encrypting">Encrypting</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="Installation.html#configure-encryption">Configure encryption</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#configure-encryption">Configure encryption</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Installation.html#creating-a-keyfile">Creating a keyfile</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Installation.html#encrypting-the-partition">Encrypting the partition</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="Installation.html#configure-lvm">Configure LVM</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Installation.html#create-the-filesystems">Create the filesystems</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Installation.html#mount-the-filesystems">Mount the filesystems</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="Installation.html#installing-stage-3">Installing stage 3</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="Installation.html#set-the-date">Set the date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#set-the-date-and-time">Set the date and time</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Installation.html#downloading-the-stage-3-tarball">Downloading the stage 3 tarball</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Installation.html#picking-an-editor">Picking an editor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Installation.html#configuring-compile-options">Configuring compile options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Installation.html#configuring-the-main-gentoo-repository">Configuring the main Gentoo repository</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Installation.html#copy-dns-configuration">Copy DNS configuration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Installation.html#id19">Mount the filesystems</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#id20">Mount the filesystems</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Installation.html#enter-the-new-environment">Enter the new environment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Installation.html#configuring-portage">Configuring portage</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Installation.html#configure-the-timezone">Configure the timezone</a></li>
@@ -128,6 +135,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Setup.html">Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#sudo">Sudo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Setup.html#gpg-signed-portage-snapshots">GPG signed portage snapshots</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Setup.html#paxtest">PaXtest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Setup.html#setting-up-ccache">Setting up ccache</a></li>
@@ -187,7 +195,7 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Gentoo Guide</a></li>
+<li><a class="reference internal" href="#">Gentoo Guide: Encrypted Root, Hardened Kernel, and UEFI</a></li>
 </ul>
 </ul>
 </li>
@@ -231,8 +239,8 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <div class="section" id="gentoo-guide">
-<h1>Gentoo Guide<a class="headerlink" href="#gentoo-guide" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="gentoo-guide-encrypted-root-hardened-kernel-and-uefi">
+<h1>Gentoo Guide: Encrypted Root, Hardened Kernel, and UEFI<a class="headerlink" href="#gentoo-guide-encrypted-root-hardened-kernel-and-uefi" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound" id="contents">
 <p class="caption"><span class="caption-text">Contents</span><a class="headerlink" href="#contents" title="Permalink to this toctree">¶</a></p>
 <ul>
@@ -244,7 +252,10 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Installation.html#setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#setup">Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#make-a-bootable-flash-drive">Make a bootable flash drive</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="Installation.html#booting">Booting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Installation.html#configuring-the-network">Configuring the Network</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Installation.html#partitioning">Partitioning</a></li>
@@ -256,13 +267,13 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="Installation.html#installing-stage-3">Installing stage 3</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="Installation.html#set-the-date">Set the date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#set-the-date-and-time">Set the date and time</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Installation.html#downloading-the-stage-3-tarball">Downloading the stage 3 tarball</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Installation.html#picking-an-editor">Picking an editor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Installation.html#configuring-compile-options">Configuring compile options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Installation.html#configuring-the-main-gentoo-repository">Configuring the main Gentoo repository</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Installation.html#copy-dns-configuration">Copy DNS configuration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Installation.html#id19">Mount the filesystems</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.html#id20">Mount the filesystems</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Installation.html#enter-the-new-environment">Enter the new environment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Installation.html#configuring-portage">Configuring portage</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Installation.html#configure-the-timezone">Configure the timezone</a></li>
@@ -295,6 +306,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Setup.html">Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Setup.html#sudo">Sudo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Setup.html#gpg-signed-portage-snapshots">GPG signed portage snapshots</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Setup.html#paxtest">PaXtest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Setup.html#setting-up-ccache">Setting up ccache</a></li>

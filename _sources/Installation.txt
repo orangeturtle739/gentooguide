@@ -12,15 +12,31 @@ This section covers installing hardened Gentoo with an encrypted root partition 
 Setup
 ******
 
-Fist, make a flash drive with a bootable version of Gentoo on it. Either a minimal installation disk or a LiveDVD works, and both are available from https://www.gentoo.org/downloads/. However, only the LiveDVD can boot using UEFI, and thus only the LiveDVD can be used to set up a system which will boot from UEFI [#uefi]_ . The LiveDVD has a full KDE desktop environment which might be easier to use, but is not necessary. Download the image and the ``.DIGESTS.asc`` file. Next, get the Gentoo keys::
+Make a bootable flash drive
+===============================
+
+First, make a flash drive with a bootable version of Gentoo on it. Either a minimal installation disk or a LiveDVD works, and both are available from https://www.gentoo.org/downloads/. However, only the LiveDVD can boot using UEFI, and thus only the LiveDVD can be used to set up a system which will boot from UEFI [#uefi]_ . The LiveDVD has a full KDE desktop environment which might be easier to use, but is not necessary. Download the image and the ``.DIGESTS.asc`` file. See :numref:`downloadimage` for an image of the download page.
+
+.. figure:: images/GentooDownloads-Marked.*
+   :width: 75 %
+   :align: center
+   :name: downloadimage
+
+   Location of the LiveDVD download for amd64 computers on the Gentoo downloads page.
+
+Next, get the Gentoo keys::
 
     $ gpg --keyserver hkps.pool.sks-keyservers.net --recv-keys 0xBB572E0E2D182910
 
-A list of the keys is available at https://www.gentoo.org/downloads/signatures/. The ``0xBB572E0E2D182910`` key ID is the "Gentoo Linux Release Engineering (Automated Weekly Release Key)" which is probably the key that the ISO file was signed with. Then, verify the file::
+A list of the keys is available at https://www.gentoo.org/downloads/signatures/. The ``0xBB572E0E2D182910`` key ID is the "Gentoo Linux Release Engineering (Automated Weekly Release Key)" which is probably the key that the ISO file was signed with.
+
+Then, verify the file::
 
     $ gpg --verify install-amd64-minimal-20141204.iso.DIGESTS.asc
 
-GPG should say something like ``Good signature from "Gentoo Linux Release Engineering (Automated Weekly Release Key) <releng@gentoo.org>"``. After that, it will print the fingerprint of the key: ``Primary key fingerprint: 13EB BDBE DE7A 1277 5DFD B1BA BB57 2E0E 2D18 2910``. If the signature is good and the key fingerprint matches the one at https://www.gentoo.org/downloads/signatures/, then the digests file is good. Next, compute the SHA 512 sum of the ISO file. On Linux, use::
+GPG should say something like ``Good signature from "Gentoo Linux Release Engineering (Automated Weekly Release Key) <releng@gentoo.org>"``. After that, it will print the fingerprint of the key: ``Primary key fingerprint: 13EB BDBE DE7A 1277 5DFD B1BA BB57 2E0E 2D18 2910``. If the signature is good and the key fingerprint matches the one at https://www.gentoo.org/downloads/signatures/, then the digests file is good.
+
+Next, compute the SHA 512 sum of the ISO file. On Linux, use::
 
     $ sha512sum install-amd64-minimal-20141204.iso
 
@@ -36,19 +52,21 @@ The ``-m 1`` makes ``grep`` only print the first match, and the ``-i`` makes it 
 
 .. highlight:: none
 
-Next, burn the ISO file to a CD, or copy it to a flash drive. The standard way to copy the image to a flash drive is with ``dd``::
+Next, burn the ISO file to a CD, or copy it to a flash drive. The standard way to copy the image to a flash drive at ``/dev/sda`` is with ``dd``::
 
     $ dd if=install-amd64-minimal-20141204.iso of=/dev/sda bs=1M
 
 .. highlight:: console
 
-The input file (``if``) is the downloaded ISO, and the output file (``of``) is the flash drive. To determine the name of the flash drive, use ``fdisk -l`` on Linux or, on OS X, use ``diskutil list``. Finally, ``bs`` is the block size. 1 mebibyte generally works well. On OS X, use ``bs=1m``. While this works, ``dd`` does not have a progress indicator, which can be annoying. To solve this, use a combination of ``pv`` and ``dd``::
+The input file (``if``) is the downloaded ISO, and the output file (``of``) is the flash drive. To determine the name of the flash drive, use ``fdisk -l`` on Linux or, on OS X, use ``diskutil list``. Finally, ``bs`` is the block size. 1 mebibyte generally works well. On OS X, use ``bs=1m``.
 
-    $ pv install-amd64-minimal-20141204.iso | dd of=/dev/sdb bs=1M
+While this works, ``dd`` does not have a progress indicator. To solve this, use a combination of ``pv`` and ``dd``::
+
+    $ pv install-amd64-minimal-20141204.iso | dd of=/dev/sda bs=1M
 
 ``pv`` copies its input file to standard output, and displays a progress bar with the status of the copy. It is also possible to use ``pv`` by itself::
 
-    $ pv install-amd64-minimal-20141204.iso > /dev/sdb
+    $ pv install-amd64-minimal-20141204.iso > /dev/sda
 
 However, then you cannot control the block size. According to a benchmark online [#catdd]_, ``cat`` (which is about the same as ``pv``) performs about the same as ``dd``:
 
@@ -84,7 +102,7 @@ If the network does not work, follow the Gentoo handbook: https://wiki.gentoo.or
 Partitioning
 ***************************
 
-The encrypted disk will have three partitions on it: one for GRUB (the GRand Unified Bootloader), one for ``/boot``, and the encrypted partition. The encrypted partition (``encr``) will be set up with Logical Volume Management (LVM) have one volume group on it (``vg1``), which will hold two logical volumes: the root filesystem and swap. Assuming the disk is at ``/dev/sda``, the partition structure will look like this::
+The disk will have three partitions on it: one for GRUB (the GRand Unified Bootloader), one for ``/boot``, and the encrypted partition. The encrypted partition (``encr``) will be set up with Logical Volume Management (LVM) have one volume group on it (``vg1``), which will hold two logical volumes: the root filesystem and swap. Assuming the disk is at ``/dev/sda``, the partition structure will look like this::
 
     /dev/sda
     |-- /dev/sda1 (vfat, grub)
@@ -94,7 +112,11 @@ The encrypted disk will have three partitions on it: one for GRUB (the GRand Uni
             |-- dev/vg1/root (ext4, root)
             `-- /dev/vg1/swap (swap)
 
-As the computer will use the Unified Extensible Firmware Interface (UEFI) [#uefibios]_ to book, the disk must use a GUID Partition Table (GPT). To make a GPT partition table, first install ``gdisk``: ``emerge gptfdisk``. Then, run it::
+As the computer will use the Unified Extensible Firmware Interface (UEFI) [#uefibios]_ to boot, the disk must use a GUID Partition Table (GPT). To make a GPT partition table, first install ``gdisk`` by using the command::
+
+    # emerge gptfdisk
+
+Then, run ``gdisk``::
 
     # gdisk
     GPT fdisk (gdisk) version 1.0.1
@@ -110,7 +132,7 @@ As the computer will use the Unified Extensible Firmware Interface (UEFI) [#uefi
 
     Command (? for help):
 
-Type in the name of the drive to install Gentoo on instead of ``/dev/sda``. ``gdisk`` provides the following commands::
+``gdisk`` provides the following commands::
 
     b    back up GPT data to a file
     c    change a partition's name
@@ -139,7 +161,9 @@ Now, make the ``grub`` partition::
     Hex code or GUID (L to show codes, Enter = 8300): EF02
     Changed type of partition to 'BIOS boot partition'
 
-The 2 MiB size is the size specified in the Gentoo handbook, as is the initial 2048 byte offset [#offset]_. The ``0xEF02`` code is the partition type [#typecodes]_. Next, make the boot partition::
+The 2 MiB size is the size specified in the Gentoo handbook, as is the initial 2048 byte offset [#offset]_. The ``0xEF02`` code is the partition type [#typecodes]_.
+
+Next, make the boot partition::
 
     Command (? for help): n
     Partition number (2-128, default 2):
@@ -149,7 +173,9 @@ The 2 MiB size is the size specified in the Gentoo handbook, as is the initial 2
     Hex code or GUID (L to show codes, Enter = 8300):
     Changed type of partition to 'Linux filesystem'
 
-Once again, the 128 MiB size is from the Gentoo handbook. Finally, make the encrypted partition::
+Once again, the 128 MiB size is from the Gentoo handbook.
+
+Finally, make the encrypted partition::
 
     Command (? for help): n
     Partition number (3-128, default 3):
@@ -164,6 +190,14 @@ This uses up the rest of the disk. Now, name the partitions. Call the first part
     Command (? for help): c
     Partition number (1-3): 1
     Enter name: grub
+
+    Command (? for help): c
+    Partition number (1-3): 2
+    Enter name: boot
+
+    Command (? for help): c
+    Partition number (1-3): 3
+    Enter name: encr
 
 Type ``p`` to see the result::
 
@@ -199,36 +233,86 @@ Encrypting
 Configure encryption
 ===========================
 
-There are two ways to encrypt the disk: with a keyfile or with a passphrase. The Linux Unified Key Setup (LUKS) supports 8 key slots, each of which can be either a passphrase or keyfile. The purpose of using a keyfile rather than a passphrase is that the keyfile can be stored on a flash drive. Then, the computer will only boot with the flash drive plugged in.
+There are two ways to encrypt the encrypted partition: with a keyfile or with a passphrase. The Linux Unified Key Setup (LUKS) supports 8 key slots, each of which can be either a passphrase or keyfile. The purpose of using a keyfile rather than a passphrase is that the keyfile can be stored on a flash drive. Then, the computer will only boot with the flash drive plugged in.
 
-To used a keyfile, first plug in the flash drive where you will store it. Determine the disk ID of the flash drive (using ``fdisk -l``), and then mount it::
+Creating a keyfile
+------------------
+
+To use a keyfile, first plug in the flash drive where you will store it. Determine the disk ID of the flash drive (using ``fdisk -l``), and then mount it::
 
     # mkdir -p /media/usb
     # mount /dev/sdb1 /media/usb
 
 The ``mkdir`` command makes the directory for mounting the drive, and the ``-p`` flag causes it to make all intermediate directories (first it makes /media, then  it makes /media/usb; without the ``-p`` flag it would fail because ``/media`` would not exist). The mount command mounts the first partition of the flash drive (``/dev/sdb1``) at the ``/media/usb`` folder.
 
+In order for the ``cryptsetup`` command to work with a key file, it needs a plain text (unencrypted) file. However, creating such a plain text file on a disk is insecure because it is hard to erase it securely, so someone might be able to recover it even if you delete and gain access to your data. The easiest way around this problem is to create a temporary RAM disk. Do this using the mount command::
+
+    # mkdir /ramfs
+    # mount -t ramfs -o size=512 ramfs /ramfs
+
+This command creates a temporary RAM filesystem with a size of 512 bytes (the exact size of the key file, but it can be bigger and will grow if more space is needed) mounted at ``/ramfs``. The format of the ``mount`` command is::
+
+    # mount -t <type> -o size=<size> <file system type> <mount point>
+
+The type is the type of RAM filesystem, which is either ``tmpfs`` or ``ramfs``. While ``tmpfs`` is newer and generally better, ``tmpfs`` may use swap space if it runs out of space on RAM, and ``ramfs`` will not [#tmpfsramfs]_. Since the whole point is to avoid writing the plain text keyfile to disk, use ``ramfs``, not ``tmpfs``. The size is the starting size of the filesystem for a ``ramfs``, which can grow, and the absolute size of a ``tmpfs`` which cannot grow. The file system type is the type of file system, and the mount point is the folder where it is mounted.
+
 Next, create the key file::
 
-    # head -c 512 /dev/urandom > /media/usb/keyfile.bin
+    # head -c 512 /dev/urandom > /ramfs/keyfile.bin
 
-This command takes the first 512 bytes from the random number stream ``/dev/urandom`` [#random]_ and writes them to the file ``/media/usb/keyfile.bin``. It is a good idea to give the key file a meaningful name to keep track of which drive it decrypts. For example, incorporate the hard drive's make, model, serial number, and partition number to into its name. To get this information, use ``lshw``. To look at the keyfile, do ``hexdump /media/usb/keyfile.bin``. For an extra layer of security, encrypt the keyfile. Then, not only will the flash drive have to be plugged into the computer for it to boot, but you will also have to type a password. To do this, use ``gpg``::
+This command takes the first 512 bytes from the random number stream ``/dev/urandom`` [#random]_ and writes them to the file ``/ramfs/keyfile.bin``. It is a good idea to give the key file a meaningful name to keep track of which drive it decrypts. For example, incorporate the hard drive's make, model, serial number, and partition number to into its name. To get this information, use ``lshw``::
 
-    # gpg --symmetric -o /media/usb/keyfile.bin.gpg /media/usb/keyfile.bin
+    # lshw | less
 
-The GNU Privacy Guard (``gpg``) is a general purpose encryption program. The ``--symmetric`` flag makes it use a symmetric cipher (which uses the same key for encryption and decrypting) as opposed to the default public key cipher. The ``-o`` file specifies the output file, and the final argument is the input file. ``gpg`` will prompt you for a password.
+.. highlight:: none
 
-One optional step is writing random data to the drive::
+The output will be very long, and ``less`` will allow you to scroll through it using the space bar to go down a page and 'b' to go up a page. Look for the a sction like this::
+
+    *-scsi:1
+              physical id: 2
+              logical name: scsi1
+              capabilities: emulated
+            *-disk
+                 description: ATA Disk
+                 product: APPLE SSD TS256C
+                 physical id: 0.0.0
+                 bus info: scsi@1:0.0.0
+                 logical name: /dev/sdb
+                 version: 0201
+                 serial: 11NS11DCTLNZ
+                 size: 233GiB (251GB)
+                 capabilities: partitioned partitioned:dos
+                 configuration: ansiversion=5 sectorsize=512 signature=e9b7948b
+
+.. highlight:: console
+
+To look at the keyfile, do ``hexdump /ramfs/keyfile.bin``. For an extra layer of security, encrypt the keyfile. Then, not only will the flash drive have to be plugged into the computer for it to boot, but you will also have to type a password. To do this, use ``gpg``::
+
+    # gpg --symmetric -o /media/usb/keyfile.bin.gpg /ramfs/keyfile.bin
+
+The GNU Privacy Guard (``gpg``) is a general purpose encryption program. The ``--symmetric`` flag makes it use a symmetric cipher (which uses the same key for encryption and decrypting) as opposed to the default public key cipher. The ``-o`` file specifies the output file, and the final argument is the input file. Note that the encrypted file is stored on the flash drive, which will be needed to boot the computer. ``gpg`` will prompt you for a password.
+
+If you do not plan to encrypt the key file (which you really should), copy it out of the RAM filesystem onto the flash drive::
+
+    # cp /ramfs/keyfile.bin /media/usb/keyfile.bin
+
+
+Encrypting the partition
+--------------------------
+
+One optional step is writing random data to the partition::
 
     # pv /dev/urandom -s 1000G | dd of=/dev/sda3 bs=1M
 
-After this, the whole drive will look random so it will be impossible to figure out how much stuff is on it. This improves the security of the drive [#driverandom]_.However, this took me about 24 hours for the 1 TB drive that I used. For a 3 TB WD Red drive, it took 78 hours. Also, the ``-s`` argument to ``pv`` does not have to be exactly right; anything pretty close will produce a good progress bar.
+After this, the whole partition will look random so it will be impossible to figure out how much stuff is on it. This improves the security [#driverandom]_. However, this took me about 24 hours for the 1 TB drive that I used. For a 3 TB WD Red drive, it took 75 hours. The ``-s`` argument to ``pv`` should be close to the actual size of the drive to get a good progress bar.
 
 Next, encrypt the drive. If using a key file, type::
 
-    # cryptsetup --cipher aes-xts-plain -s 512 --key-file /media/usb/keyfile.bin luksFormat /dev/sda3
+    # cryptsetup --cipher aes-xts-plain -s 512 --key-file /ramfs/keyfile.bin luksFormat /dev/sda3
 
-The cipher ``aes-xts-plain`` with the ``sha-512`` hash is a pretty standard combination [#cipher]_. The ``--key-file /media/usb/keyfile.bin`` specifies the key file to use. This must be the plaintext keyfile even if you plan on using an encrypted key. To use a passphrase, omit this argument. The ``luksFormat`` command makes ``cryptsetup`` format the disk as an encrypted volume. Finally, ``/dev/sda3`` is the third partition on ``/dev/sda``, which is the encrypted partition. To see the new LUKS setup, use::
+The cipher ``aes-xts-plain`` with the ``sha-512`` hash is a pretty standard combination [#cipher]_. The ``--key-file /ramfs/keyfile.bin`` specifies the key file to use. This must be the plaintext keyfile even if you plan on using an encrypted key. To use a passphrase, omit this argument. The ``luksFormat`` command makes ``cryptsetup`` format the partition as an encrypted volume. Finally, ``/dev/sda3`` is the third partition on ``/dev/sda``, which is the encrypted partition.
+
+To see the new LUKS setup, use::
 
     # cryptsetup luksDump /dev/sda3
     LUKS header information for /dev/sda3
@@ -262,9 +346,13 @@ The cipher ``aes-xts-plain`` with the ``sha-512`` hash is a pretty standard comb
 
 Now, mount an unencrypted view of the encrypted partition::
 
-    # cryptsetup --key-file /media/usb/keyfile.bin luksOpen /dev/sda3 encr
+    # cryptsetup --key-file /ramfs/keyfile.bin luksOpen /dev/sda3 encr
 
-This opens a decrypted view of the drive at ``/dev/mapper/encr``.
+This opens a decrypted view of the partition at ``/dev/mapper/encr``.
+
+If you used a keyfile, be sure the unmount the RAM filesystem so the plain text key file is no longer available::
+
+    # umount /ramfs
 
 Configure LVM
 =============
@@ -277,16 +365,16 @@ Then, create a volume group named ``vg1`` to hold the volumes::
 
     # vgcreate vg1/dev/mapper/encr
 
-Create the swap logical volume::
+Next, create the swap logical volume::
 
-    # lvcreate -L 1G y -n swap vg1
+    # lvcreate -L 34G y -n swap vg1
 
-The ``-L`` flag species the size of the partition, which is in this case 1 GB. In order to support hibernation (saving the contents of RAM to swap), the swap partition must be at least as big as the amount of RAM installed [#swap]_. Finally, ``vg1`` is the parent volume group. The swap volume will be at ``/dev/vg1/swap``.
+The ``-L`` flag species the size of the partition, which is in this case 34 GiB. In order to support hibernation (saving the contents of RAM to swap), the swap partition must be at least as big as the amount of RAM installed [#swap]_. Finally, ``vg1`` is the parent volume group. The swap volume will be at ``/dev/vg1/swap``.
 Create the root logical volume::
 
     # lvcreate -l 100%FREE -n root vg1
 
-The ``100%FREE`` makes the root volume use up the remaining space. Note the lowercase ``l``. The swap volume will be at ``/dev/vg1/root``.
+The ``100%FREE`` makes the root volume use up the remaining space. Note the lowercase ``l``. The root volume will be at ``/dev/vg1/root``.
 
 Create the filesystems
 =======================
@@ -295,7 +383,7 @@ The newly created partitions need to be formatted in order to hold data. First, 
 
     # mkdosfs /dev/sda1
 
-Remember that the ``grub`` partition is as ``/dev/sda1``.
+Remember that the ``grub`` partition is at ``/dev/sda1``.
 
 Second, the make the boot partition and the root partition ``ext4`` [#filesystems]_::
 
@@ -324,14 +412,14 @@ The last step is to mount the filesystems::
 Installing stage 3
 ***************************
 
-Set the date
+Set the date and time
 ===========================
-Check the date::
+Check the date and time::
 
     # date
     Wed Jun 15 09:58:45 UTC 2016
 
-If the date is wrong, set it, using UTC time (the timezone will be set later)::
+If the date or time is wrong, set it, using UTC time (the timezone will be set later)::
 
     # date MMDDhhmmYYYY
 
@@ -349,11 +437,34 @@ First, go to the Gentoo directory::
 
     # cd /mnt/gentoo
 
-Then, using the ``lynx`` browser, pick a mirror::
+Then, using the ``lynx`` browser, pick a mirror (see :numref:`mirrorregion` and :numref:`mirrorus`)::
 
     # lynx https://www.gentoo.org/downloads/mirrors/
 
-Go to ``releases/amd64/autobuilds/current-stage3-amd64-hardened/`` and download ``stage3-amd64-hardened-20160609.tar.bz2`` and ``stage3-amd64-hardened-20160609.tar.bz2.DIGESTS.asc``. Verify the files in the same way as the ISO file (:ref:`setup_verify`)::
+.. figure:: images/MirrorSelection-Region.*
+   :width: 75 %
+   :align: center
+   :name: mirrorregion
+
+   Selecting the mirror region with lynx.
+
+.. figure:: images/MirrorSelection-US.*
+   :width: 75 %
+   :align: center
+   :name: mirrorus
+
+   Selecting a mirror within the US with lynx.
+
+Go to ``releases/amd64/autobuilds/current-stage3-amd64-hardened/`` and download ``stage3-amd64-hardened-20160609.tar.bz2`` and ``stage3-amd64-hardened-20160609.tar.bz2.DIGESTS.asc`` (see :numref:`stage3download`).
+
+.. figure:: images/Stage3Download.*
+   :width: 75 %
+   :align: center
+   :name: stage3download
+
+   Downloading the stage 3 tarball with lynx.
+
+Verify the files in the same way as the ISO file (:ref:`setup_verify`)::
 
     # gpg --keyserver hkps.pool.sks-keyservers.net --recv-keys 0xBB572E0E2D182910
     # gpg --verify stage3-amd64-hardened-20160609.tar.bz2.DIGESTS.asc
@@ -367,7 +478,7 @@ Unpack the tarball [#tar]_::
 Picking an editor
 ===========================
 
-The remaining steps require edits to many configuration files. The editor installed by default is ``nano``. To install ``vim``, do::
+The remaining steps require edits to many configuration files. The editor installed by default is ``nano``. To install ``vim``, run::
 
     # emerge vim
 
@@ -471,13 +582,13 @@ Then, check the profile::
       [22]  hardened/linux/uclibc/amd64
 
 
-The selected profile should be ``hardened/linux/amd64``. The profile species default values for many variables [#profile]_.
+The selected profile should be ``hardened/linux/amd64``. The profile specifies default values for many variables [#profile]_.
 
 Next, configure the ``USE`` variable. To see the current use flags, use::
 
     # emerge --info | grep ^USE
 
-The ``USE`` variable is set in ``/etc/portage/make.conf``. The original value was ``USE="bindist mmx sse sse2"``. I added ``qt4`` and ``kde`` because I planned on used the KDE desktop environment later, and I added ``alsa`` for sound support [#use]_.
+The ``USE`` variable is set in ``/etc/portage/make.conf``. The original value was ``USE="bindist mmx sse sse2"``. I added ``qt4`` and ``kde`` because I planned on using the KDE desktop environment later, and I added ``alsa`` for sound support [#use]_.
 
 Configure the timezone
 ===========================
@@ -499,7 +610,16 @@ Uncomment or add the proper locales to ``/etc/locale.gen``. I used::
     en_US ISO-8859-1
     en_US.UTF-8 UTF-8
 
-Run ``locale-gen`` to generate the locales. Then, select the right local::
+Run ``locale-gen`` to generate the locales::
+
+    # locale-gen
+     * Generating locale-archive: forcing # of jobs to 1
+     * Generating 2 locales (this might take a while) with 1 jobs
+     *  (1/2) Generating en_US.ISO-8859-1 ...                         [ ok ]
+     *  (2/2) Generating en_US.UTF-8 ...                              [ ok ]
+     * Generation complete
+
+Then, select the right locale (I chose the ``en_US.utf8`` [#locales]_)::
 
     # eselect locale list
     Available targets for the LANG variable:
@@ -511,7 +631,7 @@ Run ``locale-gen`` to generate the locales. Then, select the right local::
       [ ]   (free form)
     # eselect locale set 4
 
-I chose the ``en_US.utf8`` [#locales]_. Reload the environment::
+Next, Reload the environment::
 
     # env-update && source /etc/profile && export PS1="(chroot) $PS1"
 
@@ -532,7 +652,7 @@ For the hardened kernel::
 
     # emerge sys-kernel/hardened-sources
 
-The kernel sources are installed into ``/usr/src``. The file ``/usr/src/linux`` is a symbolic link to the most recently install kernel. For example, with both the hardened sources and the normal sources installed, ``/usr/src`` might look like this::
+The kernel sources are installed into ``/usr/src``. The file ``/usr/src/linux`` is a symbolic link to the most recently installed kernel. For example, with both the hardened sources and the normal sources installed, ``/usr/src`` might look like this::
 
     # ls -Fl
     total 8
@@ -544,7 +664,7 @@ The kernel sources are installed into ``/usr/src``. The file ``/usr/src/linux`` 
 Configure the kernel
 ============================
 
-There are two ways to configure the kernel: manually and automatically. While building the kernel manually is difficult and time-consuming, it generally produces a kernel which boots much faster then the automatically generated kernel because the automatically generated kernel has to detect all the hardware at boot time and load the proper modules. This section explains how to configure the kernel manually. For information about how to configure it automatically with ``genkernel``, see https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Kernel#Alternative:_Using_genkernel.
+There are two ways to configure the kernel: manually and automatically. While building the kernel manually is more time-consuming, it generally produces a kernel which boots faster then the automatically generated kernel because the automatically generated kernel has to detect all the hardware at boot time and load the proper modules. This section explains how to configure the kernel manually. For information about how to configure it automatically with ``genkernel``, see https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Kernel#Alternative:_Using_genkernel.
 
 First, determine the system’s hardware using ``lspci``::
 
@@ -569,10 +689,10 @@ First, determine the system’s hardware using ``lspci``::
     03:00.0 Network controller: Broadcom Corporation BCM4352 802.11ac Wireless Network Adapter (rev 03)
 
 
-Then, do ``cd /usr/src/linux``, and enter the kernel configuration menu with ``make menuconfig``. Then, try to select all the right options. Here are the options I selected (which were either not selected by default or which are important), with some short comments about why I selected them (My computer had a BCM4352 wireless card which required the ``broadcom-sta`` driver):
+Then, change to the kernel source directory with ``cd /usr/src/linux``, and enter the kernel configuration menu with ``make menuconfig``. Then, try to select all the right options. Here are the options I selected (which were either not selected by default or which are important), with some short comments about why I selected them (My computer had a BCM4352 wireless card which required the ``broadcom-sta`` driver):
 
 .. literalinclude:: Kernel-Options.txt
-    :language: shell
+    :language: console
     :linenos:
 
 Compile the kernel with ``make && make modules_install``. Then, run ``make install`` to copy the kernel to ``/boot``.
@@ -596,7 +716,7 @@ Make sure all these programs are installed::
 
     # emerge sys-fs/cryptsetup sys-apps/busybox app-crypt/gnupg
 
-There are two ways to set these options. The first is with command line options::
+There are two ways to set the initramfs options. The first is with command line options::
 
     # genkernel --lvm --luks --gpg --busybox --disklabel --install initramfs
 
@@ -624,14 +744,23 @@ Naming the files
 All the new kernel files were installed in ``/boot``::
 
     # ls -Fl /boot
-    total 36608
-    -rw-r--r-- 1 root root  104171 Jun 20 14:01 config-4.4.8-hardened-r1-manual
-    drwxr-xr-x 2 root root    1024 Jun  9 21:11 efi/
-    -rw-r--r-- 1 root root 2777140 Jun 17 17:53 initramfs-4.4.8-hardened-r1-manual.img
-    -rw-r--r-- 1 root root 7064480 Jun 20 14:01 kernel-4.4.8-hardened-r1-manual
-    -rw-r--r-- 1 root root 3431015 Jun 20 14:01 System.map-4.4.8-hardened-r1-manual
+    total 47084
+    -rw-r--r-- 1 root root  104174 Jun 20 07:10 config-4.4.8-hardened-r1
+    -rw-r--r-- 1 root root 3445174 Jun 20 07:10 System.map-4.4.8-hardened-r1
+    -rw-r--r-- 1 root root 7113312 Jun 20 07:10 vmlinuz-4.4.8-hardened-r1
+    -rw-r--r-- 1 root root 5774460 Jun 20 07:10 initramfs-genkernel-x86_64-4.4.8-hardened-r1
 
-Each kernel has four files: the configuration used to make it, an initramfs and a kernel file. The kernel will initially have a name that starts with ``vmlinux``, but it can be renamed to start with ``kernel`` too. The initramfs file must start with either ``initramfs`` or ``initrd`` and must end with ``.img`` unless it is named with the default genkernel name [#naming]_. They all must have the same suffix.
+
+Each kernel has four files: the configuration used to make it, an initramfs, a kernel file, and a System.map. The kernel will initially have a name that starts with ``vmlinux``, but it can be renamed to start with ``kernel`` too. The initramfs file must start with either ``initramfs`` or ``initrd`` and must end with ``.img`` unless it is named with the default genkernel name [#naming]_. They all must have the same suffix. Because I had an automatically generated kernel, I wanted to make it clear that this kernel was manually configured, so I changed the suffix on all the files to ``4.4.8-hardened-r1-manual``. I also changed my kernel to start with ``kernel``::
+
+    # ls -Fl /boot
+    total 36608
+    -rw-r--r-- 1 root root  104171 Jun 20 07:10 config-4.4.8-hardened-r1-manual
+    -rw-r--r-- 1 root root 2777140 Jun 20 07:10 initramfs-4.4.8-hardened-r1-manual.img
+    -rw-r--r-- 1 root root 7064480 Jun 20 07:10 kernel-4.4.8-hardened-r1-manual
+    -rw-r--r-- 1 root root 3431015 Jun 20 07:10 System.map-4.4.8-hardened-r1-manual
+
+Because I also had an
 
 **************************
 System Configuration
@@ -644,7 +773,7 @@ The ``/etc/fstab`` file controls how partitions are mounted. It is a table compo
 
     <partition>  <mountpoint>  <file system>  <options>  <dump>  <pass>
 
-The partition can be specified with a path like ``/dev/sda3`` or with a UUID like ``UUID=308c6383-ab83-40d1-823a-676ff7ec475d`` or with a PARTUUID like ``PARTUUID=3f63ebb3-b9b7-4180-aa5d-ac3fd33e87c2``. While ``/dev/sd*`` style devices generally work, they could change if drives are plugged into different ports on the motherboard or if new drives are added. To determine the UUID of a drive, use ``blkid``::
+The partition can be specified with a path like ``/dev/sda3`` or with a UUID like ``UUID=308c6383-ab83-40d1-823a-676ff7ec475d`` or with a PARTUUID like ``PARTUUID=3f63ebb3-b9b7-4180-aa5d-ac3fd33e87c2`` (use whichever is used by ``blkid``). While ``/dev/sd*`` style devices generally work, they could change if drives are plugged into different ports on the motherboard or if new drives are added. To determine the UUID of a drive, use ``blkid``::
 
     # blkid
     /dev/sda1: SEC_TYPE="msdos" UUID="649B-BEC3" TYPE="vfat" PARTLABEL="grub" PARTUUID="3f63ebb3-b9b7-4180-aa5d-ac3fd33e87c2"
@@ -692,7 +821,11 @@ For now, set up basic ethernet. Later in the guide, I discus WiFi. First, determ
     lrwxrwxrwx 1 root root 0 Jun 20 18:08 sit0 -> ../../devices/virtual/net/sit0/
     lrwxrwxrwx 1 root root 0 Jun 20 18:08 wlp3s0 -> ../../devices/pci0000:00/0000:00:1c.6/0000:03:00.0/net/wlp3s0/
 
-``enp0s31f6`` is the Ethernet card, and ``wlp3s0`` is the wireless card. To set up simple DHCP, type the line ``config_enp0s31f6 ="dhcp"`` into ``/etc/conf.d/net`` [#complexnet]_. Also, install a DHCP daemon::
+``enp0s31f6`` is the Ethernet card, and ``wlp3s0`` is the wireless card.
+
+To set up simple DHCP, type the line ``config_enp0s31f6 ="dhcp"`` into ``/etc/conf.d/net`` [#complexnet]_.
+
+Also, install a DHCP daemon::
 
     # emerge net-misc/dhcpcd
 
@@ -700,8 +833,8 @@ For now, set up basic ethernet. Later in the guide, I discus WiFi. First, determ
 Now, make the networking start at boot::
 
     # cd /etc/init.d
-    ln -s net.lo net.enp0s31f6
-    rc-update add net.enp0s31f6 default
+    # ln -s net.lo net.enp0s31f6
+    # rc-update add net.enp0s31f6 default
 
 Set a root password
 ============================
@@ -718,7 +851,7 @@ There are many loggers (https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation
     # emerge app-admin/sysklogd
     rc-update add sysklogd default
 
-With ``sysklogd``, I got an error like ``sysklogd: /dev/xconsole: No such file or directory`` printed out about once a day. To fix it, I commented out the following section in ``/etc/syslog.conf`` [#xconsole]_::
+With ``sysklogd``, I got an error like the following: ``sysklogd: /dev/xconsole: No such file or directory`` printed out about once a day. To fix it, I commented out the following section in ``/etc/syslog.conf`` [#xconsole]_::
 
     daemon.*;mail.*;\
            news.err;\
@@ -733,10 +866,12 @@ Also about once a day, I got errors like::
 
 I fixed those by creating the three directories [#newsdir]_.
 
+Another way to avoid these errors would be to use a different logger.
+
 Set up a cron daemon
 ============================
 
-A cron daemon runs commands at scheduled times. Again, there are many (https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Tools#Optional:_Cron_daemon). Emerge one::
+A cron daemon runs commands at scheduled times. Again, there are many (https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Tools#Optional:_Cron_daemon). Emerge one and add it to the default runlevel::
 
     # emerge sys-process/cronie
     # rc-update add cronie default
@@ -768,7 +903,7 @@ Installing the bootloader
 
 .. highlight:: shell
 
-I used the GRand Unified Bootloader version 2 (GRUB2). To use GRUB2 with UEFI, add this to ``/etc/portage/make.conf``::
+I used the GRand Unified Bootloader version 2 (GRUB2). To use GRUB2 with UEFI, add the following to ``/etc/portage/make.conf``::
 
     GRUB_PLATFORMS="efi-64"
 
@@ -798,7 +933,7 @@ Thus, to boot with an encrypted key file named ``keyfile.bin.gpg`` stored on a f
 
     GRUB_CMDLINE_LINUX_DEFAULT="crypt_root=UUID=6736ac91-fa8c-4736-83f5-3c7996c9e678 real_root=/dev/mapper/vg1-root root_keydev=UUID=308c6383-ab83-40d1-823a-676ff7ec475d root_key=keyfile.bin.gpg dolvm"
 
-To boot with a passphrase, omit the key file parameters::
+To boot with a passphrase, omit the keyfile parameters::
 
     GRUB_CMDLINE_LINUX_DEFAULT="crypt_root=UUID=6736ac91-fa8c-4736-83f5-3c7996c9e678 real_root=/dev/mapper/vg1-root dolvm"
 
@@ -825,7 +960,7 @@ The final test is rebooting the system. If everything is right, it will boot fro
 Rescue
 ----------
 
-If the computer fails to boot fully, reboot it from the installation flash drive, remount the drives, and then enter the chroot and try to fix it. To do so, first open the encrypted drive::
+If the computer fails to boot fully, reboot it from the installation flash drive, remount the filesystems, and then enter the chroot and try to fix it. To do so, first open the encrypted drive::
 
     # cryptsetup --key-file /media/usb/keyfile.bin luksOpen /dev/sda3 encr
 
@@ -874,6 +1009,7 @@ Then, try to find and fix any problems.
 .. [#uefibios] UEFI is a replacement for the Basic Input/Output System (BIOS).
 .. [#typecodes] See http://www.ibm.com/developerworks/library/l-lpic1-104-1/ for more information about partitioning and type codes.
 .. [#offset] See https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Disks#Creating_the_BIOS_boot_partition.
+.. [#tmpfsramfs] See https://www.jamescoyle.net/knowledge/951-the-difference-between-a-tmpfs-and-ramfs-ram-disk.
 .. [#random] Some people suggest using ``/dev/random`` for cryptographic purposes, claiming that it is more random than ``/dev/urandom``. For a detailed discussion, see: http://www.2uo.de/myths-about-urandom/.
 .. [#driverandom] See http://security.stackexchange.com/questions/26594/filling-the-disk-with-random-data-prior-to-encryption.
 .. [#cipher] For a detailed discussion of the cipher and hash combination, see https://wiki.gentoo.org/wiki/DM-Crypt_LUKS#Which_cipher:hash_combination.3F. Also, for information about key lengths, see: https://www.keylength.com/en/4/.
