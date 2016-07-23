@@ -265,6 +265,8 @@ GRUB comes with a nice starfield theme, so I enabled in ``/etc/default/grub``::
 
 .. highlight:: console
 
+For information about how to make a GRUB theme, see: http://wiki.rosalab.ru/en/index.php/Grub2_theme_tutorial.
+
 ************************************
 Useful commands
 ************************************
