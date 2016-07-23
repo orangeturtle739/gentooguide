@@ -153,7 +153,7 @@ The program ``agetty`` parses ``/etc/issue``, supports the following escape sequ
 
 .. highlight:: shell
 
-An easy way to generate a nice ``/etc/issue`` file is with a script. I put mine in ``/root/scripts`` and called it ``issue.sh``. It looks like this::
+An easy way to generate a nice ``/etc/issue`` file is with a script. It looks like this::
 
     #! /bin/bash
 
