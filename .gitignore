@@ -2,3 +2,4 @@ _build
 _static
 _templates
 _package
+update-site.sh
