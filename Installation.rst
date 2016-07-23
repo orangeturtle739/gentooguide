@@ -15,7 +15,14 @@ Setup
 Make a bootable flash drive
 ===============================
 
-First, make a flash drive with a bootable version of Gentoo on it. Either a minimal installation disk or a LiveDVD works, and both are available from https://www.gentoo.org/downloads/. However, only the LiveDVD can boot using UEFI, and thus only the LiveDVD can be used to set up a system which will boot from UEFI [#uefi]_ . The LiveDVD has a full KDE desktop environment which might be easier to use, but is not necessary. Download the image and the ``.DIGESTS.asc`` file.
+First, make a flash drive with a bootable version of Gentoo on it. Either a minimal installation disk or a LiveDVD works, and both are available from https://www.gentoo.org/downloads/. However, only the LiveDVD can boot using UEFI, and thus only the LiveDVD can be used to set up a system which will boot from UEFI [#uefi]_ . The LiveDVD has a full KDE desktop environment which might be easier to use, but is not necessary. Download the image and the ``.DIGESTS.asc`` file. See :numref:`downloadimage` for an image of the download page.
+
+.. figure:: images/GentooDownloads-Marked.*
+   :width: 75 %
+   :align: center
+   :name: downloadimage
+
+   Location of the LiveDVD download for amd64 computers on the Gentoo downloads page.
 
 Next, get the Gentoo keys::
 
@@ -241,13 +248,13 @@ The ``mkdir`` command makes the directory for mounting the drive, and the ``-p``
 In order for the ``cryptsetup`` command to work with a key file, it needs a plain text (unencrypted) file. However, creating such a plain text file on a disk is insecure because it is hard to erase it securely, so someone might be able to recover it even if you delete and gain access to your data. The easiest way around this problem is to create a temporary RAM disk. Do this using the mount command::
 
     # mkdir /ramfs
-    # mount -t tmpfs -o size=1m tmpfs /ramfs
+    # mount -t ramfs -o size=512 ramfs /ramfs
 
-This command creates a temporary RAM filesystem with a size of 1 MiB (much bigger than the keyfile; you can use 512, the exact size of the key file if you are really low on RAM) mounted at ``/ramfs``. The format of the ``mount`` command is::
+This command creates a temporary RAM filesystem with a size of 512 bytes (the exact size of the key file, but it can be bigger and will grow if more space is needed) mounted at ``/ramfs``. The format of the ``mount`` command is::
 
     # mount -t <type> -o size=<size> <file system type> <mount point>
 
-The type is the type of RAM filesystem, which is either ``tmpfs`` or ``ramfs``. ``tmpfs`` is newer and generally better [#tmpfsramfs]_. The size is the starting size of the filesystem for a ``ramfs``, which can grow, and the absolute size of a ``tmpfs`` which cannot grow. The file system type is the type of file system, and the mount point is the folder where it is mounted.
+The type is the type of RAM filesystem, which is either ``tmpfs`` or ``ramfs``. While ``tmpfs`` is newer and generally better, ``tmpfs`` may use swap space if it runs out of space on RAM, and ``ramfs`` will not [#tmpfsramfs]_. Since the whole point is to avoid writing the plain text keyfile to disk, use ``ramfs``, not ``tmpfs``. The size is the starting size of the filesystem for a ``ramfs``, which can grow, and the absolute size of a ``tmpfs`` which cannot grow. The file system type is the type of file system, and the mount point is the folder where it is mounted.
 
 Next, create the key file::
 
@@ -430,11 +437,34 @@ First, go to the Gentoo directory::
 
     # cd /mnt/gentoo
 
-Then, using the ``lynx`` browser, pick a mirror::
+Then, using the ``lynx`` browser, pick a mirror (see :numref:`mirrorregion` and :numref:`mirrorus`)::
 
     # lynx https://www.gentoo.org/downloads/mirrors/
 
-Go to ``releases/amd64/autobuilds/current-stage3-amd64-hardened/`` and download ``stage3-amd64-hardened-20160609.tar.bz2`` and ``stage3-amd64-hardened-20160609.tar.bz2.DIGESTS.asc``. Verify the files in the same way as the ISO file (:ref:`setup_verify`)::
+.. figure:: images/MirrorSelection-Region.*
+   :width: 75 %
+   :align: center
+   :name: mirrorregion
+
+   Selecting the mirror region with lynx.
+
+.. figure:: images/MirrorSelection-US.*
+   :width: 75 %
+   :align: center
+   :name: mirrorus
+
+   Selecting a mirror within the US with lynx.
+
+Go to ``releases/amd64/autobuilds/current-stage3-amd64-hardened/`` and download ``stage3-amd64-hardened-20160609.tar.bz2`` and ``stage3-amd64-hardened-20160609.tar.bz2.DIGESTS.asc`` (see :numref:`stage3download`).
+
+.. figure:: images/Stage3Download.*
+   :width: 75 %
+   :align: center
+   :name: stage3download
+
+   Downloading the stage 3 tarball with lynx.
+
+Verify the files in the same way as the ISO file (:ref:`setup_verify`)::
 
     # gpg --keyserver hkps.pool.sks-keyservers.net --recv-keys 0xBB572E0E2D182910
     # gpg --verify stage3-amd64-hardened-20160609.tar.bz2.DIGESTS.asc
@@ -448,7 +478,7 @@ Unpack the tarball [#tar]_::
 Picking an editor
 ===========================
 
-The remaining steps require edits to many configuration files. The editor installed by default is ``nano``. To install ``vim``, do::
+The remaining steps require edits to many configuration files. The editor installed by default is ``nano``. To install ``vim``, run::
 
     # emerge vim
 
@@ -791,7 +821,9 @@ For now, set up basic ethernet. Later in the guide, I discus WiFi. First, determ
     lrwxrwxrwx 1 root root 0 Jun 20 18:08 sit0 -> ../../devices/virtual/net/sit0/
     lrwxrwxrwx 1 root root 0 Jun 20 18:08 wlp3s0 -> ../../devices/pci0000:00/0000:00:1c.6/0000:03:00.0/net/wlp3s0/
 
-``enp0s31f6`` is the Ethernet card, and ``wlp3s0`` is the wireless card. To set up simple DHCP, type the line ``config_enp0s31f6 ="dhcp"`` into ``/etc/conf.d/net`` [#complexnet]_.
+``enp0s31f6`` is the Ethernet card, and ``wlp3s0`` is the wireless card.
+
+To set up simple DHCP, type the line ``config_enp0s31f6 ="dhcp"`` into ``/etc/conf.d/net`` [#complexnet]_.
 
 Also, install a DHCP daemon::
 
