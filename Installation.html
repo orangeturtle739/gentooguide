@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Installation &mdash; Gentoo Guide 1.0.1 documentation</title>
+    <title>Installation &mdash; Gentoo Guide 1.0.2 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.0.1',
+        VERSION:     '1.0.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="Gentoo Guide 1.0.1 documentation" href="index.html" />
+    <link rel="top" title="Gentoo Guide 1.0.2 documentation" href="index.html" />
     <link rel="next" title="Setup" href="Setup.html" />
     <link rel="prev" title="Introduction" href="Introduction.html" />
 <meta charset='utf-8'>
@@ -652,7 +652,11 @@
 </pre></div>
 </div>
 <p>Then, create a volume group named <code class="docutils literal"><span class="pre">vg1</span></code> to hold the volumes:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> vgcreate vg1/dev/mapper/encr
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> vgcreate vg1 /dev/mapper/encr
+</pre></div>
+</div>
+<p>Activate the volume group:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> vgchange -a y vg1
 </pre></div>
 </div>
 <p>Next, create the swap logical volume:</p>

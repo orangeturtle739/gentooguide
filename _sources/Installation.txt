@@ -363,7 +363,11 @@ Now that the encryption has been set up, the next step is to set up the ``root``
 
 Then, create a volume group named ``vg1`` to hold the volumes::
 
-    # vgcreate vg1/dev/mapper/encr
+    # vgcreate vg1 /dev/mapper/encr
+
+Activate the volume group::
+
+    # vgchange -a y vg1
 
 Next, create the swap logical volume::
 
