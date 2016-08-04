@@ -35,6 +35,29 @@ Be sure to check out all the cowfiles::
     supermilker surgery telebears three-eyes turkey turtle tux udder vader
     vader-koala www
 
+Select the cow files with the ``-f`` flag::
+
+    $ cowsay -f turtle Using other cowfiles!
+     _______________________ 
+    < Using other cowfiles! >
+     ----------------------- 
+        \                                  ___-------___
+         \                             _-~~             ~~-_
+          \                         _-~                    /~-_
+                 /^\__/^\         /~  \                   /    \
+               /|  O|| O|        /      \_______________/        \
+              | |___||__|      /       /                \          \
+              |          \    /      /                    \          \
+              |   (_______) /______/                        \_________ \
+              |         / /         \                      /            \
+               \         \^\\         \                  /               \     /
+                 \         ||           \______________/      _-_       //\__//
+                   \       ||------_-~~-_ ------------- \ --/~   ~\    || __/
+                     ~-----||====/~     |==================|       |/~~~~~
+                      (_(__/  ./     /                    \_\      \.
+                             (_(___/                         \_____)_)
+
+
 ``fortune``
 ==============
 
@@ -105,8 +128,7 @@ Be sure to try all the logos::
             6      Classic Yes    classic-simp    Classic No Dots Or Letters
             7      Classic Yes    classic         The Default Classic Logo
 
-    Do "linux_logo -L num" where num is from above to get the appropriate logo.
-    Remember to also use -a to get ascii version.
+Do "linux_logo -L num" where num is the logo number or name. You can use -a to get ascii version.
 
 
 ``libcaca``
@@ -117,8 +139,14 @@ This one (``media-libs/libcaca``) will set your computer on fire: ``aafire``. It
 ``toilet``
 ==============
 
-``toilet`` (``app-misc/toilet``) actually stands for The Other Implementations LETters. Makes ASCII art. Try it: ``toilet Hello World -f mono9 --gay``.
-A useful option is ``-t`` which sets the output width to the width of the terminal. Also, ``--html`` outputs an HTML page. The available fonts are in ``/usr/share/figlet``.
+``toilet`` (``app-misc/toilet``) actually stands for The Other Implementations LETters. It makes ASCII art. See :numref:`toilet` for an example. A useful option is ``-t`` which sets the output width to the width of the terminal. Also, ``--html`` outputs an HTML page. The available fonts are in ``/usr/share/figlet``.
+
+.. figure:: images/ToiletGay.*
+   :width: 75 %
+   :align: center
+   :name: toilet
+
+   Output of ``toilet Hello World -f mono9 --gay``.
 
 ``figlet``
 ==============
@@ -259,7 +287,7 @@ Cool grub theme
 
 .. highlight:: shell
 
-GRUB comes with a nice starfield theme, so I enabled in ``/etc/default/grub``::
+GRUB comes with a nice starfield theme, so I enabled it in ``/etc/default/grub``::
 
     GRUB_THEME="/boot/grub/themes/starfield/theme.txt"
 

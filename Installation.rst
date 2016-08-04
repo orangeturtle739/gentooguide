@@ -102,7 +102,7 @@ If the network does not work, follow the Gentoo handbook: https://wiki.gentoo.or
 Partitioning
 ***************************
 
-The disk will have three partitions on it: one for GRUB (the GRand Unified Bootloader), one for ``/boot``, and the encrypted partition. The encrypted partition (``encr``) will be set up with Logical Volume Management (LVM) have one volume group on it (``vg1``), which will hold two logical volumes: the root filesystem and swap. Assuming the disk is at ``/dev/sda``, the partition structure will look like this::
+The disk will have three partitions on it: one for GRUB (the GRand Unified Bootloader), one for ``/boot``, and the encrypted partition. The encrypted partition (``encr``) will be set up with Logical Volume Management (LVM) to one volume group on it (``vg1``), which will hold two logical volumes: the root filesystem and swap. Assuming the disk is at ``/dev/sda``, the partition structure will look like this::
 
     /dev/sda
     |-- /dev/sda1 (vfat, grub)
@@ -286,13 +286,15 @@ The output will be very long, and ``less`` will allow you to scroll through it u
 
 .. highlight:: console
 
-To look at the keyfile, do ``hexdump /ramfs/keyfile.bin``. For an extra layer of security, encrypt the keyfile. Then, not only will the flash drive have to be plugged into the computer for it to boot, but you will also have to type a password. To do this, use ``gpg``::
+To look at the keyfile, do ``hexdump /ramfs/keyfile.bin``.
+
+For an extra layer of security, encrypt the keyfile. Then, not only will the flash drive have to be plugged into the computer for it to boot, but you will also have to type a password. To do this, use ``gpg``::
 
     # gpg --symmetric -o /media/usb/keyfile.bin.gpg /ramfs/keyfile.bin
 
 The GNU Privacy Guard (``gpg``) is a general purpose encryption program. The ``--symmetric`` flag makes it use a symmetric cipher (which uses the same key for encryption and decrypting) as opposed to the default public key cipher. The ``-o`` file specifies the output file, and the final argument is the input file. Note that the encrypted file is stored on the flash drive, which will be needed to boot the computer. ``gpg`` will prompt you for a password.
 
-If you do not plan to encrypt the key file (which you really should), copy it out of the RAM filesystem onto the flash drive::
+If you do not plan to encrypt the key file (which you really should), copy it out of the RAM filesystem onto the flash drive (note that the ``gpg`` command above writes the encrypted file to the flash drive)::
 
     # cp /ramfs/keyfile.bin /media/usb/keyfile.bin
 
@@ -399,6 +401,13 @@ Finally, set up the swap partition and turn it on::
 
     # mkswap /dev/vg1/swap
     # swapon /dev/vg1/swap
+
+To check the status of the swap partition, use the following command::
+
+    # swapon -s
+    Filename                          Type           Size    Used   Priority
+    dev/vg1/swap                      partition      524284  0      -1
+
 
 Mount the filesystems
 =======================
@@ -588,6 +597,16 @@ Then, check the profile::
 
 The selected profile should be ``hardened/linux/amd64``. The profile specifies default values for many variables [#profile]_.
 
+To change the profile, use the following command, with the number of the desired profile::
+
+    # eselect profile set 14
+
+The Gentoo handbook [#profile]_ recommends running the following command after changing the profile::
+
+    # emerge --ask --update --deep --newuse @world
+
+However, this is only necessary if the new profile uses ``systemd``.
+
 Next, configure the ``USE`` variable. To see the current use flags, use::
 
     # emerge --info | grep ^USE
@@ -635,7 +654,7 @@ Then, select the right locale (I chose the ``en_US.utf8`` [#locales]_)::
       [ ]   (free form)
     # eselect locale set 4
 
-Next, Reload the environment::
+Next, reload the environment::
 
     # env-update && source /etc/profile && export PS1="(chroot) $PS1"
 
@@ -643,7 +662,7 @@ Next, Reload the environment::
 Kernel
 ***************
 
-There are two main choices for the kernel: the normal kernel or the hardened kernel. The hardened kernel includes the grsecurity patch, which provide PaX [#pax]_. PaX increases the system’s security with non-executable memory, Address Space Layout Randomization (ASLR), and other features. To build a normal kernel, ignore the grsecurity options in the configuration below.
+There are two main choices for the kernel: the normal kernel or the hardened kernel. The hardened kernel includes the grsecurity patch, which provides PaX [#pax]_. PaX increases the system’s security with non-executable memory, Address Space Layout Randomization (ASLR), and other features. To build a normal kernel, ignore the grsecurity options in the configuration below.
 
 Install the sources
 ============================
@@ -696,10 +715,10 @@ First, determine the system’s hardware using ``lspci``::
 Then, change to the kernel source directory with ``cd /usr/src/linux``, and enter the kernel configuration menu with ``make menuconfig``. Then, try to select all the right options. Here are the options I selected (which were either not selected by default or which are important), with some short comments about why I selected them (My computer had a BCM4352 wireless card which required the ``broadcom-sta`` driver):
 
 .. literalinclude:: Kernel-Options.txt
-    :language: console
+    :language: pkgconfig
     :linenos:
 
-Compile the kernel with ``make && make modules_install``. Then, run ``make install`` to copy the kernel to ``/boot``.
+Compile the kernel with ``make && make modules_install``. Then, run ``make install`` to copy the kernel to ``/boot``. Make sure ``/boot`` is mounted (at this point in the guide, it should be mounted).
 
 Make the initramfs
 ============================
@@ -751,7 +770,7 @@ All the new kernel files were installed in ``/boot``::
     total 47084
     -rw-r--r-- 1 root root  104174 Jun 20 07:10 config-4.4.8-hardened-r1
     -rw-r--r-- 1 root root 3445174 Jun 20 07:10 System.map-4.4.8-hardened-r1
-    -rw-r--r-- 1 root root 7113312 Jun 20 07:10 vmlinuz-4.4.8-hardened-r1
+    -rw-r--r-- 1 root root 7113312 Jun 20 07:10 vmlinux-4.4.8-hardened-r1
     -rw-r--r-- 1 root root 5774460 Jun 20 07:10 initramfs-genkernel-x86_64-4.4.8-hardened-r1
 
 
@@ -763,8 +782,6 @@ Each kernel has four files: the configuration used to make it, an initramfs, a k
     -rw-r--r-- 1 root root 2777140 Jun 20 07:10 initramfs-4.4.8-hardened-r1-manual.img
     -rw-r--r-- 1 root root 7064480 Jun 20 07:10 kernel-4.4.8-hardened-r1-manual
     -rw-r--r-- 1 root root 3431015 Jun 20 07:10 System.map-4.4.8-hardened-r1-manual
-
-Because I also had an
 
 **************************
 System Configuration
@@ -843,14 +860,14 @@ Now, make the networking start at boot::
 Set a root password
 ============================
 
-The root account can do anything, so it needs a password. Set one::
+The root account can do anything to the computer, so it needs a password. Set one::
 
     # passwd
 
 Set up a system logger
 ============================
 
-There are many loggers (https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Tools#System_logger), but ``sysklogd`` is the simplest::
+There are many loggers (https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Tools#System_logger), but ``sysklogd`` is one of the simplest::
 
     # emerge app-admin/sysklogd
     rc-update add sysklogd default

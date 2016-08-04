@@ -106,7 +106,7 @@ In order to the signatures to be valid, the keys must also be valid. To verify t
           Key fingerprint = 13EB BDBE DE7A 1277 5DFD  B1BA BB57 2E0E 2D18 2910
     uid       [ unknown] Gentoo Linux Release Engineering (Automated Weekly Release Key) <releng@gentoo.org>
 
-Verify the fingerprints printed with those on Gentoo's website: https://wiki.gentoo.org/wiki/Project:RelEng#Keys. Of course, this verification is only as trustworthy as the HTTPS connection, but maybe the best you can do. To test it, run ``emerge --sync``. It should output something like this::
+Verify the fingerprints printed with those on Gentoo's website: https://wiki.gentoo.org/wiki/Project:RelEng#Keys. Of course, this verification is only as trustworthy as the HTTPS connection, but may be the best you can do. To test it, run ``emerge --sync``. It should output something like this::
 
     Checking signature ...
     gpg: WARNING: unsafe permissions on homedir `/var/lib/gentoo/gkeys/keyrings/gentoo/release'
@@ -359,9 +359,9 @@ The simplest way to play music from the command line is with ``media-sound/sox``
 * ``wavpack``: adds support for wav files
 * ``encode``: adds support for encoding
 
-To set the ``USE`` flags, put them in ``/etc/protage/package.use/sox``::
+To set the ``USE`` flags, put them in ``/etc/portage/package.use/sox``::
 
-    # echo "media-sound/sox amr flac mad ogg wavpack encode" > /etc/protage/package.use/sox
+    # echo "media-sound/sox amr flac mad ogg wavpack encode" > /etc/portage/package.use/sox
 
 Then, play music with ``play``::
 
@@ -416,9 +416,9 @@ While I could fix the warning by creating that file and putting the line ``maste
 * ``gpg``: for verifying overlays, but I am not sure if it is used
 * ``sync-plugin-portage``: for using portage's plugin system, which is what makes the new version different from the old one
 
-To set the ``USE`` flags, put them in ``/etc/protage/package.use/layman``::
+To set the ``USE`` flags, put them in ``/etc/portage/package.use/layman``::
 
-    # echo "app-portage/layman sync-plugin-portage gpg" > /etc/protage/package.use/layman
+    # echo "app-portage/layman sync-plugin-portage gpg" > /etc/portage/package.use/layman
 
 In order to determine the keyword changes necessary, try to emerge it::
 
@@ -458,9 +458,9 @@ Run ``layman-updater`` to set it up::
 Avahi Daemon
 ************************************
 
-The Avahi mDNS/DNS-SD daemon allows you to find computers and other things by name on the local network. It has two components: the daemon, ``net-dns/avahi``, and the client, ``sys-auth/nss-mdns``. In order to get the ``avahi-browse`` command and lots of other useful commands, ``avahi`` needs the ``dbus`` ``USE`` flag. To set the ``USE`` flags, put them in ``/etc/protage/package.use/avahi``::
+The Avahi mDNS/DNS-SD daemon allows you to find computers and other things by name on the local network. It has two components: the daemon, ``net-dns/avahi``, and the client, ``sys-auth/nss-mdns``. In order to get the ``avahi-browse`` command and lots of other useful commands, ``avahi`` needs the ``dbus`` ``USE`` flag. To set the ``USE`` flags, put them in ``/etc/portage/package.use/avahi``::
 
-    # echo "net-dns/avahi dbus" > /etc/protage/package.use/avahi
+    # echo "net-dns/avahi dbus" > /etc/portage/package.use/avahi
 
 After installing, start the daemon::
 
