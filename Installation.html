@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Installation &mdash; Gentoo Guide 1.0.2 documentation</title>
+    <title>Installation &mdash; Gentoo Guide 1.0.3 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.0.2',
+        VERSION:     '1.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="Gentoo Guide 1.0.2 documentation" href="index.html" />
+    <link rel="top" title="Gentoo Guide 1.0.3 documentation" href="index.html" />
     <link rel="next" title="Setup" href="Setup.html" />
     <link rel="prev" title="Introduction" href="Introduction.html" />
 <meta charset='utf-8'>
@@ -409,7 +409,7 @@
 </div>
 <div class="section" id="partitioning">
 <h2>Partitioning<a class="headerlink" href="#partitioning" title="Permalink to this headline">¶</a></h2>
-<p>The disk will have three partitions on it: one for GRUB (the GRand Unified Bootloader), one for <code class="docutils literal"><span class="pre">/boot</span></code>, and the encrypted partition. The encrypted partition (<code class="docutils literal"><span class="pre">encr</span></code>) will be set up with Logical Volume Management (LVM) have one volume group on it (<code class="docutils literal"><span class="pre">vg1</span></code>), which will hold two logical volumes: the root filesystem and swap. Assuming the disk is at <code class="docutils literal"><span class="pre">/dev/sda</span></code>, the partition structure will look like this:</p>
+<p>The disk will have three partitions on it: one for GRUB (the GRand Unified Bootloader), one for <code class="docutils literal"><span class="pre">/boot</span></code>, and the encrypted partition. The encrypted partition (<code class="docutils literal"><span class="pre">encr</span></code>) will be set up with Logical Volume Management (LVM) to one volume group on it (<code class="docutils literal"><span class="pre">vg1</span></code>), which will hold two logical volumes: the root filesystem and swap. Assuming the disk is at <code class="docutils literal"><span class="pre">/dev/sda</span></code>, the partition structure will look like this:</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">/dev/sda</span>
 <span class="go">|-- /dev/sda1 (vfat, grub)</span>
 <span class="go">|-- /dev/sda2 (ext4, boot)</span>
@@ -581,12 +581,13 @@
              configuration: ansiversion=5 sectorsize=512 signature=e9b7948b
 </pre></div>
 </div>
-<p>To look at the keyfile, do <code class="docutils literal"><span class="pre">hexdump</span> <span class="pre">/ramfs/keyfile.bin</span></code>. For an extra layer of security, encrypt the keyfile. Then, not only will the flash drive have to be plugged into the computer for it to boot, but you will also have to type a password. To do this, use <code class="docutils literal"><span class="pre">gpg</span></code>:</p>
+<p>To look at the keyfile, do <code class="docutils literal"><span class="pre">hexdump</span> <span class="pre">/ramfs/keyfile.bin</span></code>.</p>
+<p>For an extra layer of security, encrypt the keyfile. Then, not only will the flash drive have to be plugged into the computer for it to boot, but you will also have to type a password. To do this, use <code class="docutils literal"><span class="pre">gpg</span></code>:</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> gpg --symmetric -o /media/usb/keyfile.bin.gpg /ramfs/keyfile.bin
 </pre></div>
 </div>
 <p>The GNU Privacy Guard (<code class="docutils literal"><span class="pre">gpg</span></code>) is a general purpose encryption program. The <code class="docutils literal"><span class="pre">--symmetric</span></code> flag makes it use a symmetric cipher (which uses the same key for encryption and decrypting) as opposed to the default public key cipher. The <code class="docutils literal"><span class="pre">-o</span></code> file specifies the output file, and the final argument is the input file. Note that the encrypted file is stored on the flash drive, which will be needed to boot the computer. <code class="docutils literal"><span class="pre">gpg</span></code> will prompt you for a password.</p>
-<p>If you do not plan to encrypt the key file (which you really should), copy it out of the RAM filesystem onto the flash drive:</p>
+<p>If you do not plan to encrypt the key file (which you really should), copy it out of the RAM filesystem onto the flash drive (note that the <code class="docutils literal"><span class="pre">gpg</span></code> command above writes the encrypted file to the flash drive):</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> cp /ramfs/keyfile.bin /media/usb/keyfile.bin
 </pre></div>
 </div>
@@ -685,6 +686,12 @@ Create the root logical volume:</p>
 <p>Finally, set up the swap partition and turn it on:</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> mkswap /dev/vg1/swap
 <span class="gp">#</span> swapon /dev/vg1/swap
+</pre></div>
+</div>
+<p>To check the status of the swap partition, use the following command:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> swapon -s
+<span class="go">Filename                          Type           Size    Used   Priority</span>
+<span class="go">dev/vg1/swap                      partition      524284  0      -1</span>
 </pre></div>
 </div>
 </div>
@@ -849,11 +856,20 @@ Create the root logical volume:</p>
 </pre></div>
 </div>
 <p>The selected profile should be <code class="docutils literal"><span class="pre">hardened/linux/amd64</span></code>. The profile specifies default values for many variables <a class="footnote-reference" href="#profile" id="id22">[21]</a>.</p>
+<p>To change the profile, use the following command, with the number of the desired profile:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> eselect profile <span class="nb">set</span> 14
+</pre></div>
+</div>
+<p>The Gentoo handbook <a class="footnote-reference" href="#profile" id="id23">[21]</a> recommends running the following command after changing the profile:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge --ask --update --deep --newuse @world
+</pre></div>
+</div>
+<p>However, this is only necessary if the new profile uses <code class="docutils literal"><span class="pre">systemd</span></code>.</p>
 <p>Next, configure the <code class="docutils literal"><span class="pre">USE</span></code> variable. To see the current use flags, use:</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge --info <span class="p">|</span> grep ^USE
 </pre></div>
 </div>
-<p>The <code class="docutils literal"><span class="pre">USE</span></code> variable is set in <code class="docutils literal"><span class="pre">/etc/portage/make.conf</span></code>. The original value was <code class="docutils literal"><span class="pre">USE=&quot;bindist</span> <span class="pre">mmx</span> <span class="pre">sse</span> <span class="pre">sse2&quot;</span></code>. I added <code class="docutils literal"><span class="pre">qt4</span></code> and <code class="docutils literal"><span class="pre">kde</span></code> because I planned on using the KDE desktop environment later, and I added <code class="docutils literal"><span class="pre">alsa</span></code> for sound support <a class="footnote-reference" href="#use" id="id23">[22]</a>.</p>
+<p>The <code class="docutils literal"><span class="pre">USE</span></code> variable is set in <code class="docutils literal"><span class="pre">/etc/portage/make.conf</span></code>. The original value was <code class="docutils literal"><span class="pre">USE=&quot;bindist</span> <span class="pre">mmx</span> <span class="pre">sse</span> <span class="pre">sse2&quot;</span></code>. I added <code class="docutils literal"><span class="pre">qt4</span></code> and <code class="docutils literal"><span class="pre">kde</span></code> because I planned on using the KDE desktop environment later, and I added <code class="docutils literal"><span class="pre">alsa</span></code> for sound support <a class="footnote-reference" href="#use" id="id24">[22]</a>.</p>
 </div>
 <div class="section" id="configure-the-timezone">
 <h3>Configure the timezone<a class="headerlink" href="#configure-the-timezone" title="Permalink to this headline">¶</a></h3>
@@ -882,7 +898,7 @@ Create the root logical volume:</p>
 <span class="go"> * Generation complete</span>
 </pre></div>
 </div>
-<p>Then, select the right locale (I chose the <code class="docutils literal"><span class="pre">en_US.utf8</span></code> <a class="footnote-reference" href="#locales" id="id24">[23]</a>):</p>
+<p>Then, select the right locale (I chose the <code class="docutils literal"><span class="pre">en_US.utf8</span></code> <a class="footnote-reference" href="#locales" id="id25">[23]</a>):</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> eselect locale list
 <span class="go">Available targets for the LANG variable:</span>
 <span class="go">  [1]   C</span>
@@ -894,7 +910,7 @@ Create the root logical volume:</p>
 <span class="gp">#</span> eselect locale <span class="nb">set</span> 4
 </pre></div>
 </div>
-<p>Next, Reload the environment:</p>
+<p>Next, reload the environment:</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> env-update <span class="o">&amp;&amp;</span> <span class="nb">source</span> /etc/profile <span class="o">&amp;&amp;</span> <span class="nb">export</span> <span class="nv">PS1</span><span class="o">=</span><span class="s2">&quot;(chroot) </span><span class="nv">$PS1</span><span class="s2">&quot;</span>
 </pre></div>
 </div>
@@ -902,7 +918,7 @@ Create the root logical volume:</p>
 </div>
 <div class="section" id="kernel">
 <h2>Kernel<a class="headerlink" href="#kernel" title="Permalink to this headline">¶</a></h2>
-<p>There are two main choices for the kernel: the normal kernel or the hardened kernel. The hardened kernel includes the grsecurity patch, which provide PaX <a class="footnote-reference" href="#pax" id="id25">[24]</a>. PaX increases the system’s security with non-executable memory, Address Space Layout Randomization (ASLR), and other features. To build a normal kernel, ignore the grsecurity options in the configuration below.</p>
+<p>There are two main choices for the kernel: the normal kernel or the hardened kernel. The hardened kernel includes the grsecurity patch, which provides PaX <a class="footnote-reference" href="#pax" id="id26">[24]</a>. PaX increases the system’s security with non-executable memory, Address Space Layout Randomization (ASLR), and other features. To build a normal kernel, ignore the grsecurity options in the configuration below.</p>
 <div class="section" id="install-the-sources">
 <h3>Install the sources<a class="headerlink" href="#install-the-sources" title="Permalink to this headline">¶</a></h3>
 <p>For the normal kernel:</p>
@@ -948,7 +964,7 @@ Create the root logical volume:</p>
 </pre></div>
 </div>
 <p>Then, change to the kernel source directory with <code class="docutils literal"><span class="pre">cd</span> <span class="pre">/usr/src/linux</span></code>, and enter the kernel configuration menu with <code class="docutils literal"><span class="pre">make</span> <span class="pre">menuconfig</span></code>. Then, try to select all the right options. Here are the options I selected (which were either not selected by default or which are important), with some short comments about why I selected them (My computer had a BCM4352 wireless card which required the <code class="docutils literal"><span class="pre">broadcom-sta</span></code> driver):</p>
-<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+<div class="highlight-pkgconfig"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
   2
   3
   4
@@ -1062,128 +1078,128 @@ Create the root logical volume:</p>
 112
 113
 114
-115</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">General setup ---&gt;</span>
-<span class="go">    Stack Protector buffer overflow detection (Strong)</span>
-<span class="go">Processor type and features ---&gt;</span>
-<span class="go">    [*] EFI Runtime service support ---&gt;</span>
-<span class="go">    [*]   EFI stub support</span>
-<span class="go">    [ ]     EFI mixed-mode support</span>
-<span class="go">Power management and ACPI options ---&gt;</span>
-<span class="go">    [*] Suspend to RAM and standby</span>
-<span class="go">    [*] Opportunistic sleep</span>
-<span class="go">    [*] SMT (Hyperthreading) scheduler support</span>
-<span class="go">    [*] Multi-core scheduler support</span>
-<span class="go">Networking support ---&gt;</span>
-<span class="go">    -*- Wireless ---&gt;</span>
-<span class="go">        &lt;*&gt; cfg80211 - wireless configuration API</span>
-<span class="go">        [*]   enable powersave by default</span>
-<span class="go">        [*]	  cfg80211 wireless extensions compatibility</span>
-<span class="go">        &lt; &gt; Generic IEEE 802.11 Networking Stack (mac80211) # Must be disabled for broadcom-sta to work</span>
-<span class="go">Device Drivers ---&gt;</span>
-<span class="go">    &lt;*&gt; Sound card support ---&gt;</span>
-<span class="go">        &lt;*&gt; Advanced Linux Sound Architecture ---&gt;</span>
-<span class="go">            HD-Audio ---&gt;</span>
-<span class="go">                [*] Support digital beep via input layer</span>
-<span class="go">                (1)    Digital beep registration mode (0=off, 1=on)</span>
-<span class="go">                &lt;*&gt; Build Realtek HD-audio coced support</span>
-<span class="go">                &lt;*&gt; Build HDMI/DisplayPort HD-audio codec support</span>
-<span class="gp">            #</span> To prevent the error:
-<span class="gp">            #</span>   Too many HDMI devices
-<span class="gp">            #</span>   Consider building the kernel with <span class="nv">CONFIG_SND_DYNAMIC_MINORS</span><span class="o">=</span>y
-<span class="go">            [*] Dynamic device file minor numbers</span>
-<span class="go">            (32)	Max number of sound cards</span>
-<span class="go">    HID support ---&gt;</span>
-<span class="go">        Special HID drivers ---&gt;</span>
-<span class="go">            &lt;*&gt; Corsair devices</span>
-<span class="go">    [*] Real Time Clock ---&gt;</span>
-<span class="go">        [*] Set system time from RTC on startup and resume</span>
-<span class="go">    [*] USB support ---&gt;</span>
-<span class="go">        &lt;*&gt; Support for Host-side USB</span>
-<span class="go">        [*]   xHCI HCD (USB 3.0) support</span>
-<span class="go">        &lt; &gt;     Generic xHCI driver for a platform device</span>
-<span class="go">        &lt;*&gt;   EHCI HCD (USB 2.0) support</span>
-<span class="go">        [ ]     Root Hub Transaction Translators</span>
-<span class="go">        [*]	    Improved Transaction Translator scheduling</span>
-<span class="go">    [*] Multiple devices drive support (RAID and LVM) ---&gt;</span>
-<span class="go">        &lt;*&gt; Device mapper support</span>
-<span class="go">        &lt;*&gt;   Crypt target support # Needed for encrypted disk</span>
-<span class="go">    [*] Network device support ---&gt;</span>
-<span class="go">        [*] Wireless LAN ---&gt;</span>
-<span class="go">            &lt; &gt; Broadcom 43xx wireless support (mac80211 stack)</span>
-<span class="go">            &lt;*&gt; Intel PRO/Wireless 2100 Network Connection # Needed for broadcom-sta</span>
-<span class="go">                [ ] Enable promiscuous mode</span>
-<span class="go">                [ ] Enable full debugging output in IPW2100 module</span>
-<span class="go">        [*] Ethernet driver support ---&gt;</span>
-<span class="go">            [*] Intel devices</span>
-<span class="go">            &lt;*&gt;   Intel (R) PRO/1000 PCI-Express Gigabit Ethernet support</span>
-<span class="gp">    #</span> These <span class="m">2</span> must be disabled <span class="k">for</span> broadcom-sta
-<span class="go">    Broadcom specific AMBA ---&gt;</span>
-<span class="go">        &lt; &gt; BCMA support</span>
-<span class="go">    Sonics Silicon Backplane ---&gt;</span>
-<span class="go">        &lt; &gt; Sonics Silicon Backplane support</span>
-<span class="gp">    #</span> For sensors
-<span class="go">    I2C support ---&gt;</span>
-<span class="go">        -*- I2C support</span>
-<span class="go">        &lt;*&gt;	  I2C device interface</span>
-<span class="go">    -*- Hardware Monitoring support ---&gt;</span>
-<span class="go">        &lt;*&gt; Intel Core/Core2/Atom temperature sensor</span>
-<span class="go">        &lt;*&gt; Nuvoton NCT6775F and compatibles</span>
-<span class="go">File systems ---&gt;</span>
-<span class="go">    &lt;*&gt; Second extended fs support ---&gt;</span>
-<span class="go">    -*-   Ext2 extended attributes ---&gt;</span>
-<span class="go">    [*]     Ext2 POSIX Axxess Control Lists</span>
-<span class="go">    [*]     Ext2 Security Labels</span>
-<span class="go">    &lt;*&gt; The Extended 3 (ext3) filesystem ---&gt;</span>
-<span class="go">    [*]   Ext3 POSIX Access Control Lists</span>
-<span class="go">    [*]   Ext3 Security Labels</span>
-<span class="go">    -*- The Extended 4 (ext4) filesystem</span>
-<span class="go">    -*-   Ext4 POSIX Access Control Lists</span>
-<span class="go">    -*-   Ext4 Security Labels</span>
-<span class="go">    &lt; &gt;   Ext4 Encryption</span>
-<span class="go">    [ ]   EXT4 debugging support</span>
-<span class="go">    &lt;*&gt; FUSE (Filesystem in Userspace) support</span>
-<span class="go">    &lt;*&gt;   Character device in Userspace support</span>
-<span class="go">    [*] Miscellaneous filesystems ---&gt;</span>
-<span class="go">        &lt;*&gt; Apple Macintosh file system support</span>
-<span class="go">        &lt;*&gt; Apple Extended HFS file system support ---&gt;</span>
-<span class="go">        [*]   HFS+ POSIX Access Control Lists</span>
-<span class="go">Security options ---&gt;</span>
-<span class="go">    Grsecurity ---&gt;</span>
-<span class="go">        [*] Grsecurity</span>
-<span class="go">            Configuration Method (Automatic)</span>
-<span class="go">            Usage Type (Desktop)</span>
-<span class="go">            Virtualization Type (Host)</span>
-<span class="go">            Virtualization Hardware (EPT/RVI Processor Support)</span>
-<span class="go">            Virtualization Software (VirtualBox)</span>
-<span class="go">            Required Priorities (Performance)</span>
-<span class="go">            Customize Configuration ---&gt;</span>
-<span class="go">                PaX ---&gt;</span>
-<span class="go">                    [*] Enable various PaX features</span>
-<span class="go">                        PaX Control ---&gt;</span>
-<span class="go">                            [ ] Support soft mode</span>
-<span class="go">                            [ ] Use ELF program header marking</span>
-<span class="go">                            [*] Use filesystem extended attributesmarking</span>
-<span class="go">Cryptographic API ---&gt;</span>
-<span class="go">    -*- CBC support</span>
-<span class="go">    -*- ECB support</span>
-<span class="go">    -*- XTS support</span>
-<span class="go">    -*- CRC32c CRC algorithm</span>
-<span class="go">    &lt;*&gt; CRC32c INTEL hardware acceleration</span>
-<span class="go">    -*- Michael MIC keyed digest algorithm</span>
-<span class="go">    -*- SH1 digest algorithm</span>
-<span class="go">    &lt;*&gt; SHA1 digest algorithm (SSSE3/AVX/AVX2/SHA-NI)</span>
-<span class="go">    &lt;*&gt; SHA256 digest algorithm (SSSE3/AVX/AVX2/SHA-NI)</span>
-<span class="go">    &lt;*&gt; SHA512 digest algorithm (SSSE3/AVX/AVX2)</span>
-<span class="go">    -*- AES cipher algorithms</span>
-<span class="go">    -*- AES cipher algorithms (x86_64)</span>
-<span class="go">    &lt;*&gt; AES cipher algorithms (AES-NI)</span>
+115</pre></div></td><td class="code"><div class="highlight"><pre><span></span>General setup ---&gt;
+    Stack Protector buffer overflow detection (Strong)
+Processor type and features ---&gt;
+    [*] EFI Runtime service support ---&gt;
+    [*]   EFI stub support
+    [ ]     EFI mixed-mode support
+Power management and ACPI options ---&gt;
+    [*] Suspend to RAM and standby
+    [*] Opportunistic sleep
+    [*] SMT (Hyperthreading) scheduler support
+    [*] Multi-core scheduler support
+Networking support ---&gt;
+    -*- Wireless ---&gt;
+        &lt;*&gt; cfg80211 - wireless configuration API
+        [*]   enable powersave by default
+        [*]	  cfg80211 wireless extensions compatibility
+        &lt; &gt; Generic IEEE 802.11 Networking Stack (mac80211) <span class="c1"># Must be disabled for broadcom-sta to work</span>
+Device Drivers ---&gt;
+    &lt;*&gt; Sound card support ---&gt;
+        &lt;*&gt; Advanced Linux Sound Architecture ---&gt;
+            HD-Audio ---&gt;
+                [*] Support digital beep via input layer
+                (1)    Digital beep registration mode (0=off, 1=on)
+                &lt;*&gt; Build Realtek HD-audio coced support
+                &lt;*&gt; Build HDMI/DisplayPort HD-audio codec support
+            <span class="c1"># To prevent the error:</span>
+            <span class="c1">#   Too many HDMI devices</span>
+            <span class="c1">#   Consider building the kernel with CONFIG_SND_DYNAMIC_MINORS=y</span>
+            [*] Dynamic device file minor numbers
+            (32)	Max number of sound cards
+    HID support ---&gt;
+        Special HID drivers ---&gt;
+            &lt;*&gt; Corsair devices
+    [*] Real Time Clock ---&gt;
+        [*] Set system time from RTC on startup and resume
+    [*] USB support ---&gt;
+        &lt;*&gt; Support for Host-side USB
+        [*]   xHCI HCD (USB 3.0) support
+        &lt; &gt;     Generic xHCI driver for a platform device
+        &lt;*&gt;   EHCI HCD (USB 2.0) support
+        [ ]     Root Hub Transaction Translators
+        [*]	    Improved Transaction Translator scheduling
+    [*] Multiple devices drive support (RAID and LVM) ---&gt;
+        &lt;*&gt; Device mapper support
+        &lt;*&gt;   Crypt target support <span class="c1"># Needed for encrypted disk</span>
+    [*] Network device support ---&gt;
+        [*] Wireless LAN ---&gt;
+            &lt; &gt; Broadcom 43xx wireless support (mac80211 stack)
+            &lt;*&gt; Intel PRO/Wireless 2100 Network Connection <span class="c1"># Needed for broadcom-sta</span>
+                [ ] Enable promiscuous mode
+                [ ] Enable full debugging output in IPW2100 module
+        [*] Ethernet driver support ---&gt;
+            [*] Intel devices
+            &lt;*&gt;   Intel (R) PRO/1000 PCI-Express Gigabit Ethernet support
+    <span class="c1"># These 2 must be disabled for broadcom-sta</span>
+    Broadcom specific AMBA ---&gt;
+        &lt; &gt; BCMA support
+    Sonics Silicon Backplane ---&gt;
+        &lt; &gt; Sonics Silicon Backplane support
+    <span class="c1"># For sensors</span>
+    I2C support ---&gt;
+        -*- I2C support
+        &lt;*&gt;	  I2C device interface
+    -*- Hardware Monitoring support ---&gt;
+        &lt;*&gt; Intel Core/Core2/Atom temperature sensor
+        &lt;*&gt; Nuvoton NCT6775F and compatibles
+File systems ---&gt;
+    &lt;*&gt; Second extended fs support ---&gt;
+    -*-   Ext2 extended attributes ---&gt;
+    [*]     Ext2 POSIX Axxess Control Lists
+    [*]     Ext2 Security Labels
+    &lt;*&gt; The Extended 3 (ext3) filesystem ---&gt;
+    [*]   Ext3 POSIX Access Control Lists
+    [*]   Ext3 Security Labels
+    -*- The Extended 4 (ext4) filesystem
+    -*-   Ext4 POSIX Access Control Lists
+    -*-   Ext4 Security Labels
+    &lt; &gt;   Ext4 Encryption
+    [ ]   EXT4 debugging support
+    &lt;*&gt; FUSE (Filesystem in Userspace) support
+    &lt;*&gt;   Character device in Userspace support
+    [*] Miscellaneous filesystems ---&gt;
+        &lt;*&gt; Apple Macintosh file system support
+        &lt;*&gt; Apple Extended HFS file system support ---&gt;
+        [*]   HFS+ POSIX Access Control Lists
+Security options ---&gt;
+    Grsecurity ---&gt;
+        [*] Grsecurity
+            Configuration Method (Automatic)
+            Usage Type (Desktop)
+            Virtualization Type (Host)
+            Virtualization Hardware (EPT/RVI Processor Support)
+            Virtualization Software (VirtualBox)
+            Required Priorities (Performance)
+            Customize Configuration ---&gt;
+                PaX ---&gt;
+                    [*] Enable various PaX features
+                        PaX Control ---&gt;
+                            [ ] Support soft mode
+                            [ ] Use ELF program header marking
+                            [*] Use filesystem extended attributesmarking
+Cryptographic API ---&gt;
+    -*- CBC support
+    -*- ECB support
+    -*- XTS support
+    -*- CRC32c CRC algorithm
+    &lt;*&gt; CRC32c INTEL hardware acceleration
+    -*- Michael MIC keyed digest algorithm
+    -*- SH1 digest algorithm
+    &lt;*&gt; SHA1 digest algorithm (SSSE3/AVX/AVX2/SHA-NI)
+    &lt;*&gt; SHA256 digest algorithm (SSSE3/AVX/AVX2/SHA-NI)
+    &lt;*&gt; SHA512 digest algorithm (SSSE3/AVX/AVX2)
+    -*- AES cipher algorithms
+    -*- AES cipher algorithms (x86_64)
+    &lt;*&gt; AES cipher algorithms (AES-NI)
 </pre></div>
 </td></tr></table></div>
-<p>Compile the kernel with <code class="docutils literal"><span class="pre">make</span> <span class="pre">&amp;&amp;</span> <span class="pre">make</span> <span class="pre">modules_install</span></code>. Then, run <code class="docutils literal"><span class="pre">make</span> <span class="pre">install</span></code> to copy the kernel to <code class="docutils literal"><span class="pre">/boot</span></code>.</p>
+<p>Compile the kernel with <code class="docutils literal"><span class="pre">make</span> <span class="pre">&amp;&amp;</span> <span class="pre">make</span> <span class="pre">modules_install</span></code>. Then, run <code class="docutils literal"><span class="pre">make</span> <span class="pre">install</span></code> to copy the kernel to <code class="docutils literal"><span class="pre">/boot</span></code>. Make sure <code class="docutils literal"><span class="pre">/boot</span></code> is mounted (at this point in the guide, it should be mounted).</p>
 </div>
 <div class="section" id="make-the-initramfs">
 <h3>Make the initramfs<a class="headerlink" href="#make-the-initramfs" title="Permalink to this headline">¶</a></h3>
-<p>Because the root partition is encrypted, and the commands to decrypt it are stored on the root partition, the computer will need an initial RAM file system (initramfs) in order to decrypt the root partition when it boots. One easy way to make it is with <code class="docutils literal"><span class="pre">genkernel</span></code> <a class="footnote-reference" href="#initramfs" id="id26">[25]</a>. First, install it:</p>
+<p>Because the root partition is encrypted, and the commands to decrypt it are stored on the root partition, the computer will need an initial RAM file system (initramfs) in order to decrypt the root partition when it boots. One easy way to make it is with <code class="docutils literal"><span class="pre">genkernel</span></code> <a class="footnote-reference" href="#initramfs" id="id27">[25]</a>. First, install it:</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge sys-kernel/genkernel
 </pre></div>
 </div>
@@ -1224,11 +1240,11 @@ Create the root logical volume:</p>
 <span class="go">total 47084</span>
 <span class="go">-rw-r--r-- 1 root root  104174 Jun 20 07:10 config-4.4.8-hardened-r1</span>
 <span class="go">-rw-r--r-- 1 root root 3445174 Jun 20 07:10 System.map-4.4.8-hardened-r1</span>
-<span class="go">-rw-r--r-- 1 root root 7113312 Jun 20 07:10 vmlinuz-4.4.8-hardened-r1</span>
+<span class="go">-rw-r--r-- 1 root root 7113312 Jun 20 07:10 vmlinux-4.4.8-hardened-r1</span>
 <span class="go">-rw-r--r-- 1 root root 5774460 Jun 20 07:10 initramfs-genkernel-x86_64-4.4.8-hardened-r1</span>
 </pre></div>
 </div>
-<p>Each kernel has four files: the configuration used to make it, an initramfs, a kernel file, and a System.map. The kernel will initially have a name that starts with <code class="docutils literal"><span class="pre">vmlinux</span></code>, but it can be renamed to start with <code class="docutils literal"><span class="pre">kernel</span></code> too. The initramfs file must start with either <code class="docutils literal"><span class="pre">initramfs</span></code> or <code class="docutils literal"><span class="pre">initrd</span></code> and must end with <code class="docutils literal"><span class="pre">.img</span></code> unless it is named with the default genkernel name <a class="footnote-reference" href="#naming" id="id27">[26]</a>. They all must have the same suffix. Because I had an automatically generated kernel, I wanted to make it clear that this kernel was manually configured, so I changed the suffix on all the files to <code class="docutils literal"><span class="pre">4.4.8-hardened-r1-manual</span></code>. I also changed my kernel to start with <code class="docutils literal"><span class="pre">kernel</span></code>:</p>
+<p>Each kernel has four files: the configuration used to make it, an initramfs, a kernel file, and a System.map. The kernel will initially have a name that starts with <code class="docutils literal"><span class="pre">vmlinux</span></code>, but it can be renamed to start with <code class="docutils literal"><span class="pre">kernel</span></code> too. The initramfs file must start with either <code class="docutils literal"><span class="pre">initramfs</span></code> or <code class="docutils literal"><span class="pre">initrd</span></code> and must end with <code class="docutils literal"><span class="pre">.img</span></code> unless it is named with the default genkernel name <a class="footnote-reference" href="#naming" id="id28">[26]</a>. They all must have the same suffix. Because I had an automatically generated kernel, I wanted to make it clear that this kernel was manually configured, so I changed the suffix on all the files to <code class="docutils literal"><span class="pre">4.4.8-hardened-r1-manual</span></code>. I also changed my kernel to start with <code class="docutils literal"><span class="pre">kernel</span></code>:</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> ls -Fl /boot
 <span class="go">total 36608</span>
 <span class="go">-rw-r--r-- 1 root root  104171 Jun 20 07:10 config-4.4.8-hardened-r1-manual</span>
@@ -1237,7 +1253,6 @@ Create the root logical volume:</p>
 <span class="go">-rw-r--r-- 1 root root 3431015 Jun 20 07:10 System.map-4.4.8-hardened-r1-manual</span>
 </pre></div>
 </div>
-<p>Because I also had an</p>
 </div>
 </div>
 <div class="section" id="system-configuration">
@@ -1258,7 +1273,7 @@ Create the root logical volume:</p>
 <span class="go">/dev/mapper/vg1-root: UUID=&quot;ecb7836f-e6ee-480a-b4ab-67071657d789&quot; TYPE=&quot;ext4&quot;</span>
 </pre></div>
 </div>
-<p>The mount point is the directory where the file system should be mounted. The options specify options to use when <code class="docutils literal"><span class="pre">mount</span></code> mounts the partition. The common ones are <a class="footnote-reference" href="#fstab" id="id28">[27]</a>:</p>
+<p>The mount point is the directory where the file system should be mounted. The options specify options to use when <code class="docutils literal"><span class="pre">mount</span></code> mounts the partition. The common ones are <a class="footnote-reference" href="#fstab" id="id29">[27]</a>:</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">noauto</span></code>: does not mount the partition automatically (to use it, the user must mount it)</li>
 <li><code class="docutils literal"><span class="pre">noatime</span></code>: does not record the time at which files are accessed. This makes the system faster.</li>
@@ -1266,7 +1281,7 @@ Create the root logical volume:</p>
 <li><code class="docutils literal"><span class="pre">errors=remount-ro</span></code>: if there are errors when mounting, mount the file system read only.</li>
 <li><code class="docutils literal"><span class="pre">sw</span></code>: swap</li>
 </ul>
-<p>The dump field is normally 0 <a class="footnote-reference" href="#fstab" id="id29">[27]</a>.The pass field controls the order in which the filesystem is checked for errors. The drives marked with 1 are checked first, then the drives marked with 2. The drives marked with 0 are never checked.  The root filesystem should be checked first, followed by all the others <a class="footnote-reference" href="#fstab" id="id30">[27]</a>. Swap does not need to be checked.</p>
+<p>The dump field is normally 0 <a class="footnote-reference" href="#fstab" id="id30">[27]</a>.The pass field controls the order in which the filesystem is checked for errors. The drives marked with 1 are checked first, then the drives marked with 2. The drives marked with 0 are never checked.  The root filesystem should be checked first, followed by all the others <a class="footnote-reference" href="#fstab" id="id31">[27]</a>. Swap does not need to be checked.</p>
 <p>Edit <code class="docutils literal"><span class="pre">/etc/fstab</span></code> to look like this (substituting in the right UUIDs and removing <code class="docutils literal"><span class="pre">discard</span></code> if not using an SSD):</p>
 <div class="highlight-shell"><div class="highlight"><pre><span></span><span class="nv">UUID</span><span class="o">=</span>308c6383-ab83-40d1-823a-676ff7ec475d       /boot      ext4  noauto,noatime,discard             <span class="m">0</span> 2
 <span class="nv">UUID</span><span class="o">=</span>ecb7836f-e6ee-480a-b4ab-67071657d789       /          ext4  noatime,discard,errors<span class="o">=</span>remount-ro  <span class="m">0</span> 1
@@ -1291,7 +1306,7 @@ Create the root logical volume:</p>
 </pre></div>
 </div>
 <p><code class="docutils literal"><span class="pre">enp0s31f6</span></code> is the Ethernet card, and <code class="docutils literal"><span class="pre">wlp3s0</span></code> is the wireless card.</p>
-<p>To set up simple DHCP, type the line <code class="docutils literal"><span class="pre">config_enp0s31f6</span> <span class="pre">=&quot;dhcp&quot;</span></code> into <code class="docutils literal"><span class="pre">/etc/conf.d/net</span></code> <a class="footnote-reference" href="#complexnet" id="id31">[28]</a>.</p>
+<p>To set up simple DHCP, type the line <code class="docutils literal"><span class="pre">config_enp0s31f6</span> <span class="pre">=&quot;dhcp&quot;</span></code> into <code class="docutils literal"><span class="pre">/etc/conf.d/net</span></code> <a class="footnote-reference" href="#complexnet" id="id32">[28]</a>.</p>
 <p>Also, install a DHCP daemon:</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge net-misc/dhcpcd
 </pre></div>
@@ -1305,19 +1320,19 @@ Create the root logical volume:</p>
 </div>
 <div class="section" id="set-a-root-password">
 <h3>Set a root password<a class="headerlink" href="#set-a-root-password" title="Permalink to this headline">¶</a></h3>
-<p>The root account can do anything, so it needs a password. Set one:</p>
+<p>The root account can do anything to the computer, so it needs a password. Set one:</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> passwd
 </pre></div>
 </div>
 </div>
 <div class="section" id="set-up-a-system-logger">
 <h3>Set up a system logger<a class="headerlink" href="#set-up-a-system-logger" title="Permalink to this headline">¶</a></h3>
-<p>There are many loggers (<a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Tools#System_logger">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Tools#System_logger</a>), but <code class="docutils literal"><span class="pre">sysklogd</span></code> is the simplest:</p>
+<p>There are many loggers (<a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Tools#System_logger">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Tools#System_logger</a>), but <code class="docutils literal"><span class="pre">sysklogd</span></code> is one of the simplest:</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge app-admin/sysklogd
 <span class="go">rc-update add sysklogd default</span>
 </pre></div>
 </div>
-<p>With <code class="docutils literal"><span class="pre">sysklogd</span></code>, I got an error like the following: <code class="docutils literal"><span class="pre">sysklogd:</span> <span class="pre">/dev/xconsole:</span> <span class="pre">No</span> <span class="pre">such</span> <span class="pre">file</span> <span class="pre">or</span> <span class="pre">directory</span></code> printed out about once a day. To fix it, I commented out the following section in <code class="docutils literal"><span class="pre">/etc/syslog.conf</span></code> <a class="footnote-reference" href="#xconsole" id="id32">[29]</a>:</p>
+<p>With <code class="docutils literal"><span class="pre">sysklogd</span></code>, I got an error like the following: <code class="docutils literal"><span class="pre">sysklogd:</span> <span class="pre">/dev/xconsole:</span> <span class="pre">No</span> <span class="pre">such</span> <span class="pre">file</span> <span class="pre">or</span> <span class="pre">directory</span></code> printed out about once a day. To fix it, I commented out the following section in <code class="docutils literal"><span class="pre">/etc/syslog.conf</span></code> <a class="footnote-reference" href="#xconsole" id="id33">[29]</a>:</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">daemon.*;mail.*;\</span>
 <span class="go">       news.err;\</span>
 <span class="go">       *.=debug;*.=info;\</span>
@@ -1330,7 +1345,7 @@ Create the root logical volume:</p>
 <span class="go">syslogd: /var/log/news/news.notice: No such file or directory</span>
 </pre></div>
 </div>
-<p>I fixed those by creating the three directories <a class="footnote-reference" href="#newsdir" id="id33">[30]</a>.</p>
+<p>I fixed those by creating the three directories <a class="footnote-reference" href="#newsdir" id="id34">[30]</a>.</p>
 <p>Another way to avoid these errors would be to use a different logger.</p>
 </div>
 <div class="section" id="set-up-a-cron-daemon">
@@ -1574,61 +1589,61 @@ Create the root logical volume:</p>
 <table class="docutils footnote" frame="void" id="profile" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id22">[21]</a></td><td>For more information, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Choosing_the_right_profile">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Choosing_the_right_profile</a></td></tr>
+<tr><td class="label">[21]</td><td><em>(<a class="fn-backref" href="#id22">1</a>, <a class="fn-backref" href="#id23">2</a>)</em> For more information, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Choosing_the_right_profile">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Choosing_the_right_profile</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="use" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id23">[22]</a></td><td>For a list of all the <code class="docutils literal"><span class="pre">USE</span></code> flags, see: <a class="reference external" href="https://www.gentoo.org/support/use-flags/">https://www.gentoo.org/support/use-flags/</a>.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id24">[22]</a></td><td>For a list of all the <code class="docutils literal"><span class="pre">USE</span></code> flags, see: <a class="reference external" href="https://www.gentoo.org/support/use-flags/">https://www.gentoo.org/support/use-flags/</a>.</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="locales" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id24">[23]</a></td><td>For more information on locales, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Localization/Guide">https://wiki.gentoo.org/wiki/Localization/Guide</a>.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id25">[23]</a></td><td>For more information on locales, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Localization/Guide">https://wiki.gentoo.org/wiki/Localization/Guide</a>.</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="pax" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id25">[24]</a></td><td>For more information, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Hardened/PaX_Quickstart">https://wiki.gentoo.org/wiki/Hardened/PaX_Quickstart</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id26">[24]</a></td><td>For more information, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Hardened/PaX_Quickstart">https://wiki.gentoo.org/wiki/Hardened/PaX_Quickstart</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="initramfs" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id26">[25]</a></td><td>There are many other programs which can generate an initramfs. See <a class="reference external" href="https://wiki.gentoo.org/wiki/Initramfs">https://wiki.gentoo.org/wiki/Initramfs</a>.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id27">[25]</a></td><td>There are many other programs which can generate an initramfs. See <a class="reference external" href="https://wiki.gentoo.org/wiki/Initramfs">https://wiki.gentoo.org/wiki/Initramfs</a>.</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="naming" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id27">[26]</a></td><td>See the GRUB page for more information on naming: <a class="reference external" href="https://wiki.gentoo.org/wiki/GRUB2_Quick_Start#Kernel_naming_scheme">https://wiki.gentoo.org/wiki/GRUB2_Quick_Start#Kernel_naming_scheme</a>.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id28">[26]</a></td><td>See the GRUB page for more information on naming: <a class="reference external" href="https://wiki.gentoo.org/wiki/GRUB2_Quick_Start#Kernel_naming_scheme">https://wiki.gentoo.org/wiki/GRUB2_Quick_Start#Kernel_naming_scheme</a>.</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="fstab" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[27]</td><td><em>(<a class="fn-backref" href="#id28">1</a>, <a class="fn-backref" href="#id29">2</a>, <a class="fn-backref" href="#id30">3</a>)</em> For more information, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System#Filesystem_information">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System#Filesystem_information</a>.</td></tr>
+<tr><td class="label">[27]</td><td><em>(<a class="fn-backref" href="#id29">1</a>, <a class="fn-backref" href="#id30">2</a>, <a class="fn-backref" href="#id31">3</a>)</em> For more information, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System#Filesystem_information">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System#Filesystem_information</a>.</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="complexnet" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id31">[28]</a></td><td>For more complex network configurations, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System#Configuring_the_network">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System#Configuring_the_network</a>.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id32">[28]</a></td><td>For more complex network configurations, see: <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System#Configuring_the_network">https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System#Configuring_the_network</a>.</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="xconsole" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id32">[29]</a></td><td>See <a class="reference external" href="https://forums.gentoo.org/viewtopic-t-1042218-start-0.html">https://forums.gentoo.org/viewtopic-t-1042218-start-0.html</a>.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id33">[29]</a></td><td>See <a class="reference external" href="https://forums.gentoo.org/viewtopic-t-1042218-start-0.html">https://forums.gentoo.org/viewtopic-t-1042218-start-0.html</a>.</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="newsdir" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id33">[30]</a></td><td>See <a class="reference external" href="https://forums.gentoo.org/viewtopic-t-881147-start-0.html">https://forums.gentoo.org/viewtopic-t-881147-start-0.html</a>.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id34">[30]</a></td><td>See <a class="reference external" href="https://forums.gentoo.org/viewtopic-t-881147-start-0.html">https://forums.gentoo.org/viewtopic-t-881147-start-0.html</a>.</td></tr>
 </tbody>
 </table>
 </div>

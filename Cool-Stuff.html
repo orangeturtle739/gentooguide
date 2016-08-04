@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Cool Stuff &mdash; Gentoo Guide 1.0.2 documentation</title>
+    <title>Cool Stuff &mdash; Gentoo Guide 1.0.3 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.0.2',
+        VERSION:     '1.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="Gentoo Guide 1.0.2 documentation" href="index.html" />
+    <link rel="top" title="Gentoo Guide 1.0.3 documentation" href="index.html" />
     <link rel="prev" title="Setup" href="Setup.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -292,6 +292,28 @@
 <span class="go">vader-koala www</span>
 </pre></div>
 </div>
+<p>Select the cow files with the <code class="docutils literal"><span class="pre">-f</span></code> flag:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> cowsay -f turtle Using other cowfiles!
+<span class="go"> _______________________</span>
+<span class="go">&lt; Using other cowfiles! &gt;</span>
+<span class="go"> -----------------------</span>
+<span class="go">    \                                  ___-------___</span>
+<span class="go">     \                             _-~~             ~~-_</span>
+<span class="go">      \                         _-~                    /~-_</span>
+<span class="go">             /^\__/^\         /~  \                   /    \</span>
+<span class="go">           /|  O|| O|        /      \_______________/        \</span>
+<span class="go">          | |___||__|      /       /                \          \</span>
+<span class="go">          |          \    /      /                    \          \</span>
+<span class="go">          |   (_______) /______/                        \_________ \</span>
+<span class="go">          |         / /         \                      /            \</span>
+<span class="go">           \         \^\\         \                  /               \     /</span>
+<span class="go">             \         ||           \______________/      _-_       //\__//</span>
+<span class="go">               \       ||------_-~~-_ ------------- \ --/~   ~\    || __/</span>
+<span class="go">                 ~-----||====/~     |==================|       |/~~~~~</span>
+<span class="go">                  (_(__/  ./     /                    \_\      \.</span>
+<span class="go">                         (_(___/                         \_____)_)</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="fortune">
 <h3><code class="docutils literal"><span class="pre">fortune</span></code><a class="headerlink" href="#fortune" title="Permalink to this headline">¶</a></h3>
@@ -355,11 +377,9 @@
 <span class="go">        5      Classic Yes    classic-nodots  The Classic Logo, No Periods</span>
 <span class="go">        6      Classic Yes    classic-simp    Classic No Dots Or Letters</span>
 <span class="go">        7      Classic Yes    classic         The Default Classic Logo</span>
-
-<span class="go">Do &quot;linux_logo -L num&quot; where num is from above to get the appropriate logo.</span>
-<span class="go">Remember to also use -a to get ascii version.</span>
 </pre></div>
 </div>
+<p>Do &#8220;linux_logo -L num&#8221; where num is the logo number or name. You can use -a to get ascii version.</p>
 </div>
 <div class="section" id="libcaca">
 <h3><code class="docutils literal"><span class="pre">libcaca</span></code><a class="headerlink" href="#libcaca" title="Permalink to this headline">¶</a></h3>
@@ -367,8 +387,11 @@
 </div>
 <div class="section" id="toilet">
 <h3><code class="docutils literal"><span class="pre">toilet</span></code><a class="headerlink" href="#toilet" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">toilet</span></code> (<code class="docutils literal"><span class="pre">app-misc/toilet</span></code>) actually stands for The Other Implementations LETters. Makes ASCII art. Try it: <code class="docutils literal"><span class="pre">toilet</span> <span class="pre">Hello</span> <span class="pre">World</span> <span class="pre">-f</span> <span class="pre">mono9</span> <span class="pre">--gay</span></code>.
-A useful option is <code class="docutils literal"><span class="pre">-t</span></code> which sets the output width to the width of the terminal. Also, <code class="docutils literal"><span class="pre">--html</span></code> outputs an HTML page. The available fonts are in <code class="docutils literal"><span class="pre">/usr/share/figlet</span></code>.</p>
+<p><code class="docutils literal"><span class="pre">toilet</span></code> (<code class="docutils literal"><span class="pre">app-misc/toilet</span></code>) actually stands for The Other Implementations LETters. It makes ASCII art. See <a class="reference internal" href="#id1"><span class="std std-numref">Fig. 5</span></a> for an example. A useful option is <code class="docutils literal"><span class="pre">-t</span></code> which sets the output width to the width of the terminal. Also, <code class="docutils literal"><span class="pre">--html</span></code> outputs an HTML page. The available fonts are in <code class="docutils literal"><span class="pre">/usr/share/figlet</span></code>.</p>
+<div class="figure align-center" id="id1">
+<a class="reference internal image-reference" href="_images/ToiletGay.png"><img alt="_images/ToiletGay.png" src="_images/ToiletGay.png" style="width: 75%;" /></a>
+<p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Output of <code class="docutils literal"><span class="pre">toilet</span> <span class="pre">Hello</span> <span class="pre">World</span> <span class="pre">-f</span> <span class="pre">mono9</span> <span class="pre">--gay</span></code>.</span></p>
+</div>
 </div>
 <div class="section" id="figlet">
 <h3><code class="docutils literal"><span class="pre">figlet</span></code><a class="headerlink" href="#figlet" title="Permalink to this headline">¶</a></h3>
@@ -493,11 +516,11 @@ toilet -f slant <span class="s2">&quot;GreenHippogriff&quot;</span> -w <span cla
 </div>
 <div class="section" id="nice-console-font-with-consolefont">
 <h3>Nice console font with <code class="docutils literal"><span class="pre">consolefont</span></code><a class="headerlink" href="#nice-console-font-with-consolefont" title="Permalink to this headline">¶</a></h3>
-<p>This makes the console font more readable. Install <code class="docutils literal"><span class="pre">media-fonts/terminus-font</span></code> <a class="footnote-reference" href="#terminus" id="id1">[1]</a>. The available console fonts are in <code class="docutils literal"><span class="pre">/usr/share/consolefonts/</span></code>. Test the fonts with <code class="docutils literal"><span class="pre">setfont</span> <span class="pre">fontname</span></code>, leaving off the extension in the name. To reset the font to the default, use <code class="docutils literal"><span class="pre">setfont</span></code>. Set the font in <code class="docutils literal"><span class="pre">/etc/conf.d/consolefont</span></code> with <code class="docutils literal"><span class="pre">consolefont=&quot;ter-v18b&quot;</span></code> (I chose <code class="docutils literal"><span class="pre">ter-v18b</span></code>). Finally, add <code class="docutils literal"><span class="pre">consolefont</span></code> to the boot runlevel:</p>
+<p>This makes the console font more readable. Install <code class="docutils literal"><span class="pre">media-fonts/terminus-font</span></code> <a class="footnote-reference" href="#terminus" id="id2">[1]</a>. The available console fonts are in <code class="docutils literal"><span class="pre">/usr/share/consolefonts/</span></code>. Test the fonts with <code class="docutils literal"><span class="pre">setfont</span> <span class="pre">fontname</span></code>, leaving off the extension in the name. To reset the font to the default, use <code class="docutils literal"><span class="pre">setfont</span></code>. Set the font in <code class="docutils literal"><span class="pre">/etc/conf.d/consolefont</span></code> with <code class="docutils literal"><span class="pre">consolefont=&quot;ter-v18b&quot;</span></code> (I chose <code class="docutils literal"><span class="pre">ter-v18b</span></code>). Finally, add <code class="docutils literal"><span class="pre">consolefont</span></code> to the boot runlevel:</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> rc-update add consolefont boot
 </pre></div>
 </div>
-<p>Before changing the console font, I sometimes had squares for quotes and other strange things, but changing the font fixed that <a class="footnote-reference" href="#squares" id="id2">[2]</a>.</p>
+<p>Before changing the console font, I sometimes had squares for quotes and other strange things, but changing the font fixed that <a class="footnote-reference" href="#squares" id="id3">[2]</a>.</p>
 </div>
 <div class="section" id="ascii-art-linux-penguin-at-boot-with-linux-logo">
 <h3>ASCII art Linux penguin at boot with <code class="docutils literal"><span class="pre">linux-logo</span></code><a class="headerlink" href="#ascii-art-linux-penguin-at-boot-with-linux-logo" title="Permalink to this headline">¶</a></h3>
@@ -540,7 +563,7 @@ toilet -f slant <span class="s2">&quot;GreenHippogriff&quot;</span> -w <span cla
 </div>
 <div class="section" id="cool-grub-theme">
 <h3>Cool grub theme<a class="headerlink" href="#cool-grub-theme" title="Permalink to this headline">¶</a></h3>
-<p>GRUB comes with a nice starfield theme, so I enabled in <code class="docutils literal"><span class="pre">/etc/default/grub</span></code>:</p>
+<p>GRUB comes with a nice starfield theme, so I enabled it in <code class="docutils literal"><span class="pre">/etc/default/grub</span></code>:</p>
 <div class="highlight-shell"><div class="highlight"><pre><span></span><span class="nv">GRUB_THEME</span><span class="o">=</span><span class="s2">&quot;/boot/grub/themes/starfield/theme.txt&quot;</span>
 </pre></div>
 </div>
@@ -588,13 +611,13 @@ toilet -f slant <span class="s2">&quot;GreenHippogriff&quot;</span> -w <span cla
 <table class="docutils footnote" frame="void" id="terminus" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>See <a class="reference external" href="https://www.artembutusov.com/modify-linux-kernel-font/">https://www.artembutusov.com/modify-linux-kernel-font/</a>.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td>See <a class="reference external" href="https://www.artembutusov.com/modify-linux-kernel-font/">https://www.artembutusov.com/modify-linux-kernel-font/</a>.</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="squares" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>See <a class="reference external" href="https://forums.gentoo.org/viewtopic-t-980980-start-0.html">https://forums.gentoo.org/viewtopic-t-980980-start-0.html</a>.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id3">[2]</a></td><td>See <a class="reference external" href="https://forums.gentoo.org/viewtopic-t-980980-start-0.html">https://forums.gentoo.org/viewtopic-t-980980-start-0.html</a>.</td></tr>
 </tbody>
 </table>
 </div>

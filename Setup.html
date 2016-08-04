@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Setup &mdash; Gentoo Guide 1.0.2 documentation</title>
+    <title>Setup &mdash; Gentoo Guide 1.0.3 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.0.2',
+        VERSION:     '1.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="Gentoo Guide 1.0.2 documentation" href="index.html" />
+    <link rel="top" title="Gentoo Guide 1.0.3 documentation" href="index.html" />
     <link rel="next" title="Cool Stuff" href="Cool-Stuff.html" />
     <link rel="prev" title="Installation" href="Installation.html" />
 <meta charset='utf-8'>
@@ -359,7 +359,7 @@ auto-sync <span class="o">=</span> yes
 <span class="go">uid       [ unknown] Gentoo Linux Release Engineering (Automated Weekly Release Key) &lt;releng@gentoo.org&gt;</span>
 </pre></div>
 </div>
-<p>Verify the fingerprints printed with those on Gentoo&#8217;s website: <a class="reference external" href="https://wiki.gentoo.org/wiki/Project:RelEng#Keys">https://wiki.gentoo.org/wiki/Project:RelEng#Keys</a>. Of course, this verification is only as trustworthy as the HTTPS connection, but maybe the best you can do. To test it, run <code class="docutils literal"><span class="pre">emerge</span> <span class="pre">--sync</span></code>. It should output something like this:</p>
+<p>Verify the fingerprints printed with those on Gentoo&#8217;s website: <a class="reference external" href="https://wiki.gentoo.org/wiki/Project:RelEng#Keys">https://wiki.gentoo.org/wiki/Project:RelEng#Keys</a>. Of course, this verification is only as trustworthy as the HTTPS connection, but may be the best you can do. To test it, run <code class="docutils literal"><span class="pre">emerge</span> <span class="pre">--sync</span></code>. It should output something like this:</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">Checking signature ...</span>
 <span class="go">gpg: WARNING: unsafe permissions on homedir `/var/lib/gentoo/gkeys/keyrings/gentoo/release&#39;</span>
 <span class="go">gpg: Signature made Wed 22 Jun 2016 08:52:03 PM EDT using RSA key ID C9189250</span>
@@ -596,8 +596,8 @@ auto-sync <span class="o">=</span> yes
 <li><code class="docutils literal"><span class="pre">wavpack</span></code>: adds support for wav files</li>
 <li><code class="docutils literal"><span class="pre">encode</span></code>: adds support for encoding</li>
 </ul>
-<p>To set the <code class="docutils literal"><span class="pre">USE</span></code> flags, put them in <code class="docutils literal"><span class="pre">/etc/protage/package.use/sox</span></code>:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> <span class="nb">echo</span> <span class="s2">&quot;media-sound/sox amr flac mad ogg wavpack encode&quot;</span> &gt; /etc/protage/package.use/sox
+<p>To set the <code class="docutils literal"><span class="pre">USE</span></code> flags, put them in <code class="docutils literal"><span class="pre">/etc/portage/package.use/sox</span></code>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> <span class="nb">echo</span> <span class="s2">&quot;media-sound/sox amr flac mad ogg wavpack encode&quot;</span> &gt; /etc/portage/package.use/sox
 </pre></div>
 </div>
 <p>Then, play music with <code class="docutils literal"><span class="pre">play</span></code>:</p>
@@ -644,8 +644,8 @@ auto-sync <span class="o">=</span> yes
 <li><code class="docutils literal"><span class="pre">gpg</span></code>: for verifying overlays, but I am not sure if it is used</li>
 <li><code class="docutils literal"><span class="pre">sync-plugin-portage</span></code>: for using portage&#8217;s plugin system, which is what makes the new version different from the old one</li>
 </ul>
-<p>To set the <code class="docutils literal"><span class="pre">USE</span></code> flags, put them in <code class="docutils literal"><span class="pre">/etc/protage/package.use/layman</span></code>:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> <span class="nb">echo</span> <span class="s2">&quot;app-portage/layman sync-plugin-portage gpg&quot;</span> &gt; /etc/protage/package.use/layman
+<p>To set the <code class="docutils literal"><span class="pre">USE</span></code> flags, put them in <code class="docutils literal"><span class="pre">/etc/portage/package.use/layman</span></code>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> <span class="nb">echo</span> <span class="s2">&quot;app-portage/layman sync-plugin-portage gpg&quot;</span> &gt; /etc/portage/package.use/layman
 </pre></div>
 </div>
 <p>In order to determine the keyword changes necessary, try to emerge it:</p>
@@ -681,8 +681,8 @@ auto-sync <span class="o">=</span> yes
 </div>
 <div class="section" id="avahi-daemon">
 <h2>Avahi Daemon<a class="headerlink" href="#avahi-daemon" title="Permalink to this headline">¶</a></h2>
-<p>The Avahi mDNS/DNS-SD daemon allows you to find computers and other things by name on the local network. It has two components: the daemon, <code class="docutils literal"><span class="pre">net-dns/avahi</span></code>, and the client, <code class="docutils literal"><span class="pre">sys-auth/nss-mdns</span></code>. In order to get the <code class="docutils literal"><span class="pre">avahi-browse</span></code> command and lots of other useful commands, <code class="docutils literal"><span class="pre">avahi</span></code> needs the <code class="docutils literal"><span class="pre">dbus</span></code> <code class="docutils literal"><span class="pre">USE</span></code> flag. To set the <code class="docutils literal"><span class="pre">USE</span></code> flags, put them in <code class="docutils literal"><span class="pre">/etc/protage/package.use/avahi</span></code>:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> <span class="nb">echo</span> <span class="s2">&quot;net-dns/avahi dbus&quot;</span> &gt; /etc/protage/package.use/avahi
+<p>The Avahi mDNS/DNS-SD daemon allows you to find computers and other things by name on the local network. It has two components: the daemon, <code class="docutils literal"><span class="pre">net-dns/avahi</span></code>, and the client, <code class="docutils literal"><span class="pre">sys-auth/nss-mdns</span></code>. In order to get the <code class="docutils literal"><span class="pre">avahi-browse</span></code> command and lots of other useful commands, <code class="docutils literal"><span class="pre">avahi</span></code> needs the <code class="docutils literal"><span class="pre">dbus</span></code> <code class="docutils literal"><span class="pre">USE</span></code> flag. To set the <code class="docutils literal"><span class="pre">USE</span></code> flags, put them in <code class="docutils literal"><span class="pre">/etc/portage/package.use/avahi</span></code>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> <span class="nb">echo</span> <span class="s2">&quot;net-dns/avahi dbus&quot;</span> &gt; /etc/portage/package.use/avahi
 </pre></div>
 </div>
 <p>After installing, start the daemon:</p>
