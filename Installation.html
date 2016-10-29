@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Installation &mdash; Gentoo Guide 1.0.3 documentation</title>
+    <title>Installation &#8212; Gentoo Guide 1.0.4 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.0.3',
+        VERSION:     '1.0.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="Gentoo Guide 1.0.3 documentation" href="index.html" />
+    <link rel="top" title="Gentoo Guide 1.0.4 documentation" href="index.html" />
     <link rel="next" title="Setup" href="Setup.html" />
     <link rel="prev" title="Introduction" href="Introduction.html" />
 <meta charset='utf-8'>
@@ -661,7 +661,7 @@
 </pre></div>
 </div>
 <p>Next, create the swap logical volume:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> lvcreate -L 34G y -n swap vg1
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> lvcreate -L 34G -n swap vg1
 </pre></div>
 </div>
 <p>The <code class="docutils literal"><span class="pre">-L</span></code> flag species the size of the partition, which is in this case 34 GiB. In order to support hibernation (saving the contents of RAM to swap), the swap partition must be at least as big as the amount of RAM installed <a class="footnote-reference" href="#swap" id="id11">[11]</a>. Finally, <code class="docutils literal"><span class="pre">vg1</span></code> is the parent volume group. The swap volume will be at <code class="docutils literal"><span class="pre">/dev/vg1/swap</span></code>.
@@ -678,7 +678,7 @@ Create the root logical volume:</p>
 </pre></div>
 </div>
 <p>Remember that the <code class="docutils literal"><span class="pre">grub</span></code> partition is at <code class="docutils literal"><span class="pre">/dev/sda1</span></code>.</p>
-<p>Second, the make the boot partition and the root partition <code class="docutils literal"><span class="pre">ext4</span></code> <a class="footnote-reference" href="#filesystems" id="id12">[12]</a>:</p>
+<p>Second, make the boot partition and the root partition <code class="docutils literal"><span class="pre">ext4</span></code> <a class="footnote-reference" href="#filesystems" id="id12">[12]</a>:</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> mkfs.ext4 /dev/sda2
 <span class="gp">#</span> mkfs.ext4 /dev/vg1/root
 </pre></div>
@@ -1387,8 +1387,8 @@ Cryptographic API ---&gt;
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge sys-boot/grub:2
 </pre></div>
 </div>
-<p>Install GRUB2 to the EFI partition (<code class="docutils literal"><span class="pre">/dev/sda1</span></code>), which is mounted at <code class="docutils literal"><span class="pre">/boot/efi</span></code>:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> grub2-install --target<span class="o">=</span>x86_64-efi --efi-directory<span class="o">=</span>/boot/efi
+<p>Install GRUB2 to the EFI partition (<code class="docutils literal"><span class="pre">/dev/sda1</span></code>), which is mounted at <code class="docutils literal"><span class="pre">/boot/efi</span></code> <a class="footnote-reference" href="#grub2" id="id35">[31]</a>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> grub-install --target<span class="o">=</span>x86_64-efi --efi-directory<span class="o">=</span>/boot/efi
 </pre></div>
 </div>
 <p>If this outputs errors like <code class="docutils literal"><span class="pre">EFI</span> <span class="pre">variables</span> <span class="pre">are</span> <span class="pre">not</span> <span class="pre">supported</span> <span class="pre">on</span> <span class="pre">this</span> <span class="pre">system</span></code>, then the system is not currently booted using UEFI, and it will be impossible to install a UEFI version of GRUB without rebooting the system using UEFI.</p>
@@ -1409,8 +1409,8 @@ Cryptographic API ---&gt;
 </pre></div>
 </div>
 <p>There is one other GRUB option that appears relevant: <code class="docutils literal"><span class="pre">GRUB_ENABLE_CRYPTODISK=y</span></code>. However, that is only needed when the boot partition is also encrypted. Without an encrypted boot partition, that option causes the error <code class="docutils literal"><span class="pre">error:</span> <span class="pre">device</span> <span class="pre">name</span> <span class="pre">required</span></code> on boot. Leave it commented out.</p>
-<p>Now, generate the GRUB2 configuration file:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> grub2-mkconfig -o /boot/grub/grub.cfg
+<p>Now, generate the GRUB2 configuration file <a class="footnote-reference" href="#grub2" id="id36">[31]</a>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> grub-mkconfig -o /boot/grub/grub.cfg
 </pre></div>
 </div>
 </div>
@@ -1646,6 +1646,12 @@ Cryptographic API ---&gt;
 <tr><td class="label"><a class="fn-backref" href="#id34">[30]</a></td><td>See <a class="reference external" href="https://forums.gentoo.org/viewtopic-t-881147-start-0.html">https://forums.gentoo.org/viewtopic-t-881147-start-0.html</a>.</td></tr>
 </tbody>
 </table>
+<table class="docutils footnote" frame="void" id="grub2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[31]</td><td><em>(<a class="fn-backref" href="#id35">1</a>, <a class="fn-backref" href="#id36">2</a>)</em> All the grub commands used to have a <code class="docutils literal"><span class="pre">grub2-</span></code> prefix, but the 2 was removed.</td></tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -1664,7 +1670,7 @@ Cryptographic API ---&gt;
     </p>
     <p>
         &copy; Copyright 2016, Jacob Glueck.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.<br/>
     </p>
   </div>
 </footer>

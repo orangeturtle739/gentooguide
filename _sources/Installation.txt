@@ -373,7 +373,7 @@ Activate the volume group::
 
 Next, create the swap logical volume::
 
-    # lvcreate -L 34G y -n swap vg1
+    # lvcreate -L 34G -n swap vg1
 
 The ``-L`` flag species the size of the partition, which is in this case 34 GiB. In order to support hibernation (saving the contents of RAM to swap), the swap partition must be at least as big as the amount of RAM installed [#swap]_. Finally, ``vg1`` is the parent volume group. The swap volume will be at ``/dev/vg1/swap``.
 Create the root logical volume::
@@ -391,7 +391,7 @@ The newly created partitions need to be formatted in order to hold data. First, 
 
 Remember that the ``grub`` partition is at ``/dev/sda1``.
 
-Second, the make the boot partition and the root partition ``ext4`` [#filesystems]_::
+Second, make the boot partition and the root partition ``ext4`` [#filesystems]_::
 
     # mkfs.ext4 /dev/sda2
     # mkfs.ext4 /dev/vg1/root
@@ -934,9 +934,9 @@ Then, install GRUB2::
 
     # emerge sys-boot/grub:2
 
-Install GRUB2 to the EFI partition (``/dev/sda1``), which is mounted at ``/boot/efi``::
+Install GRUB2 to the EFI partition (``/dev/sda1``), which is mounted at ``/boot/efi`` [#grub2]_::
 
-    # grub2-install --target=x86_64-efi --efi-directory=/boot/efi
+    # grub-install --target=x86_64-efi --efi-directory=/boot/efi
 
 If this outputs errors like ``EFI variables are not supported on this system``, then the system is not currently booted using UEFI, and it will be impossible to install a UEFI version of GRUB without rebooting the system using UEFI.
 
@@ -962,9 +962,9 @@ To boot with a passphrase, omit the keyfile parameters::
 
 There is one other GRUB option that appears relevant: ``GRUB_ENABLE_CRYPTODISK=y``. However, that is only needed when the boot partition is also encrypted. Without an encrypted boot partition, that option causes the error ``error: device name required`` on boot. Leave it commented out.
 
-Now, generate the GRUB2 configuration file::
+Now, generate the GRUB2 configuration file [#grub2]_::
 
-    # grub2-mkconfig -o /boot/grub/grub.cfg
+    # grub-mkconfig -o /boot/grub/grub.cfg
 
 
 Rebooting
@@ -1054,3 +1054,4 @@ Then, try to find and fix any problems.
 .. [#complexnet] For more complex network configurations, see: https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System#Configuring_the_network.
 .. [#xconsole] See https://forums.gentoo.org/viewtopic-t-1042218-start-0.html.
 .. [#newsdir] See https://forums.gentoo.org/viewtopic-t-881147-start-0.html.
+.. [#grub2] All the grub commands used to have a ``grub2-`` prefix, but the 2 was removed.
