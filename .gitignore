@@ -3,3 +3,4 @@ _static
 _templates
 _package
 update-site.sh
+*.DS_Store
